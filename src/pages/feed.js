@@ -31,8 +31,8 @@ const checkUserEdit = (doc) => {
   const user = app.auth.currentUser.uid;
   if (user == doc.user) {
     return `
-      ${udButton({type: 'button', class: 'edit-btn', name: doc.user, id: doc.id, onClick: makePostEditable, title: 'Editar' })}
-      ${udButton({type: 'button', class: 'save-btn', name: doc.user, id: doc.id, onClick: saveEditPost, title: 'Salvar' })}
+      ${udButton({type: 'button', class: 'edit-btn minibtns', name: doc.user, id: doc.id, onClick: makePostEditable, title: 'Editar' })}
+      ${udButton({type: 'button', class: 'save-btn minibtns', name: doc.user, id: doc.id, onClick: saveEditPost, title: 'Salvar' })}
     `;
   } 
   return '';
@@ -42,7 +42,7 @@ const checkUserDelete =(doc) =>{
   const user = app.auth.currentUser.uid;
   if (user == doc.user) {
     return `
-  ${udButton({type: 'button', class: 'delete-btn', name: doc.user, id: doc.id, onClick: deletePost, title: 'X' })}`
+  ${udButton({type: 'button', class: 'delete-btn minibtns', name: doc.user, id: doc.id, onClick: deletePost, title: 'X' })}`
 
 }
 return '';
@@ -51,12 +51,15 @@ return '';
 const postTemplate = (doc) => {
   return `
     <div class='posted container-post' data-id=${doc.id}> 
-      <p class='posted posted-name'> ${doc.name}
+      <p class='posted posted-name'> Publicado por ${doc.name} | ${doc.date}
       ${checkUserDelete(doc)}
       </p>
+      <div class='text-button'>
       <p class='posted text ${doc.id}'> ${doc.text} |</p>
+      <div class='buttons'>
       ${checkUserEdit(doc)}
-      <p>${doc.date}</p>
+      </div>
+      </div>
     </div>`;
 };
 
