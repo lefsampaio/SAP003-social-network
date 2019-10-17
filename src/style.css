@@ -95,12 +95,34 @@ body {
   margin-bottom: 3px;
 }
 
+.new-post {
+  display: flex;
+  flex-direction: column;
+  width: 92vw;
+  height: 20vh;
+  padding: 9px 3px;
+  background-color: #bfb2c1;
+  border-radius: 6px;
+}
+
+.post-btn {
+  align-self: flex-end;
+  margin-top: 4px;
+  width: 85px;
+  height: 32px;
+  padding: 0;
+  margin-right: 10px;
+}
+
 .add-post{
-  width: 50vh;
+  width: 82vw;
   height: 10vh;
   padding: 10px;
   resize: none;
   font-size: 15px;
+  align-self: center;
+  border-radius: 8px;
+  border: 1px solid grey;
 }
 
 .erro{
@@ -119,8 +141,7 @@ body {
 }
 
 .posted{
-  border-radius: 4px;
-  margin: none;
+  border-radius: 6px 6px 0 0;
 }
 
 .posted-name{
@@ -145,6 +166,7 @@ body {
   height: 51px;
   margin-top: -13px;
   padding: 3px 8px;
+  border-radius: 0 0 6px 6px;
 }
 
 .minibtns {
@@ -160,15 +182,11 @@ body {
 }
 
 .delete-btn {
-  margin-left: 10px;
+  margin-right: 3px;
 }
 
-.edit-btn {
+.edit-btn, .save-btn {
   font-size: 20px;
-}
-
-.save-btn {
-  font-size: 19px;
 }
 
 @media (min-width: 900px){

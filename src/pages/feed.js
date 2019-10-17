@@ -8,63 +8,66 @@ const logout = () => {
 };
 
 const deletePost = () => {
-  const confirmDelete = confirm('Deseja mesmo deletar?')
-  if(confirmDelete){
-  app.db.collection('posts').doc(id).delete().then(() => {
-    document.getElementById(id).parentElement.parentElement.remove();
-  });}
+  const confirmDelete = confirm('Deseja mesmo deletar?');
+  if (confirmDelete) {
+    app.db.collection('posts').doc(id).delete().then(() => {
+      document.getElementById(id).parentElement.parentElement.remove();
+    });
+  }
 };
 
 
-const makePostEditable = () => { 
-  document.getElementsByClassName(id)[0].firstChild.parentElement.contentEditable = true
-  };
-  
+const makePostEditable = () => {
+  document.getElementsByClassName(id)[0].firstChild.parentElement.contentEditable = true;
+};
+
 const saveEditPost = () => {
-  const pText= document.getElementsByClassName(id)[0].firstChild.parentElement
+  const pText = document.getElementsByClassName(id)[0].firstChild.parentElement;
   pText.contentEditable = false;
   const db = firebase.firestore();
-  db.collection('posts').doc(id).update({text: pText.textContent, date: new Date().toLocaleString('pt-BR').slice(0, 16),})
-}
+  db.collection('posts').doc(id).update({ text: pText.textContent, date: new Date().toLocaleString('pt-BR').slice(0, 16) });
+};
 
 const checkUserEdit = (doc) => {
   const user = app.auth.currentUser.uid;
-  if (user == doc.user) {
+  if (user === doc.user) {
     return `
-      ${udButton({type: 'button', class: 'edit-btn minibtns', name: doc.user, id: doc.id, onClick: makePostEditable, title: 'Editar' })}
-      ${udButton({type: 'button', class: 'save-btn minibtns', name: doc.user, id: doc.id, onClick: saveEditPost, title: 'Salvar' })}
+    ${udButton({
+    type: 'button', class: 'save-btn minibtns', name: doc.user, id: doc.id, onClick: saveEditPost, title: '️️️️️️✔️',
+  })}
+      ${udButton({
+    type: 'button', class: 'edit-btn minibtns', name: doc.user, id: doc.id, onClick: makePostEditable, title: '✎',
+  })}
     `;
-  } 
+  }
   return '';
 };
 
-const checkUserDelete =(doc) =>{
+const checkUserDelete = (doc) => {
   const user = app.auth.currentUser.uid;
-  if (user == doc.user) {
+  if (user === doc.user) {
     return `
-  ${udButton({type: 'button', class: 'delete-btn minibtns', name: doc.user, id: doc.id, onClick: deletePost, title: 'X' })}`
-
-}
-return '';
+  ${udButton({
+    type: 'button', class: 'delete-btn minibtns', name: doc.user, id: doc.id, onClick: deletePost, title: 'X',
+  })}`;
+  }
+  return '';
 };
 
-const postTemplate = (doc) => {
-  return `
+const postTemplate = doc => `
     <div class='posted container-post' data-id=${doc.id}> 
       <p class='posted posted-name'> Publicado por ${doc.name} | ${doc.date}
       ${checkUserDelete(doc)}
       </p>
       <div class='text-button'>
-      <p class='posted text ${doc.id}'> ${doc.text} |</p>
+      <p class='posted text ${doc.id}'> ${doc.text}</p>
       <div class='buttons'>
       ${checkUserEdit(doc)}
       </div>
       </div>
     </div>`;
-};
 
 const newPost = () => {
-  const postsSpace = document.querySelector('.posts');
   const textArea = document.querySelector('.add-post');
   const post = {
     name: app.auth.currentUser.displayName,
@@ -76,32 +79,34 @@ const newPost = () => {
   app.db.collection('posts').add(post).then((docRef) => {
     const docPost = {
       ...post,
-      id: docRef.id
-    }
+      id: docRef.id,
+    };
 
-    document.querySelector('.posts').insertAdjacentHTML('afterbegin', app.postTemplate(docPost))
+    document.querySelector('.posts').insertAdjacentHTML('afterbegin', app.postTemplate(docPost));
 
     textArea.value = '';
   });
 };
 
-const Feed= (props)=> {
+const Feed = (props) => {
   let postsTemplate = '';
   props.posts.forEach((post) => {
     const docPost = {
       ...post.data(),
-      id: post.id
-    }
-    postsTemplate += postTemplate(docPost)
+      id: post.id,
+    };
+    postsTemplate += postTemplate(docPost);
   });
 
   const template = `
     <section class="container">
       <section class="container">
-      <textarea class="add-post" placeholder="O que você está ouvindo?"></textarea>
-      ${Button({
-    type: 'button', title: 'Postar', class: 'primary-button', onClick: newPost,
+      <div class='new-post'>
+        <textarea class="add-post" placeholder="O que você está ouvindo?"></textarea>
+        ${Button({
+    type: 'button', title: 'Postar', class: 'primary-button post-btn', onClick: newPost,
   })}
+      </div>
         <div class="posts"> ${postsTemplate} </div>
       </section>
       ${Button({
@@ -111,7 +116,7 @@ const Feed= (props)=> {
   `;
 
   return template;
-}
+};
 
 
 window.app = {

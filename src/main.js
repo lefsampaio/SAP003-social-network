@@ -10,12 +10,11 @@ const authCheck = () => {
       location.hash = '#feed';
 
       firebase.firestore().collection('posts')
-          .orderBy('timestamp', 'desc')
-          .get()
-          .then((querySnapshot) => {
-            main.innerHTML = Feed({posts: querySnapshot });
-
-          });
+        .orderBy('timestamp', 'desc')
+        .get()
+        .then((querySnapshot) => {
+          main.innerHTML = Feed({ posts: querySnapshot });
+        });
     } else {
       location.hash = '';
     }
