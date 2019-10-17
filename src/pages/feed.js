@@ -2,7 +2,7 @@ import Button from '../components/button.js';
 
 const logout = () => {
   app.auth.signOut().catch((error) => {
-    // console.log(error);
+    console.log(error);
   });
 };
 
@@ -21,15 +21,15 @@ const checkUser = (docUid) => {
   }
 };
 
-const makePostEditable = (id) => { 
+const makePostEditable = (id) => {
   document.getElementsByClassName(id)[0].firstChild.parentElement.contentEditable = true
-  };
-  
+};
+
 const saveEditPost = (id) => {
-  const pText= document.getElementsByClassName(id)[0].firstChild.parentElement
+  const pText = document.getElementsByClassName(id)[0].firstChild.parentElement
   pText.contentEditable = false;
   const db = firebase.firestore();
-  db.collection('posts').doc(id).update({text: pText.textContent}) 
+  db.collection('posts').doc(id).update({ text: pText.textContent, date: new Date().toLocaleString('pt-BR').slice(0, 16) })
 }
 
 const postTemplate = (doc) => {
@@ -39,24 +39,22 @@ const postTemplate = (doc) => {
       <p class='posted posted-name'> ${doc.data().name}
         <button type='button' class='delete-btn' id=${doc.id} name=${doc.data().user}>X</button>
       </p>
-      <p class='posted text ${doc.id}'> ${doc.data().text} |</p>
-      <button type='button' class='edit-btn' name=${doc.id}>Editar</button>
-      <button type='button' class='save-btn' name=${doc.id}>Salvar</button>
+      <p class='posted text ${doc.id}'> ${doc.data().text} </p>
+      <button type='button' class='edit-btn' name=${doc.data().user} id=${doc.id} >Editar</button>
+      <button type='button' class='save-btn'name=${doc.data().user} id=${doc.id}>Salvar</button>
       <p>${doc.data().date}</p>
     </div>`;
 
   checkUser(doc.data().user);
   document.querySelectorAll('.delete-btn').forEach(cls => cls.addEventListener('click', e => deletePost(e.target.id)));
 
-  const editPost= document.querySelector('.text')
   document.querySelectorAll('.edit-btn').forEach
-  (cls => cls.addEventListener('click', e => makePostEditable(e.target.name)))
+    (cls => cls.addEventListener('click', e => makePostEditable(e.target.id)))
 
   document.querySelectorAll('.save-btn').forEach
-  (cls => cls.addEventListener('click', e => saveEditPost(e.target.name)))
-
+    (cls => cls.addEventListener('click', e => saveEditPost(e.target.id)))
+  checkUser(doc.data().user);
 };
-
 const showPosts = () => {
   app.db.collection('posts').orderBy('timestamp', 'desc').get()
     .then((snapshot) => {
