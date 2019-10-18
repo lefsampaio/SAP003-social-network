@@ -30,10 +30,7 @@ body {
 }
 
 .main-container{
-  display: flex;
-  flex-direction: column;
   justify-content: space-around;
-  align-items: center;
   margin-top: 50px;
 }
 
@@ -41,8 +38,6 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding: 10px;
-  margin: 20px;
 }
 
 .primary-input{
@@ -51,7 +46,9 @@ body {
   height: 31px;
   border: 1px solid gray;
   padding-left: 12px;
+  padding-top: 4px;
   margin-top: 10px;
+  font-family: 'Hind', sans-serif;
 }
 
 .login-text{
@@ -99,7 +96,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 92vw;
-  height: 20vh;
+  height: 19vh;
   padding: 9px 3px;
   background-color: #bfb2c1;
   border-radius: 6px;
@@ -114,23 +111,38 @@ body {
   margin-right: 10px;
 }
 
+.margin-top-container {
+  margin-top: 15px;
+}
+
 .add-post{
   width: 82vw;
   height: 10vh;
   padding: 10px;
   resize: none;
-  font-size: 15px;
+  font-size: 17px;
   align-self: center;
   border-radius: 8px;
   border: 1px solid grey;
+  font-family: 'Hind', sans-serif;
 }
 
 .erro{
   text-align: center;
+  margin-top: 35px;
+  width: 92vw;
+  font-family: 'Hind', sans-serif;
 }
 
 .posts{
   width: 100%;
+}
+
+.signout-button {
+  width: 17vw;
+  height: 6vh;
+  padding: 0;
+  margin-left: 12px;
 }
 
 .container-post{
@@ -151,10 +163,21 @@ body {
   align-items: center;
   padding: 5px;
   font-size: 13px;
+  font-family: 'Hind', sans-serif;
 }
 
 .text {
   margin: 0;
+  width: 70vw;
+  font-family: 'Hind', sans-serif;
+  background-color:  #e1bee7;
+}
+
+.editable-text {
+  background-color: whitesmoke;
+  padding: 3px 3px;
+  width: 70vw;
+  height: auto;
   font-family: 'Hind', sans-serif;
 }
 
@@ -163,7 +186,6 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  height: 51px;
   margin-top: -13px;
   padding: 3px 8px;
   border-radius: 0 0 6px 6px;
@@ -175,6 +197,7 @@ body {
   width: 24px;
   padding: 0;
   font-weight: bold;
+  font-size: 17px;
 }
 
 .minibtns:hover {
@@ -183,10 +206,6 @@ body {
 
 .delete-btn {
   margin-right: 3px;
-}
-
-.edit-btn, .save-btn {
-  font-size: 20px;
 }
 
 @media (min-width: 900px){
