@@ -88,7 +88,7 @@ const newPost = () => {
     document.querySelector('.posts').insertAdjacentHTML('afterbegin', app.postTemplate(docPost));
 
     textArea.value = '';
-    document.querySelector('.post-btn').disabled = true;
+    // document.querySelector('.post-btn').disabled = true;
   });
 };
 
@@ -114,7 +114,7 @@ const Feed = (props) => {
 
   const template = `
   ${Button({
-    type: 'button', title: 'Sair', class: 'primary-button signout-button', onClick: logout, disabled: false,
+    type: 'button', title: 'Sair', class: 'primary-button signout-button', onClick: logout, disabled: 'enabled',
   })}
     <section class="container">
       <section class="container margin-top-container">
@@ -123,7 +123,7 @@ const Feed = (props) => {
     class: 'add-post', placeholder: 'O que você está ouvindo?', onKeyup: buttonActivate,
   })}
         ${Button({
-    type: 'button', title: 'Postar', class: 'primary-button post-btn', onClick: newPost, disabled: true,
+    type: 'button', title: 'Postar', class: 'primary-button post-btn', onClick: newPost, disabled: 'disabled',
   })}
       </div>
         <div class="posts"> ${postsTemplate} </div>
