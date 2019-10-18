@@ -242,6 +242,22 @@ body {
   }
 
   .add-post{
-    width: 70vh;
+    width: 39vw;
+  }
+
+  .new-post {
+    width: 42vw;
+  }
+
+  .posts {
+    width: 42vw;
+  }
+
+  .signout-button {
+    width: 6vw;
+  }
+
+  .text {
+    width: 36vw;
   }
 }
