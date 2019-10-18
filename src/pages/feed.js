@@ -1,5 +1,6 @@
 import Button from '../components/button.js';
 import udButton from '../components/udButton.js';
+import textArea from '../components/text-area.js';
 
 const logout = () => {
   app.auth.signOut().catch((error) => {
@@ -19,11 +20,13 @@ const deletePost = () => {
 
 const makePostEditable = () => {
   document.getElementsByClassName(id)[0].firstChild.parentElement.contentEditable = true;
+  document.getElementsByClassName(id)[0].firstChild.parentElement.className = `editable-text ${id}`;
 };
 
 const saveEditPost = () => {
   const pText = document.getElementsByClassName(id)[0].firstChild.parentElement;
   pText.contentEditable = false;
+  pText.className = `text ${id}`;
   const db = firebase.firestore();
   db.collection('posts').doc(id).update({ text: pText.textContent, date: new Date().toLocaleString('pt-BR').slice(0, 16) });
 };
@@ -88,6 +91,15 @@ const newPost = () => {
   });
 };
 
+const buttonActivate = () => {
+  const chars = document.querySelector('.add-post').value.length;
+  if (chars !== 0) {
+    document.querySelector('.post-btn').removeAttribute('disabled', '');
+  } else {
+    document.querySelector('.post-btn').setAttribute('disabled', '');
+  }
+};
+
 const Feed = (props) => {
   let postsTemplate = '';
   props.posts.forEach((post) => {
@@ -105,7 +117,9 @@ const Feed = (props) => {
     <section class="container">
       <section class="container margin-top-container">
       <div class='new-post'>
-        <textarea class="add-post" placeholder="O que você está ouvindo?"></textarea>
+        ${textArea({
+    class: 'add-post', placeholder: 'O que você está ouvindo?', onKeyup: buttonActivate,
+  })}
         ${Button({
     type: 'button', title: 'Postar', class: 'primary-button post-btn', onClick: newPost,
   })}
