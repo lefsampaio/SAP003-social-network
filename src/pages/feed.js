@@ -88,15 +88,17 @@ const newPost = () => {
     document.querySelector('.posts').insertAdjacentHTML('afterbegin', app.postTemplate(docPost));
 
     textArea.value = '';
+    document.querySelector('.post-btn').disabled = true;
   });
 };
 
-const buttonActivate = () => {
-  const chars = document.querySelector('.add-post').value.length;
+const buttonActivate = (e) => {
+  const postBtn = e.target.nextSibling.nextSibling;
+  const chars = e.target.value.length;
   if (chars !== 0) {
-    document.querySelector('.post-btn').removeAttribute('disabled', '');
+    postBtn.disabled = false;
   } else {
-    document.querySelector('.post-btn').setAttribute('disabled', '');
+    postBtn.disabled = true;
   }
 };
 
@@ -112,26 +114,24 @@ const Feed = (props) => {
 
   const template = `
   ${Button({
-    type: 'button', title: 'Sair', class: 'primary-button signout-button', onClick: logout,
+    type: 'button', title: 'Sair', class: 'primary-button signout-button', onClick: logout, disabled: false,
   })}
     <section class="container">
       <section class="container margin-top-container">
       <div class='new-post'>
-        ${textArea({
+      ${textArea({
     class: 'add-post', placeholder: 'O que você está ouvindo?', onKeyup: buttonActivate,
   })}
         ${Button({
-    type: 'button', title: 'Postar', class: 'primary-button post-btn', onClick: newPost,
+    type: 'button', title: 'Postar', class: 'primary-button post-btn', onClick: newPost, disabled: true,
   })}
       </div>
         <div class="posts"> ${postsTemplate} </div>
       </section>
     </section>
   `;
-
   return template;
 };
-
 
 window.app = {
   postTemplate,

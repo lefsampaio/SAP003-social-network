@@ -22,11 +22,11 @@ body {
   font-size: 16px;
   align-self: center;
   margin-top: 20px;
-  box-shadow: 2px 2px 5px grey
 }
 
 .primary-button:hover{
   background-color: #af8eb5;
+  box-shadow: 2px 2px 5px grey
 }
 
 .main-container{
@@ -109,6 +109,16 @@ body {
   height: 32px;
   padding: 0;
   margin-right: 10px;
+}
+
+.post-btn:disabled {
+  background-color: #8080807d;
+  color: gray;
+  box-shadow: none;
+}
+
+.post-btn:disabled:hover {
+  cursor: not-allowed;
 }
 
 .margin-top-container {
