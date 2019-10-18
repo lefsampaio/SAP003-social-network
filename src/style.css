@@ -170,6 +170,15 @@ body {
   margin: 0;
   width: 70vw;
   font-family: 'Hind', sans-serif;
+  background-color:  #e1bee7;
+}
+
+.editable-text {
+  background-color: whitesmoke;
+  padding: 3px 3px;
+  width: 70vw;
+  height: auto;
+  font-family: 'Hind', sans-serif;
 }
 
 .text-button {
@@ -177,7 +186,6 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  height: 51px;
   margin-top: -13px;
   padding: 3px 8px;
   border-radius: 0 0 6px 6px;

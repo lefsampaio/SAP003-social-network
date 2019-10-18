@@ -60,7 +60,7 @@ const postTemplate = doc => `
       ${checkUserDelete(doc)}
       </p>
       <div class='text-button'>
-      <p class='posted text ${doc.id}'> ${doc.text}</p>
+      <p class='text ${doc.id}'> ${doc.text}</p>
       <div class='buttons'>
       ${checkUserEdit(doc)}
       </div>
