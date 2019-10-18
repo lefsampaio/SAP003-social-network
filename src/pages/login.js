@@ -42,7 +42,7 @@ const Login = () => {
           ${Input({ type: 'email', placeholder: 'Email', class: 'js-email-input primary-input' })}
           ${Input({ type: 'password', placeholder: 'Password', class: 'js-password-input primary-input' })}
           ${Button({
-    type: 'submit', title: 'Login', class: 'primary-button', onClick: userLogin,
+    type: 'submit', title: 'Login', class: 'primary-button', onClick: userLogin, disabled: 'enabled',
   })}
         </form>
         <p class="login-text">Ou entre com...</p>

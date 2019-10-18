@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Hind|Righteous&display=swap');
 
 body {
-  background-color: #f3e5f5;
   background-color: #efeeee;
   margin: 0;
   padding: 0;
@@ -22,11 +21,11 @@ body {
   font-size: 16px;
   align-self: center;
   margin-top: 20px;
-  box-shadow: 2px 2px 5px grey
 }
 
 .primary-button:hover{
   background-color: #af8eb5;
+  box-shadow: 2px 2px 5px grey
 }
 
 .main-container{
@@ -96,7 +95,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 92vw;
-  height: 19vh;
+  height: 135px;
   padding: 9px 3px;
   background-color: #bfb2c1;
   border-radius: 6px;
@@ -111,13 +110,23 @@ body {
   margin-right: 10px;
 }
 
+.post-btn:disabled {
+  background-color: #8080807d;
+  color: gray;
+  box-shadow: none;
+}
+
+.post-btn:disabled:hover {
+  cursor: not-allowed;
+}
+
 .margin-top-container {
   margin-top: 15px;
 }
 
 .add-post{
   width: 82vw;
-  height: 10vh;
+  height: 73px;
   padding: 10px;
   resize: none;
   font-size: 17px;
@@ -140,7 +149,7 @@ body {
 
 .signout-button {
   width: 17vw;
-  height: 6vh;
+  height: 35px;
   padding: 0;
   margin-left: 12px;
 }
@@ -213,6 +222,10 @@ body {
     flex-direction: row;
   }
 
+  .erro {
+    width: 20vw;
+  }
+
   .google-button:hover{
     cursor: pointer;
   }
@@ -229,6 +242,22 @@ body {
   }
 
   .add-post{
-    width: 70vh;
+    width: 39vw;
+  }
+
+  .new-post {
+    width: 42vw;
+  }
+
+  .posts {
+    width: 42vw;
+  }
+
+  .signout-button {
+    width: 6vw;
+  }
+
+  .text {
+    width: 36vw;
   }
 }

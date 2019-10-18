@@ -1,5 +1,6 @@
 import Button from '../components/button.js';
 import udButton from '../components/udButton.js';
+import textArea from '../components/text-area.js';
 
 const logout = () => {
   app.auth.signOut().catch((error) => {
@@ -19,11 +20,13 @@ const deletePost = () => {
 
 const makePostEditable = () => {
   document.getElementsByClassName(id)[0].firstChild.parentElement.contentEditable = true;
+  document.getElementsByClassName(id)[0].firstChild.parentElement.className = `editable-text ${id}`;
 };
 
 const saveEditPost = () => {
   const pText = document.getElementsByClassName(id)[0].firstChild.parentElement;
   pText.contentEditable = false;
+  pText.className = `text ${id}`;
   const db = firebase.firestore();
   db.collection('posts').doc(id).update({ text: pText.textContent, date: new Date().toLocaleString('pt-BR').slice(0, 16) });
 };
@@ -85,7 +88,18 @@ const newPost = () => {
     document.querySelector('.posts').insertAdjacentHTML('afterbegin', app.postTemplate(docPost));
 
     textArea.value = '';
+    document.querySelector('.post-btn').disabled = true;
   });
+};
+
+const buttonActivate = (e) => {
+  const postBtn = e.target.nextSibling.nextSibling;
+  const chars = e.target.value.length;
+  if (chars !== 0) {
+    postBtn.disabled = false;
+  } else {
+    postBtn.disabled = true;
+  }
 };
 
 const Feed = (props) => {
@@ -100,24 +114,24 @@ const Feed = (props) => {
 
   const template = `
   ${Button({
-    type: 'button', title: 'Sair', class: 'primary-button signout-button', onClick: logout,
+    type: 'button', title: 'Sair', class: 'primary-button signout-button', onClick: logout, disabled: 'enabled',
   })}
     <section class="container">
       <section class="container margin-top-container">
       <div class='new-post'>
-        <textarea class="add-post" placeholder="O que você está ouvindo?"></textarea>
+      ${textArea({
+    class: 'add-post', placeholder: 'O que você está ouvindo?', onKeyup: buttonActivate,
+  })}
         ${Button({
-    type: 'button', title: 'Postar', class: 'primary-button post-btn', onClick: newPost,
+    type: 'button', title: 'Postar', class: 'primary-button post-btn', onClick: newPost, disabled: 'disabled',
   })}
       </div>
         <div class="posts"> ${postsTemplate} </div>
       </section>
     </section>
   `;
-
   return template;
 };
-
 
 window.app = {
   postTemplate,
