@@ -88,7 +88,7 @@ const newPost = () => {
     document.querySelector('.posts').insertAdjacentHTML('afterbegin', app.postTemplate(docPost));
 
     textArea.value = '';
-    // document.querySelector('.post-btn').disabled = true;
+    document.querySelector('.post-btn').disabled = true;
   });
 };
 
