@@ -33,10 +33,10 @@ const checkUserEdit = (doc) => {
   if (user === doc.user) {
     return `
     ${udButton({
-    type: 'button', class: 'save-btn minibtns', name: doc.user, id: doc.id, onClick: saveEditPost, title: '️️️️️️✔️',
+    type: 'button', class: 'save-btn minibtns', name: doc.user, id: doc.id, onClick: saveEditPost, title: '️️️️️️<i class="fas fa-check"></i>',
   })}
       ${udButton({
-    type: 'button', class: 'edit-btn minibtns', name: doc.user, id: doc.id, onClick: makePostEditable, title: '✎',
+    type: 'button', class: 'edit-btn minibtns', name: doc.user, id: doc.id, onClick: makePostEditable, title: '<i class="fas fa-pencil-alt"></i>',
   })}
     `;
   }
@@ -99,8 +99,11 @@ const Feed = (props) => {
   });
 
   const template = `
+  ${Button({
+    type: 'button', title: 'Sair', class: 'primary-button signout-button', onClick: logout,
+  })}
     <section class="container">
-      <section class="container">
+      <section class="container margin-top-container">
       <div class='new-post'>
         <textarea class="add-post" placeholder="O que você está ouvindo?"></textarea>
         ${Button({
@@ -109,9 +112,6 @@ const Feed = (props) => {
       </div>
         <div class="posts"> ${postsTemplate} </div>
       </section>
-      ${Button({
-    type: 'button', title: 'Logout', class: 'primary-button', onClick: logout,
-  })}
     </section>
   `;
 

@@ -30,7 +30,7 @@ const loginGoogle = () => {
 
 const Login = () => {
   const template = `
-    <section class="main-container">
+    <section class='container main-container'>
     <section class="logo">
       ${logo({
     img: 'image/logo.png', classImg: 'logo', classP: 'text-logo', text: 'MusicalSpace',
