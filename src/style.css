@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Hind|Righteous&display=swap');
 
 body {
-  background-color: #f3e5f5;
   background-color: #efeeee;
   margin: 0;
   padding: 0;
@@ -96,7 +95,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 92vw;
-  height: 19vh;
+  height: 135px;
   padding: 9px 3px;
   background-color: #bfb2c1;
   border-radius: 6px;
@@ -127,7 +126,7 @@ body {
 
 .add-post{
   width: 82vw;
-  height: 10vh;
+  height: 73px;
   padding: 10px;
   resize: none;
   font-size: 17px;
@@ -150,7 +149,7 @@ body {
 
 .signout-button {
   width: 17vw;
-  height: 6vh;
+  height: 35px;
   padding: 0;
   margin-left: 12px;
 }
@@ -221,6 +220,10 @@ body {
 @media (min-width: 900px){
   .main-container{
     flex-direction: row;
+  }
+
+  .erro {
+    width: 20vw;
   }
 
   .google-button:hover{
