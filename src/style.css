@@ -206,12 +206,33 @@ body {
   font-size: 17px;
 }
 
-.minibtns:hover {
+/* .minibtns:hover {
   background-color: #af8eb5;
+} */
+
+.edit-save-btns {
+  background-color: #e1bee7;
+}
+
+.save-btn {
+  display: none;
+}
+
+.save-btn:hover {
+  color: green;
+}
+
+.edit-btn:hover {
+  color: #cfcf57;
 }
 
 .delete-btn {
   margin-right: 3px;
+  background-color: #bfb2c1;
+}
+
+.delete-btn:hover {
+  color: #d30505;
 }
 
 @media (min-width: 900px){

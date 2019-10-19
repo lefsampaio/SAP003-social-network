@@ -19,11 +19,15 @@ const deletePost = (target) => {
 
 
 const makePostEditable = (target) => {
+  target.parentElement.style.display = 'none';
+  target.parentElement.previousElementSibling.style.display = 'inline';
   target.parentElement.parentElement.previousElementSibling.contentEditable = true;
   target.parentElement.parentElement.previousElementSibling.className += ' editable-text';
 };
 
 const saveEditPost = (target) => {
+  target.parentElement.style.display = 'none';
+  target.parentElement.nextElementSibling.style.display = 'inline';
   const pText = target.parentElement.parentElement.previousElementSibling;
   const id = target.parentElement.dataset.docid;
   const db = firebase.firestore();
@@ -41,7 +45,7 @@ const checkUserEdit = (doc) => {
     return `
     ${udButton({
     type: 'button',
-    class: 'save-btn minibtns',
+    class: 'save-btn minibtns edit-save-btns',
     name: doc.user,
     dataDocid: doc.id,
     onClick: saveEditPost,
@@ -49,7 +53,7 @@ const checkUserEdit = (doc) => {
   })}
       ${udButton({
     type: 'button',
-    class: 'edit-btn minibtns',
+    class: 'edit-btn minibtns edit-save-btns',
     name: doc.user,
     dataDocid: doc.id,
     onClick: makePostEditable,
