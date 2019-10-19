@@ -1,6 +1,7 @@
 import Button from '../components/button.js';
 import udButton from '../components/udButton.js';
 import textArea from '../components/text-area.js';
+import divPosts from '../components/div-posts.js';
 
 const logout = () => {
   app.auth.signOut().catch((error) => {
@@ -18,18 +19,18 @@ const deletePost = (target) => {
 };
 
 
-const makePostEditable = (target) => {
-  target.parentElement.style.display = 'none';
-  target.parentElement.previousElementSibling.style.display = 'inline';
-  target.parentElement.parentElement.previousElementSibling.contentEditable = true;
-  target.parentElement.parentElement.previousElementSibling.className += ' editable-text';
+const makePostEditable = (parentOfIcon) => {
+  parentOfIcon.style.display = 'none';
+  parentOfIcon.previousElementSibling.style.display = 'inline';
+  parentOfIcon.parentElement.previousElementSibling.contentEditable = true;
+  parentOfIcon.parentElement.previousElementSibling.className += ' editable-text';
 };
 
-const saveEditPost = (target) => {
-  target.parentElement.style.display = 'none';
-  target.parentElement.nextElementSibling.style.display = 'inline';
-  const pText = target.parentElement.parentElement.previousElementSibling;
-  const id = target.parentElement.dataset.docid;
+const saveEditPost = (parentOfIcon) => {
+  parentOfIcon.style.display = 'none';
+  parentOfIcon.nextElementSibling.style.display = 'inline';
+  const pText = parentOfIcon.parentElement.previousElementSibling;
+  const id = parentOfIcon.dataset.docid;
   const db = firebase.firestore();
   pText.contentEditable = false;
   pText.className = 'text';
@@ -37,6 +38,16 @@ const saveEditPost = (target) => {
     text: pText.textContent,
     date: new Date().toLocaleString('pt-BR').slice(0, 16),
   });
+};
+
+const dealingWithPostButtons = (target) => {
+  if (target.className.match(/delete-btn/)) {
+    app.deletePost(target);
+  } else if (target.className.match(/fa-pencil-alt/)) {
+    app.makePostEditable(target.parentElement);
+  } else if (target.className.match(/fa-check/)) {
+    app.saveEditPost(target.parentElement);
+  }
 };
 
 const checkUserEdit = (doc) => {
@@ -48,7 +59,7 @@ const checkUserEdit = (doc) => {
     class: 'save-btn minibtns edit-save-btns',
     name: doc.user,
     dataDocid: doc.id,
-    onClick: saveEditPost,
+    // onClick: saveEditPost,
     title: '️️️️️️<i class="fas fa-check"></i>',
   })}
       ${udButton({
@@ -56,7 +67,7 @@ const checkUserEdit = (doc) => {
     class: 'edit-btn minibtns edit-save-btns',
     name: doc.user,
     dataDocid: doc.id,
-    onClick: makePostEditable,
+    // onClick: makePostEditable,
     title: '<i class="fas fa-pencil-alt"></i>',
   })}
     `;
@@ -73,7 +84,7 @@ const checkUserDelete = (doc) => {
     class: 'delete-btn minibtns',
     name: doc.user,
     dataDocid: doc.id,
-    onClick: deletePost,
+    // onClick: deletePost,
     title: 'X',
   })}`;
   }
@@ -81,17 +92,17 @@ const checkUserDelete = (doc) => {
 };
 
 const postTemplate = doc => `
-    <div class='posted container-post' data-id=${doc.id}> 
-      <p class='posted posted-name'> Publicado por ${doc.name} | ${doc.date}
-      ${checkUserDelete(doc)}
-      </p>
-      <div class='text-button'>
-      <p class='text' data-docid=${doc.id}> ${doc.text}</p>
-      <div class='buttons'>
-      ${checkUserEdit(doc)}
-      </div>
-      </div>
-    </div>`;
+  <div class='posted container-post' data-id=${doc.id}> 
+    <p class='posted posted-name'> Publicado por ${doc.name} | ${doc.date}
+    ${checkUserDelete(doc)}
+    </p>
+    <div class='text-button'>
+    <p class='text' data-docid=${doc.id}> ${doc.text}</p>
+    <div class='buttons'>
+    ${checkUserEdit(doc)}
+    </div>
+    </div>
+  </div>`;
 
 const newPost = () => {
   const textArea = document.querySelector('.add-post');
@@ -159,7 +170,11 @@ const Feed = (props) => {
     disabled: 'disabled',
   })}
       </div>
-        <div class="posts"> ${postsTemplate} </div>
+      ${divPosts({
+    class: 'posts',
+    onClick: dealingWithPostButtons,
+    content: postsTemplate,
+  })}
       </section>
     </section>
   `;
@@ -167,6 +182,9 @@ const Feed = (props) => {
 };
 
 window.app = {
+  deletePost,
+  makePostEditable,
+  saveEditPost,
   postTemplate,
   db: firebase.firestore(),
   auth: firebase.auth(),
