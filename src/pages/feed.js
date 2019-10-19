@@ -143,7 +143,7 @@ const Feed = (props) => {
     onClick: logout,
     disabled: 'enabled',
   })}
-    <section class="container">
+    <section class="container screen-margin-bottom">
       <section class="container margin-top-container">
       <div class='new-post'>
       ${textArea({

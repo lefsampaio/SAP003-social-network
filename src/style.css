@@ -235,6 +235,10 @@ body {
   color: #d30505;
 }
 
+.screen-margin-bottom {
+  margin-bottom: 10px;
+}
+
 @media (min-width: 900px){
   .main-container{
     flex-direction: row;
