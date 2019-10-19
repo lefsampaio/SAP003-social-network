@@ -8,27 +8,31 @@ const logout = () => {
   });
 };
 
-const deletePost = () => {
+const deletePost = (target) => {
   const confirmDelete = confirm('Deseja mesmo deletar?');
   if (confirmDelete) {
-    app.db.collection('posts').doc(id).delete().then(() => {
-      document.getElementById(id).parentElement.parentElement.remove();
+    app.db.collection('posts').doc(target.dataset.docid).delete().then(() => {
+      target.parentElement.parentElement.remove();
     });
   }
 };
 
 
-const makePostEditable = () => {
-  document.getElementsByClassName(id)[0].firstChild.parentElement.contentEditable = true;
-  document.getElementsByClassName(id)[0].firstChild.parentElement.className = `editable-text ${id}`;
+const makePostEditable = (target) => {
+  target.parentElement.parentElement.previousElementSibling.contentEditable = true;
+  target.parentElement.parentElement.previousElementSibling.className += ' editable-text';
 };
 
-const saveEditPost = () => {
-  const pText = document.getElementsByClassName(id)[0].firstChild.parentElement;
-  pText.contentEditable = false;
-  pText.className = `text ${id}`;
+const saveEditPost = (target) => {
+  const pText = target.parentElement.parentElement.previousElementSibling;
+  const id = target.parentElement.dataset.docid;
   const db = firebase.firestore();
-  db.collection('posts').doc(id).update({ text: pText.textContent, date: new Date().toLocaleString('pt-BR').slice(0, 16) });
+  pText.contentEditable = false;
+  pText.className = 'text';
+  db.collection('posts').doc(id).update({
+    text: pText.textContent,
+    date: new Date().toLocaleString('pt-BR').slice(0, 16),
+  });
 };
 
 const checkUserEdit = (doc) => {
@@ -36,10 +40,20 @@ const checkUserEdit = (doc) => {
   if (user === doc.user) {
     return `
     ${udButton({
-    type: 'button', class: 'save-btn minibtns', name: doc.user, id: doc.id, onClick: saveEditPost, title: '️️️️️️<i class="fas fa-check"></i>',
+    type: 'button',
+    class: 'save-btn minibtns',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: saveEditPost,
+    title: '️️️️️️<i class="fas fa-check"></i>',
   })}
       ${udButton({
-    type: 'button', class: 'edit-btn minibtns', name: doc.user, id: doc.id, onClick: makePostEditable, title: '<i class="fas fa-pencil-alt"></i>',
+    type: 'button',
+    class: 'edit-btn minibtns',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: makePostEditable,
+    title: '<i class="fas fa-pencil-alt"></i>',
   })}
     `;
   }
@@ -51,7 +65,12 @@ const checkUserDelete = (doc) => {
   if (user === doc.user) {
     return `
   ${udButton({
-    type: 'button', class: 'delete-btn minibtns', name: doc.user, id: doc.id, onClick: deletePost, title: 'X',
+    type: 'button',
+    class: 'delete-btn minibtns',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: deletePost,
+    title: 'X',
   })}`;
   }
   return '';
@@ -63,7 +82,7 @@ const postTemplate = doc => `
       ${checkUserDelete(doc)}
       </p>
       <div class='text-button'>
-      <p class='text ${doc.id}'> ${doc.text}</p>
+      <p class='text' data-docid=${doc.id}> ${doc.text}</p>
       <div class='buttons'>
       ${checkUserEdit(doc)}
       </div>
@@ -114,16 +133,26 @@ const Feed = (props) => {
 
   const template = `
   ${Button({
-    type: 'button', title: 'Sair', class: 'primary-button signout-button', onClick: logout, disabled: 'enabled',
+    type: 'button',
+    title: 'Sair',
+    class: 'primary-button signout-button',
+    onClick: logout,
+    disabled: 'enabled',
   })}
     <section class="container">
       <section class="container margin-top-container">
       <div class='new-post'>
       ${textArea({
-    class: 'add-post', placeholder: 'O que você está ouvindo?', onKeyup: buttonActivate,
+    class: 'add-post',
+    placeholder: 'O que você está ouvindo?',
+    onKeyup: buttonActivate,
   })}
         ${Button({
-    type: 'button', title: 'Postar', class: 'primary-button post-btn', onClick: newPost, disabled: 'disabled',
+    type: 'button',
+    title: 'Postar',
+    class: 'primary-button post-btn',
+    onClick: newPost,
+    disabled: 'disabled',
   })}
       </div>
         <div class="posts"> ${postsTemplate} </div>
