@@ -90,14 +90,23 @@ body {
   width: 100%;
   margin-bottom: 3px;
 }
+.header{
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  background-color:#9c64a6;
+}
+.header-title{
+  justify-self: center;
 
+}
 .new-post {
   display: flex;
   flex-direction: column;
   width: 92vw;
   height: 135px;
   padding: 9px 3px;
-  background-color: #bfb2c1;
+  background-color: #e1bee7;
   border-radius: 6px;
 }
 
@@ -108,11 +117,12 @@ body {
   height: 32px;
   padding: 0;
   margin-right: 10px;
+  background-color: #9c64a6;
 }
 
 .post-btn:disabled {
-  background-color: #8080807d;
-  color: gray;
+  background-color: #9c64a67d;
+  color: #00000066;
   box-shadow: none;
 }
 
@@ -151,7 +161,7 @@ body {
   width: 17vw;
   height: 35px;
   padding: 0;
-  margin-left: 12px;
+
 }
 
 .container-post{
@@ -166,12 +176,14 @@ body {
 }
 
 .posted-name{
-  background-color: #bfb2c1;
+  background-color: #9c64a6;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 5px;
-  font-size: 13px;
+  font-size: 15px;
+  margin-bottom: 13px;
+  color: #ffffff;
   font-family: 'Hind', sans-serif;
 }
 
@@ -233,7 +245,7 @@ body {
 
 .delete-btn {
   margin-right: 3px;
-  background-color: #bfb2c1;
+  background-color:#9c64a6;
 }
 
 .delete-btn:hover {

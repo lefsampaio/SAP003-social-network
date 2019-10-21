@@ -86,12 +86,21 @@ const postTemplate = doc => `
       ${checkUserDelete(doc)}
       </p>
       <div class='text-button'>
-      <p class='text' data-docid=${doc.id}> ${doc.text}</p>
+      <p class='text' data-like=${doc.likes} data-docid=${doc.id}> ${doc.text}</p>
       <div class='buttons'>
+      ${udButton({
+        type: 'button',
+        class: 'like-btn minibtns edit-save-btns',
+        name: doc.user,
+        dataDocid: doc.id,
+        onClick: like,
+        title:'<i class="fas fa-heart"></i>',
+      })}${doc.likes} 
       ${checkUserEdit(doc)}
       </div>
       </div>
     </div>`;
+    
 
 const newPost = () => {
   const textArea = document.querySelector('.add-post');
@@ -99,6 +108,7 @@ const newPost = () => {
     name: app.auth.currentUser.displayName,
     user: app.auth.currentUser.uid,
     text: textArea.value,
+    likes: 0,
     timestamp: new Date().getTime(),
     date: new Date().toLocaleString('pt-BR').slice(0, 16),
   };
@@ -125,6 +135,18 @@ const buttonActivate = (e) => {
   }
 };
 
+const like = (heart) => {
+  const data = heart.parentElement.parentElement.previousElementSibling.dataset;
+      let newlike = Number(data.like)+1;
+      app.db.collection('posts').doc(data.docid)
+        .update({
+          likes: newlike,
+        })}
+  
+  
+
+
+
 const Feed = (props) => {
   let postsTemplate = '';
   props.posts.forEach((post) => {
@@ -136,13 +158,14 @@ const Feed = (props) => {
   });
 
   const template = `
+  <header class='header'> <span class='header-title'> MusicalSpace </span>
   ${Button({
     type: 'button',
     title: 'Sair',
     class: 'primary-button signout-button',
     onClick: logout,
     disabled: 'enabled',
-  })}
+  })}</header>
     <section class="container screen-margin-bottom">
       <section class="container margin-top-container">
       <div class='new-post'>
