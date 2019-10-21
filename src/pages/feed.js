@@ -158,13 +158,14 @@ const Feed = (props) => {
   });
 
   const template = `
+  <header class='header'> <span class='header-title'> MusicalSpace </span>
   ${Button({
     type: 'button',
     title: 'Sair',
     class: 'primary-button signout-button',
     onClick: logout,
     disabled: 'enabled',
-  })}
+  })}</header>
     <section class="container screen-margin-bottom">
       <section class="container margin-top-container">
       <div class='new-post'>
