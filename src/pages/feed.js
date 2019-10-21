@@ -90,11 +90,11 @@ const postTemplate = doc => `
       <div class='buttons'>
       ${udButton({
         type: 'button',
-        class: 'like-btn',
+        class: 'like-btn minibtns edit-save-btns',
         name: doc.user,
         dataDocid: doc.id,
         onClick: like,
-        title: '<3',
+        title:'<i class="fas fa-heart"></i>',
       })}${doc.likes} 
       ${checkUserEdit(doc)}
       </div>
@@ -136,16 +136,15 @@ const buttonActivate = (e) => {
 };
 
 const like = (heart) => {
-  const hasLiked = false;
-  const data = heart.parentElement.previousElementSibling.dataset;
-  if(!hasLiked){
+  const data = heart.parentElement.parentElement.previousElementSibling.dataset;
       let newlike = Number(data.like)+1;
       app.db.collection('posts').doc(data.docid)
         .update({
           likes: newlike,
         })}
   
-}
+  
+
 
 
 const Feed = (props) => {
