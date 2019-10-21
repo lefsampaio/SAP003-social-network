@@ -20,15 +20,15 @@ const deletePost = (target) => {
 
 
 const makePostEditable = (parentOfIcon) => {
-  parentOfIcon.style.display = 'none';
-  parentOfIcon.previousElementSibling.style.display = 'inline';
+  parentOfIcon.className = 'edit-btn minibtns edit-save-btns hide';
+  parentOfIcon.previousElementSibling.className = 'save-btn minibtns edit-save-btns show';
   parentOfIcon.parentElement.previousElementSibling.contentEditable = true;
   parentOfIcon.parentElement.previousElementSibling.className += ' editable-text';
 };
 
 const saveEditPost = (parentOfIcon) => {
-  parentOfIcon.style.display = 'none';
-  parentOfIcon.nextElementSibling.style.display = 'inline';
+  parentOfIcon.className = 'save-btn minibtns edit-save-btns hide';
+  parentOfIcon.nextElementSibling.className = 'edit-btn minibtns edit-save-btns show';
   const pText = parentOfIcon.parentElement.previousElementSibling;
   const id = parentOfIcon.dataset.docid;
   const db = firebase.firestore();
