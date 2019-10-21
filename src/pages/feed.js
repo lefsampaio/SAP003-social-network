@@ -86,16 +86,16 @@ const postTemplate = doc => `
       ${checkUserDelete(doc)}
       </p>
       <div class='text-button'>
-      <p class='text' data-docid=${doc.id}> ${doc.text}</p>
+      <p class='text' data-like=${doc.likes} data-docid=${doc.id}> ${doc.text}</p>
       <div class='buttons'>
       ${udButton({
         type: 'button',
-        class: 'like-btn minibtns',
+        class: 'like-btn',
         name: doc.user,
         dataDocid: doc.id,
         onClick: like,
         title: '<3',
-      })};
+      })}${doc.likes} 
       ${checkUserEdit(doc)}
       </div>
       </div>
@@ -135,18 +135,16 @@ const buttonActivate = (e) => {
   }
 };
 
-const like = (likeHeart) => {
-  app.db.collection('posts').doc(id).get()
-    .then((doc) => {
-      let newlike = Number(doc.likes)+1;
-      console.log(newlike)
-      app.db.collection('posts').doc(id)
+const like = (heart) => {
+  const hasLiked = false;
+  const data = heart.parentElement.previousElementSibling.dataset;
+  if(!hasLiked){
+      let newlike = Number(data.like)+1;
+      app.db.collection('posts').doc(data.docid)
         .update({
           likes: newlike,
-        })
-    }).then(() => {
-      app.postTemplate()
-    })
+        })}
+  
 }
 
 

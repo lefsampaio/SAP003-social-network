@@ -11,8 +11,7 @@ const authCheck = () => {
 
       firebase.firestore().collection('posts')
         .orderBy('timestamp', 'desc')
-        .get()
-        .then((querySnapshot) => {
+        .onSnapshot((querySnapshot) => {
           main.innerHTML = Feed({ posts: querySnapshot });
         });
     } else {
