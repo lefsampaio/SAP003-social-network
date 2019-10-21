@@ -180,14 +180,12 @@ body {
   width: 70vw;
   font-family: 'Hind', sans-serif;
   background-color:  #e1bee7;
+  word-wrap: break-word;
 }
 
 .editable-text {
   background-color: whitesmoke;
   padding: 3px 3px;
-  width: 70vw;
-  height: auto;
-  font-family: 'Hind', sans-serif;
 }
 
 .text-button {
@@ -209,12 +207,41 @@ body {
   font-size: 17px;
 }
 
-.minibtns:hover {
+/* .minibtns:hover {
   background-color: #af8eb5;
+} */
+
+.edit-save-btns {
+  background-color: #e1bee7;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: inline;
+}
+
+.save-btn:hover {
+  color: green;
+}
+
+.edit-btn:hover {
+  color: #cfcf57;
 }
 
 .delete-btn {
   margin-right: 3px;
+  background-color: #bfb2c1;
+}
+
+.delete-btn:hover {
+  color: #d30505;
+}
+
+.screen-margin-bottom {
+  margin-bottom: 10px;
 }
 
 @media (min-width: 900px){
