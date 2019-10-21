@@ -36,11 +36,11 @@ const checkUserEdit = (doc) => {
   if (user === doc.user) {
     return `
     ${udButton({
-    type: 'button', class: 'save-btn minibtns', name: doc.user, id: doc.id, onClick: saveEditPost, title: '️️️️️️<i class="fas fa-check"></i>',
-  })}
+      type: 'button', class: 'save-btn minibtns', name: doc.user, id: doc.id, onClick: saveEditPost, title: '️️️️️️<i class="fas fa-check"></i>',
+    })}
       ${udButton({
-    type: 'button', class: 'edit-btn minibtns', name: doc.user, id: doc.id, onClick: makePostEditable, title: '<i class="fas fa-pencil-alt"></i>',
-  })}
+      type: 'button', class: 'edit-btn minibtns', name: doc.user, id: doc.id, onClick: makePostEditable, title: '<i class="fas fa-pencil-alt"></i>',
+    })}
     `;
   }
   return '';
@@ -51,8 +51,8 @@ const checkUserDelete = (doc) => {
   if (user === doc.user) {
     return `
   ${udButton({
-    type: 'button', class: 'delete-btn minibtns', name: doc.user, id: doc.id, onClick: deletePost, title: 'X',
-  })}`;
+      type: 'button', class: 'delete-btn minibtns', name: doc.user, id: doc.id, onClick: deletePost, title: 'X',
+    })}`;
   }
   return '';
 };
@@ -64,11 +64,13 @@ const postTemplate = doc => `
       </p>
       <div class='text-button'>
       <p class='text ${doc.id}'> ${doc.text}</p>
-      <div class='buttons'>
+      <div class='buttons'>  
+      ${udButton({ type: 'button', class: 'btn-like', name: doc.user, id: doc.id, title: '❤️', onClick: like })}${doc.likes}   
       ${checkUserEdit(doc)}
       </div>
       </div>
     </div>`;
+    
 
 const newPost = () => {
   const textArea = document.querySelector('.add-post');
@@ -76,6 +78,7 @@ const newPost = () => {
     name: app.auth.currentUser.displayName,
     user: app.auth.currentUser.uid,
     text: textArea.value,
+    likes: 0,
     timestamp: new Date().getTime(),
     date: new Date().toLocaleString('pt-BR').slice(0, 16),
   };
@@ -101,6 +104,21 @@ const buttonActivate = (e) => {
     postBtn.disabled = true;
   }
 };
+
+const like = () => {
+  app.db.collection('posts').doc(id).get()
+    .then((doc) => {
+      let newlike = Number(doc.likes)+1;
+      console.log(newlike)
+      app.db.collection('posts').doc(id)
+        .update({
+          likes: newlike,
+        })
+    }).then(() => {
+      app.postTemplate()
+    })
+}
+
 
 const Feed = (props) => {
   let postsTemplate = '';
