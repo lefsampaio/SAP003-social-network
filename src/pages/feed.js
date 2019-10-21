@@ -9,28 +9,28 @@ const logout = () => {
   });
 };
 
-const deletePost = (target) => {
+const deletePost = (deleteButton) => {
   const confirmDelete = confirm('Deseja mesmo deletar?');
   if (confirmDelete) {
-    app.db.collection('posts').doc(target.dataset.docid).delete().then(() => {
-      target.parentElement.parentElement.remove();
+    app.db.collection('posts').doc(deleteButton.dataset.docid).delete().then(() => {
+      deleteButton.parentElement.parentElement.remove();
     });
   }
 };
 
 
-const makePostEditable = (parentOfIcon) => {
-  parentOfIcon.className = 'edit-btn minibtns edit-save-btns hide';
-  parentOfIcon.previousElementSibling.className = 'save-btn minibtns edit-save-btns show';
-  parentOfIcon.parentElement.previousElementSibling.contentEditable = true;
-  parentOfIcon.parentElement.previousElementSibling.className += ' editable-text';
+const makePostEditable = (editButton) => {
+  editButton.className = 'edit-btn minibtns edit-save-btns hide';
+  editButton.previousElementSibling.className = 'save-btn minibtns edit-save-btns show';
+  editButton.parentElement.previousElementSibling.contentEditable = true;
+  editButton.parentElement.previousElementSibling.className += ' editable-text';
 };
 
-const saveEditPost = (parentOfIcon) => {
-  parentOfIcon.className = 'save-btn minibtns edit-save-btns hide';
-  parentOfIcon.nextElementSibling.className = 'edit-btn minibtns edit-save-btns show';
-  const pText = parentOfIcon.parentElement.previousElementSibling;
-  const id = parentOfIcon.dataset.docid;
+const saveEditPost = (saveButton) => {
+  saveButton.className = 'save-btn minibtns edit-save-btns hide';
+  saveButton.nextElementSibling.className = 'edit-btn minibtns edit-save-btns show';
+  const pText = saveButton.parentElement.previousElementSibling;
+  const id = saveButton.dataset.docid;
   const db = firebase.firestore();
   pText.contentEditable = false;
   pText.className = 'text';
