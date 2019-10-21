@@ -180,6 +180,7 @@ body {
   width: 70vw;
   font-family: 'Hind', sans-serif;
   background-color:  #e1bee7;
+  word-wrap: break-word;
 }
 
 .editable-text {
@@ -214,8 +215,12 @@ body {
   background-color: #e1bee7;
 }
 
-.save-btn {
+.hide {
   display: none;
+}
+
+.show {
+  display: inline;
 }
 
 .save-btn:hover {

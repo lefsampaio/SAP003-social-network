@@ -8,28 +8,28 @@ const logout = () => {
   });
 };
 
-const deletePost = (target) => {
+const deletePost = (deleteButton) => {
   const confirmDelete = confirm('Deseja mesmo deletar?');
   if (confirmDelete) {
-    app.db.collection('posts').doc(target.dataset.docid).delete().then(() => {
-      target.parentElement.parentElement.remove();
+    app.db.collection('posts').doc(deleteButton.dataset.docid).delete().then(() => {
+      deleteButton.parentElement.parentElement.remove();
     });
   }
 };
 
 
-const makePostEditable = (target) => {
-  target.parentElement.style.display = 'none';
-  target.parentElement.previousElementSibling.style.display = 'inline';
-  target.parentElement.parentElement.previousElementSibling.contentEditable = true;
-  target.parentElement.parentElement.previousElementSibling.className += ' editable-text';
+const makePostEditable = (pencilIcon) => {
+  pencilIcon.parentElement.className = 'edit-btn minibtns edit-save-btns hide';
+  pencilIcon.parentElement.previousElementSibling.className = 'save-btn minibtns edit-save-btns show';
+  pencilIcon.parentElement.parentElement.previousElementSibling.contentEditable = true;
+  pencilIcon.parentElement.parentElement.previousElementSibling.className += ' editable-text';
 };
 
-const saveEditPost = (target) => {
-  target.parentElement.style.display = 'none';
-  target.parentElement.nextElementSibling.style.display = 'inline';
-  const pText = target.parentElement.parentElement.previousElementSibling;
-  const id = target.parentElement.dataset.docid;
+const saveEditPost = (checkIcon) => {
+  checkIcon.parentElement.className = 'save-btn minibtns edit-save-btns hide';
+  checkIcon.parentElement.nextElementSibling.className = 'edit-btn minibtns edit-save-btns show';
+  const pText = checkIcon.parentElement.parentElement.previousElementSibling;
+  const id = checkIcon.parentElement.dataset.docid;
   const db = firebase.firestore();
   pText.contentEditable = false;
   pText.className = 'text';
@@ -45,7 +45,7 @@ const checkUserEdit = (doc) => {
     return `
     ${udButton({
     type: 'button',
-    class: 'save-btn minibtns edit-save-btns',
+    class: 'save-btn minibtns edit-save-btns hide',
     name: doc.user,
     dataDocid: doc.id,
     onClick: saveEditPost,
