@@ -8,27 +8,35 @@ const logout = () => {
   });
 };
 
-const deletePost = () => {
+const deletePost = (deleteButton) => {
   const confirmDelete = confirm('Deseja mesmo deletar?');
   if (confirmDelete) {
-    app.db.collection('posts').doc(id).delete().then(() => {
-      document.getElementById(id).parentElement.parentElement.remove();
+    app.db.collection('posts').doc(deleteButton.dataset.docid).delete().then(() => {
+      deleteButton.parentElement.parentElement.remove();
     });
   }
 };
 
 
-const makePostEditable = () => {
-  document.getElementsByClassName(id)[0].firstChild.parentElement.contentEditable = true;
-  document.getElementsByClassName(id)[0].firstChild.parentElement.className = `editable-text ${id}`;
+const makePostEditable = (pencilIcon) => {
+  pencilIcon.parentElement.className = 'edit-btn minibtns edit-save-btns hide';
+  pencilIcon.parentElement.previousElementSibling.className = 'save-btn minibtns edit-save-btns show';
+  pencilIcon.parentElement.parentElement.previousElementSibling.contentEditable = true;
+  pencilIcon.parentElement.parentElement.previousElementSibling.className += ' editable-text';
 };
 
-const saveEditPost = () => {
-  const pText = document.getElementsByClassName(id)[0].firstChild.parentElement;
-  pText.contentEditable = false;
-  pText.className = `text ${id}`;
+const saveEditPost = (checkIcon) => {
+  checkIcon.parentElement.className = 'save-btn minibtns edit-save-btns hide';
+  checkIcon.parentElement.nextElementSibling.className = 'edit-btn minibtns edit-save-btns show';
+  const pText = checkIcon.parentElement.parentElement.previousElementSibling;
+  const id = checkIcon.parentElement.dataset.docid;
   const db = firebase.firestore();
-  db.collection('posts').doc(id).update({ text: pText.textContent, date: new Date().toLocaleString('pt-BR').slice(0, 16) });
+  pText.contentEditable = false;
+  pText.className = 'text';
+  db.collection('posts').doc(id).update({
+    text: pText.textContent,
+    date: new Date().toLocaleString('pt-BR').slice(0, 16),
+  });
 };
 
 const checkUserEdit = (doc) => {
@@ -36,11 +44,21 @@ const checkUserEdit = (doc) => {
   if (user === doc.user) {
     return `
     ${udButton({
-      type: 'button', class: 'save-btn minibtns', name: doc.user, id: doc.id, onClick: saveEditPost, title: '️️️️️️<i class="fas fa-check"></i>',
-    })}
+    type: 'button',
+    class: 'save-btn minibtns edit-save-btns hide',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: saveEditPost,
+    title: '️️️️️️<i class="fas fa-check"></i>',
+  })}
       ${udButton({
-      type: 'button', class: 'edit-btn minibtns', name: doc.user, id: doc.id, onClick: makePostEditable, title: '<i class="fas fa-pencil-alt"></i>',
-    })}
+    type: 'button',
+    class: 'edit-btn minibtns edit-save-btns',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: makePostEditable,
+    title: '<i class="fas fa-pencil-alt"></i>',
+  })}
     `;
   }
   return '';
@@ -51,8 +69,13 @@ const checkUserDelete = (doc) => {
   if (user === doc.user) {
     return `
   ${udButton({
-      type: 'button', class: 'delete-btn minibtns', name: doc.user, id: doc.id, onClick: deletePost, title: 'X',
-    })}`;
+    type: 'button',
+    class: 'delete-btn minibtns',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: deletePost,
+    title: 'X',
+  })}`;
   }
   return '';
 };
@@ -63,9 +86,16 @@ const postTemplate = doc => `
       ${checkUserDelete(doc)}
       </p>
       <div class='text-button'>
-      <p class='text ${doc.id}'> ${doc.text}</p>
-      <div class='buttons'>  
-      ${udButton({ type: 'button', class: 'btn-like', name: doc.user, id: doc.id, title: '❤️', onClick: like })}${doc.likes}   
+      <p class='text' data-docid=${doc.id}> ${doc.text}</p>
+      <div class='buttons'>
+      ${udButton({
+        type: 'button',
+        class: 'like-btn minibtns',
+        name: doc.user,
+        dataDocid: doc.id,
+        onClick: like,
+        title: '<3',
+      })};
       ${checkUserEdit(doc)}
       </div>
       </div>
@@ -105,7 +135,7 @@ const buttonActivate = (e) => {
   }
 };
 
-const like = () => {
+const like = (likeHeart) => {
   app.db.collection('posts').doc(id).get()
     .then((doc) => {
       let newlike = Number(doc.likes)+1;
@@ -132,16 +162,26 @@ const Feed = (props) => {
 
   const template = `
   ${Button({
-    type: 'button', title: 'Sair', class: 'primary-button signout-button', onClick: logout, disabled: 'enabled',
+    type: 'button',
+    title: 'Sair',
+    class: 'primary-button signout-button',
+    onClick: logout,
+    disabled: 'enabled',
   })}
-    <section class="container">
+    <section class="container screen-margin-bottom">
       <section class="container margin-top-container">
       <div class='new-post'>
       ${textArea({
-    class: 'add-post', placeholder: 'O que você está ouvindo?', onKeyup: buttonActivate,
+    class: 'add-post',
+    placeholder: 'O que você está ouvindo?',
+    onKeyup: buttonActivate,
   })}
         ${Button({
-    type: 'button', title: 'Postar', class: 'primary-button post-btn', onClick: newPost, disabled: 'disabled',
+    type: 'button',
+    title: 'Postar',
+    class: 'primary-button post-btn',
+    onClick: newPost,
+    disabled: 'disabled',
   })}
       </div>
         <div class="posts"> ${postsTemplate} </div>
