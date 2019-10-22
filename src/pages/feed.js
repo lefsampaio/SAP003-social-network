@@ -84,6 +84,12 @@ const checkUserDelete = (doc) => {
 
 const addComment = (commentIcon) => {
   commentIcon.parentElement.nextElementSibling.className = 'add-comment show';
+  commentIcon.nextElementSibling.className = 'save-btn minibtns hide fas fa-check show';
+};
+
+const newComment = (checkIcon) => {
+  const newComment = document.querySelector('.add-comment').value;
+  app.db.collection(`posts/${checkIcon.dataset.docid}/comments`).add({ text: newComment, name: app.auth.currentUser.displayName });
 };
 
 const postTemplate = doc => `
@@ -92,7 +98,7 @@ const postTemplate = doc => `
       ${checkUserDelete(doc)}
       </p>
       <div class='text-button'>
-        <p class='text' data-like=${doc.likes} data-docid=${doc.id}> ${doc.text}</p>
+        <p class='text' data-like=${doc.likes} data-docid=${doc.id} data-comments=${doc.comments}> ${doc.text}</p>
         <div class='buttons'>
         ${checkUserEdit(doc)}
         </div>
@@ -105,13 +111,19 @@ const postTemplate = doc => `
     dataDocid: doc.id,
     onClick: addComment,
   })}
+    ${actionIcon({
+    class: 'save-btn minibtns hide fas fa-check',
+    name: doc.name,
+    dataDocid: doc.id,
+    onClick: newComment,
+  })}
       ${actionIcon({
     class: 'like-btn minibtns fas fa-heart',
     name: doc.user,
     dataDocid: doc.id,
     onClick: like,
   })}
-  <span class="likes">${doc.likes}</span>
+      <span class="likes">${doc.likes}</span>
       </div>
       ${textArea({
     class: 'add-comment hide',
@@ -154,13 +166,18 @@ const buttonActivate = (e) => {
 };
 
 const Feed = (props) => {
-  let postsTemplate = '';
+  console.log('entrou', props.posts);
+
+  const postsTemplate = '';
+  // const teste = props.posts.map(post => post);
+  // console.log('TCL: Feed -> teste', teste);
   props.posts.forEach((post) => {
-    const docPost = {
-      ...post.data(),
-      id: post.id,
-    };
-    postsTemplate += postTemplate(docPost);
+    console.log(post);
+    // const docPost = {
+    //   ...post.data(),
+    //   id: post.id,
+    // };
+    // postsTemplate += postTemplate(docPost);
   });
 
   const template = `

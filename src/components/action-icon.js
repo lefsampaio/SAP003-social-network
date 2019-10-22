@@ -1,6 +1,6 @@
 const actionIcon = (props) => {
   const template = `
-        <i class="${props.class}" name=${props.name} data-docid=${props.dataDocid}
+        <i class="${props.class}" name="${props.name}" data-docid=${props.dataDocid}
         onclick="a.handleClick(event,${props.onClick})"></i>`;
 
   return template;
