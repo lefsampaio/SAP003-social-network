@@ -104,6 +104,7 @@ const postTemplate = doc => `
 
 const newPost = () => {
   const textArea = document.querySelector('.add-post');
+  const privacyOption= document.querySelector('.privacyOption')
   const post = {
     name: app.auth.currentUser.displayName,
     user: app.auth.currentUser.uid,
@@ -111,14 +112,13 @@ const newPost = () => {
     likes: 0,
     timestamp: new Date().getTime(),
     date: new Date().toLocaleString('pt-BR').slice(0, 16),
+    privacy: privacyOption.value
   };
   app.db.collection('posts').add(post).then((docRef) => {
-    const docPost = {
+    docRef = {
       ...post,
       id: docRef.id,
     };
-
-    document.querySelector('.posts').insertAdjacentHTML('afterbegin', app.postTemplate(docPost));
 
     textArea.value = '';
     document.querySelector('.post-btn').disabled = true;
@@ -158,22 +158,25 @@ const Feed = (props) => {
   });
 
   const template = `
-  <header class='header'> <span class='header-title'> MusicalSpace </span>
-  ${Button({
-    type: 'button',
-    title: 'Sair',
-    class: 'primary-button signout-button',
-    onClick: logout,
-    disabled: 'enabled',
-  })}</header>
+    <header class='header'> <span class='header-title'> MusicalSpace </span>
+    ${Button({
+      type: 'button',
+      title: 'Sair',
+      class: 'primary-button signout-button',
+      onClick: logout,
+      disabled: 'enabled',
+    })}
+    </header>
     <section class="container screen-margin-bottom">
       <section class="container margin-top-container">
       <div class='new-post'>
+
       ${textArea({
     class: 'add-post',
     placeholder: 'O que você está ouvindo?',
     onKeyup: buttonActivate,
   })}
+
         ${Button({
     type: 'button',
     title: 'Postar',
@@ -181,6 +184,12 @@ const Feed = (props) => {
     onClick: newPost,
     disabled: 'disabled',
   })}
+
+      <select class="privacyOption">
+        <option class="public" value="true" selected> Público </option>
+        <option class="private" value="false"> Privado </option>
+      </select>
+
       </div>
         <div class="posts"> ${postsTemplate} </div>
       </section>

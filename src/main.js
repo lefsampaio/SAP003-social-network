@@ -9,7 +9,9 @@ const authCheck = () => {
     if (user) {
       location.hash = '#feed';
 
-      firebase.firestore().collection('posts')
+      const db= firebase.firestore().collection('posts')
+      db.where('privacy', '==', 'true')
+      // firebase.firestore().collection('posts')
         .orderBy('timestamp', 'desc')
         .onSnapshot((querySnapshot) => {
           main.innerHTML = Feed({ posts: querySnapshot });

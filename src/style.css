@@ -110,6 +110,10 @@ body {
   border-radius: 6px;
 }
 
+.privacyOption{
+  width:90px;
+}
+
 .post-btn {
   align-self: flex-end;
   margin-top: 4px;
