@@ -52,17 +52,17 @@ const checkUserEdit = (doc) => {
   if (user === doc.user) {
     return `
     ${actionIcon({
-    class: 'save-btn minibtns hide fas fa-check',
-    name: doc.user,
-    dataDocid: doc.id,
-    onClick: saveEditPost,
-  })}
+      class: 'save-btn minibtns hide fas fa-check',
+      name: doc.user,
+      dataDocid: doc.id,
+      onClick: saveEditPost,
+    })}
       ${actionIcon({
-    class: 'edit-btn minibtns fas fa-pencil-alt',
-    name: doc.user,
-    dataDocid: doc.id,
-    onClick: makePostEditable,
-  })}
+      class: 'edit-btn minibtns fas fa-pencil-alt',
+      name: doc.user,
+      dataDocid: doc.id,
+      onClick: makePostEditable,
+    })}
     `;
   }
   return '';
@@ -73,11 +73,11 @@ const checkUserDelete = (doc) => {
   if (user === doc.user) {
     return `
   ${actionIcon({
-    class: 'delete-btn minibtns fas fa-times',
-    name: doc.user,
-    dataDocid: doc.id,
-    onClick: deletePost,
-  })}`;
+      class: 'delete-btn minibtns fas fa-times',
+      name: doc.user,
+      dataDocid: doc.id,
+      onClick: deletePost,
+    })}`;
   }
   return '';
 };
@@ -100,24 +100,24 @@ const postTemplate = doc => `
       <div class="comments">
       <div>
       ${actionIcon({
-    class: 'comment-btn minibtns fab far fa-paper-plane',
-    name: doc.user,
-    dataDocid: doc.id,
-    onClick: addComment,
-  })}
+  class: 'comment-btn minibtns fab far fa-paper-plane',
+  name: doc.user,
+  dataDocid: doc.id,
+  onClick: addComment,
+})}
       ${actionIcon({
-    class: 'like-btn minibtns fas fa-heart',
-    name: doc.user,
-    dataDocid: doc.id,
-    onClick: like,
-  })}
+  class: 'like-btn minibtns fas fa-heart',
+  name: doc.user,
+  dataDocid: doc.id,
+  onClick: like,
+})}
   <span class="likes">${doc.likes}</span>
       </div>
       ${textArea({
-    class: 'add-comment hide',
-    placeholder: 'Comente...',
-    // onKeyup:
-  })}
+  class: 'add-comment hide',
+  placeholder: 'Comente...',
+  // onKeyup:
+})}
       </div>
     </div>`;
 
@@ -173,6 +173,7 @@ const Feed = (props) => {
     disabled: 'enabled',
   })}</header>
     <section class="container screen-margin-bottom">
+    ${Profile()}
       <section class="container margin-top-container">
       <div class='new-post'>
       ${textArea({
@@ -195,6 +196,71 @@ const Feed = (props) => {
   return template;
 };
 
+const Profile = () => {
+  const username = app.auth.currentUser
+  const user = app.auth.currentUser.uid;
+  const name = username.displayName;
+
+  const templateProfile =
+    `<div class='profile'>
+        <div class='user-info'>
+          <p class='username'>${name}</p>
+          ${actionIcon({
+      class: 'edit-btn minibtns fas fa-pencil-alt',
+      name: user.user,
+      dataDocid: user.id,
+      onClick: editProfile,
+    })}      
+          ${actionIcon({
+      class: 'save-btn minibtns hide fas fa-check',
+      name: user.user,
+      dataDocid: user.id,
+      onClick: updateProfile,
+    })}   
+      
+        </div>
+      </div> 
+      `
+  return templateProfile
+}
+const editProfile = (pencilIcon) => {
+  pencilIcon.className = 'edit-btn minibtns hide';
+  pencilIcon.nextElementSibling.className = 'save-btn minibtns show fas fa-check';
+  pencilIcon.previousElementSibling.contentEditable = true;
+  pencilIcon.previousElementSibling.className += 'editable-text';
+};
+
+const updateProfile = (checkIcon) => {
+
+  checkIcon.className = 'save-btn minibtns hide fas fa-check';
+  checkIcon.className = 'edit-btn minibtns show';
+  const pName = checkIcon.parentElement;
+  // const id = checkIcon.dataset.docid;
+  pName.contentEditable = false;
+  pName.className = 'username';
+
+  const user = app.auth.currentUser;
+  user.updateProfile({
+    displayName: pName.textContent,
+    name: pName.textContent
+  })
+
+  app.db.collection('posts').where('user', '==', user.uid)
+    .get()
+    .then(function (querySnapshot) {
+      querySnapshot.forEach((doc) => {
+
+        app.db.collection('posts').doc(doc.id).update({ name: pName.textContent });
+      });
+    })
+  //  let paloma = app.db.collection('posts').doc(user.uid);
+
+  //     paloma.update({
+  //       name: pName.textContent,
+  //     })
+
+};
+
 window.app = {
   postTemplate,
   db: firebase.firestore(),
@@ -202,3 +268,4 @@ window.app = {
 };
 
 export default Feed;
+
