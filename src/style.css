@@ -95,6 +95,7 @@ body {
   display: flex;
   align-items: center;
   background-color:#9c64a6;
+  padding: 10px 15px;
 }
 .header-title{
   justify-self: center;
@@ -158,7 +159,8 @@ body {
 }
 
 .signout-button {
-  width: 17vw;
+  width: 57px;
+  margin-top: 0;
   height: 35px;
   padding: 0;
 
@@ -180,7 +182,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px;
+  padding: 3px 8px;
   font-size: 15px;
   margin-bottom: 13px;
   color: #ffffff;
@@ -205,26 +207,21 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   margin-top: -13px;
   padding: 3px 8px;
-  border-radius: 0 0 6px 6px;
 }
 
 .minibtns {
   border: none;
-  height: 23px;
-  width: 24px;
   padding: 0;
+  color: black;
   font-weight: bold;
   font-size: 17px;
 }
 
-/* .minibtns:hover {
-  background-color: #af8eb5;
-} */
-
-.edit-save-btns {
-  background-color: #e1bee7;
+.minibtns:hover {
+  cursor: pointer;
 }
 
 .hide {
@@ -240,16 +237,42 @@ body {
 }
 
 .edit-btn:hover {
-  color: #cfcf57;
-}
-
-.delete-btn {
-  margin-right: 3px;
-  background-color:#9c64a6;
+  color: #454ee7;
 }
 
 .delete-btn:hover {
   color: #d30505;
+}
+
+.comment-btn:hover {
+  color: #2ad1a7;
+}
+
+.like-btn:hover {
+  color: palevioletred;
+}
+
+.comments {
+  background-color: #a342a3;
+  height: max-content;
+  padding: 3px 8px;
+  border-radius: 0 0 6px 6px;
+  display: flex;
+  flex-direction: column;
+}
+
+.likes {
+  font-family: 'Hind', sans-serif;
+}
+
+.add-comment {
+  resize: none;
+  width: 99%;
+  height: 45%;
+  border-radius: 8px;
+  border: 1px solid grey;
+  font-family: 'Hind', sans-serif;
+  margin-bottom: -20px;
 }
 
 .screen-margin-bottom {
