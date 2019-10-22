@@ -1,6 +1,6 @@
 import Button from '../components/button.js';
-import udButton from '../components/udButton.js';
 import textArea from '../components/text-area.js';
+import actionIcon from '../components/action-icon.js';
 
 const logout = () => {
   app.auth.signOut().catch((error) => {
@@ -19,17 +19,17 @@ const deletePost = (deleteButton) => {
 
 
 const makePostEditable = (pencilIcon) => {
-  pencilIcon.parentElement.className = 'edit-btn minibtns edit-save-btns hide';
-  pencilIcon.parentElement.previousElementSibling.className = 'save-btn minibtns edit-save-btns show';
-  pencilIcon.parentElement.parentElement.previousElementSibling.contentEditable = true;
-  pencilIcon.parentElement.parentElement.previousElementSibling.className += ' editable-text';
+  pencilIcon.className = 'edit-btn minibtns hide';
+  pencilIcon.previousElementSibling.className = 'save-btn minibtns show fas fa-check';
+  pencilIcon.parentElement.previousElementSibling.contentEditable = true;
+  pencilIcon.parentElement.previousElementSibling.className += ' editable-text';
 };
 
 const saveEditPost = (checkIcon) => {
-  checkIcon.parentElement.className = 'save-btn minibtns edit-save-btns hide';
-  checkIcon.parentElement.nextElementSibling.className = 'edit-btn minibtns edit-save-btns show';
-  const pText = checkIcon.parentElement.parentElement.previousElementSibling;
-  const id = checkIcon.parentElement.dataset.docid;
+  checkIcon.className = 'save-btn minibtns hide fas fa-check';
+  checkIcon.nextElementSibling.className = 'edit-btn minibtns show';
+  const pText = checkIcon.parentElement.previousElementSibling;
+  const id = checkIcon.dataset.docid;
   const db = firebase.firestore();
   pText.contentEditable = false;
   pText.className = 'text';
@@ -39,25 +39,29 @@ const saveEditPost = (checkIcon) => {
   });
 };
 
+const like = (heart) => {
+  const newlike = Number(heart.nextElementSibling.textContent) + 1;
+  app.db.collection('posts').doc(heart.dataset.docid)
+    .update({
+      likes: newlike,
+    });
+};
+
 const checkUserEdit = (doc) => {
   const user = app.auth.currentUser.uid;
   if (user === doc.user) {
     return `
-    ${udButton({
-    type: 'button',
-    class: 'save-btn minibtns edit-save-btns hide',
+    ${actionIcon({
+    class: 'save-btn minibtns hide fas fa-check',
     name: doc.user,
     dataDocid: doc.id,
     onClick: saveEditPost,
-    title: '️️️️️️<i class="fas fa-check"></i>',
   })}
-      ${udButton({
-    type: 'button',
-    class: 'edit-btn minibtns edit-save-btns',
+      ${actionIcon({
+    class: 'edit-btn minibtns fas fa-pencil-alt',
     name: doc.user,
     dataDocid: doc.id,
     onClick: makePostEditable,
-    title: '<i class="fas fa-pencil-alt"></i>',
   })}
     `;
   }
@@ -68,16 +72,18 @@ const checkUserDelete = (doc) => {
   const user = app.auth.currentUser.uid;
   if (user === doc.user) {
     return `
-  ${udButton({
-    type: 'button',
-    class: 'delete-btn minibtns',
+  ${actionIcon({
+    class: 'delete-btn minibtns fas fa-times',
     name: doc.user,
     dataDocid: doc.id,
     onClick: deletePost,
-    title: 'X',
   })}`;
   }
   return '';
+};
+
+const addComment = (commentIcon) => {
+  commentIcon.parentElement.nextElementSibling.className = 'add-comment show';
 };
 
 const postTemplate = doc => `
@@ -86,21 +92,35 @@ const postTemplate = doc => `
       ${checkUserDelete(doc)}
       </p>
       <div class='text-button'>
-      <p class='text' data-like=${doc.likes} data-docid=${doc.id}> ${doc.text}</p>
-      <div class='buttons'>
-      ${udButton({
-        type: 'button',
-        class: 'like-btn minibtns edit-save-btns',
-        name: doc.user,
-        dataDocid: doc.id,
-        onClick: like,
-        title:'<i class="fas fa-heart"></i>',
-      })}${doc.likes} 
-      ${checkUserEdit(doc)}
+        <p class='text' data-like=${doc.likes} data-docid=${doc.id}> ${doc.text}</p>
+        <div class='buttons'>
+        ${checkUserEdit(doc)}
+        </div>
       </div>
+      <div class="comments">
+      <div>
+      ${actionIcon({
+    class: 'comment-btn minibtns fab far fa-paper-plane',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: addComment,
+  })}
+      ${actionIcon({
+    class: 'like-btn minibtns fas fa-heart',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: like,
+  })}
+  <span class="likes">${doc.likes}</span>
+      </div>
+      ${textArea({
+    class: 'add-comment hide',
+    placeholder: 'Comente...',
+    // onKeyup:
+  })}
       </div>
     </div>`;
-    
+
 
 const newPost = () => {
   const textArea = document.querySelector('.add-post');
@@ -113,12 +133,10 @@ const newPost = () => {
     date: new Date().toLocaleString('pt-BR').slice(0, 16),
   };
   app.db.collection('posts').add(post).then((docRef) => {
-    const docPost = {
+    docRef = {
       ...post,
       id: docRef.id,
     };
-
-    document.querySelector('.posts').insertAdjacentHTML('afterbegin', app.postTemplate(docPost));
 
     textArea.value = '';
     document.querySelector('.post-btn').disabled = true;
@@ -134,18 +152,6 @@ const buttonActivate = (e) => {
     postBtn.disabled = true;
   }
 };
-
-const like = (heart) => {
-  const data = heart.parentElement.parentElement.previousElementSibling.dataset;
-      let newlike = Number(data.like)+1;
-      app.db.collection('posts').doc(data.docid)
-        .update({
-          likes: newlike,
-        })}
-  
-  
-
-
 
 const Feed = (props) => {
   let postsTemplate = '';
