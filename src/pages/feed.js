@@ -83,7 +83,7 @@ const checkUserDelete = (doc) => {
 };
 
 const addComment = (commentIcon) => {
-  commentIcon.parentElement.nextElementSibling.className = 'add-comment show';
+  commentIcon.parentElement.nextElementSibling.classList.toggle('hide');
   commentIcon.parentElement.nextElementSibling.nextElementSibling.className = 'save-btn minibtns show fas fa-check';
 };
 
