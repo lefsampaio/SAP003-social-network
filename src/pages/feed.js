@@ -84,39 +84,78 @@ const checkUserDelete = (doc) => {
 
 const addComment = (commentIcon) => {
   commentIcon.parentElement.nextElementSibling.className = 'add-comment show';
+  commentIcon.parentElement.nextElementSibling.nextElementSibling.className = 'save-btn minibtns show fas fa-check';
+};
+
+const saveComment = (saveCommentIcon) => {
+  const commentTextArea = saveCommentIcon.previousElementSibling;
+  const comment = commentTextArea.value;
+  const name = app.auth.currentUser.displayName;
+  const id = saveCommentIcon.dataset.docid;
+
+  app.db.collection('posts').doc(id).update({
+    comments: firebase.firestore.FieldValue.arrayUnion({ comment, name }),
+  });
+};
+
+const checkComments = (array) => {
+  if (array) {
+    const commentsTemplate = [];
+    array.forEach((obj) => {
+      commentsTemplate.push(`<p>
+      ${obj.name} comentou: ${obj.comment}
+    </p>
+  `);
+    });
+    return commentsTemplate.join('');
+  }
+  return '';
 };
 
 const postTemplate = doc => `
     <div class='posted container-post' data-id=${doc.id}> 
+
       <p class='posted posted-name'> Publicado por ${doc.name} | ${doc.date}
       ${checkUserDelete(doc)}
       </p>
+
       <div class='text-button'>
         <p class='text' data-like=${doc.likes} data-docid=${doc.id}> ${doc.text}</p>
         <div class='buttons'>
         ${checkUserEdit(doc)}
         </div>
       </div>
-      <div class="comments">
+
       <div>
-      ${actionIcon({
+      ${checkComments(doc.comments)}
+      </div>
+
+      <div class="comments">
+        <div>
+        ${actionIcon({
     class: 'comment-btn minibtns fab far fa-paper-plane',
     name: doc.user,
     dataDocid: doc.id,
     onClick: addComment,
   })}
-      ${actionIcon({
+        ${actionIcon({
     class: 'like-btn minibtns fas fa-heart',
     name: doc.user,
     dataDocid: doc.id,
     onClick: like,
   })}
-  <span class="likes">${doc.likes}</span>
-      </div>
+    <span class="likes">${doc.likes}</span>
+        </div>
       ${textArea({
     class: 'add-comment hide',
     placeholder: 'Comente...',
     // onKeyup:
+  })}
+  ${actionIcon({
+    class: 'save-btn minibtns hide fas fa-check',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: saveComment,
   })}
       </div>
     </div>`;
