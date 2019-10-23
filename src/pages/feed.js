@@ -17,7 +17,6 @@ const deletePost = (deleteButton) => {
   }
 };
 
-
 const makePostEditable = (pencilIcon) => {
   pencilIcon.className = 'edit-btn minibtns hide';
   pencilIcon.previousElementSibling.className = 'save-btn minibtns show fas fa-check';
@@ -86,6 +85,11 @@ const addComment = (commentIcon) => {
   commentIcon.parentElement.nextElementSibling.className = 'add-comment show';
 };
 
+const changeViewPost = () => {
+ 
+ console.log('vai carambinha')
+}
+
 const postTemplate = doc => `
     <div class='posted container-post' data-id=${doc.id}> 
       <p class='posted posted-name'> Publicado por ${doc.name} | ${doc.date}
@@ -132,13 +136,13 @@ const newPost = () => {
     likes: 0,
     timestamp: new Date().getTime(),
     date: new Date().toLocaleString('pt-BR').slice(0, 16),
-    privacy: privacyOption.value
+    private: privacyOption.value
   };
-  app.db.collection('posts').add(post).then((docRef) => {
-    docRef = {
-      ...post,
-      id: docRef.id,
-    };
+  app.db.collection('posts').add(post).then(() => {
+    // docRef = {
+    //   ...post,
+    //   id: docRef.id,
+    // };
 
     textArea.value = '';
     document.querySelector('.post-btn').disabled = true;
@@ -164,7 +168,8 @@ const Feed = (props) => {
     };
     postsTemplate += postTemplate(docPost);
   });
-
+  
+    
   const template = `
     <header class='header'> <span class='header-title'> MusicalSpace </span>
     ${Button({
@@ -193,12 +198,17 @@ const Feed = (props) => {
     disabled: 'disabled',
   })}
 
-      <select class="privacyOption">
-        <option class="public" value="true" selected> Público </option>
-        <option class="private" value="false"> Privado </option>
-      </select>
-
+        <select class="privacyOption">
+          <option class="public" value="false" selected> Público </option>
+          <option class="private" value="true"> Privado </option>
+        </select>
       </div>
+        <p> Visualizar post 
+          <select class="privacyOption" onchange="${changeViewPost}">
+            <option class="public" value="false" selected> Público </option>
+            <option class="private" value="true"> Privado </option>
+          </select>
+        </p>
         <div class="posts"> ${postsTemplate} </div>
       </section>
     </section>
@@ -213,3 +223,8 @@ window.app = {
 };
 
 export default Feed;
+
+
+// const currentUser= user.uid
+// firebase.firestore().collection('posts')
+//   .where('user', '==', currentUser)
