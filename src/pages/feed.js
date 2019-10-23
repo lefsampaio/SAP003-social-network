@@ -2,6 +2,7 @@ import Button from '../components/button.js';
 import textArea from '../components/text-area.js';
 import actionIcon from '../components/action-icon.js';
 
+
 const logout = () => {
   app.auth.signOut().catch((error) => {
     // console.log(error);
@@ -134,24 +135,24 @@ const postTemplate = doc => `
       <div class="comments" data-docid=${doc.id}>
         <div>
         ${actionIcon({
-    class: 'comment-btn minibtns fab far fa-paper-plane',
-    name: doc.user,
-    dataDocid: doc.id,
-    onClick: addComment,
-  })}
+  class: 'comment-btn minibtns fab far fa-paper-plane',
+  name: doc.user,
+  dataDocid: doc.id,
+  onClick: addComment,
+})}
         ${actionIcon({
-    class: 'like-btn minibtns fas fa-heart',
-    name: doc.user,
-    dataDocid: doc.id,
-    onClick: like,
-  })}
+  class: 'like-btn minibtns fas fa-heart',
+  name: doc.user,
+  dataDocid: doc.id,
+  onClick: like,
+})}
     <span class="likes">${doc.likes}</span>
         </div>
       ${textArea({
-    class: 'add-comment hide',
-    placeholder: 'Comente...',
-    onKeyup: saveComment,
-  })}
+  class: 'add-comment hide',
+  placeholder: 'Comente...',
+  onKeyup: saveComment,
+})}
 
       </div>
     </div>`;
@@ -159,11 +160,13 @@ const postTemplate = doc => `
 
 const newPost = () => {
   const textArea = document.querySelector('.add-post');
+  const photoURL = document.querySelector('.my-picture');
   const post = {
     name: app.auth.currentUser.displayName,
     user: app.auth.currentUser.uid,
     text: textArea.value,
     likes: 0,
+    photo:photoURL,
     timestamp: new Date().getTime(),
     date: new Date().toLocaleString('pt-BR').slice(0, 16),
   };
@@ -237,8 +240,17 @@ const Profile = () => {
   const name = username.displayName.trim();
 
   const templateProfile =
-    `<div class="profile">        
-          <p class="user-info">${name}</p>
+    `<div class="photo-profile">
+      <input type="file" id="myFile" class="my-picture" accept="image/png, image/jpeg"></input>
+      <img class= "photo-img" src=${username.photo ? username.photo : "../image/person.png"}/>
+      ${Button({
+        type: 'button',
+        title: '',
+        class: 'edit-btn minibtns fas fa-camera-retro',
+        onClick: updatePhoto,
+      })}       
+    <div class="profile">      
+          <h2 class="user-info">${name}</h2>
           ${actionIcon({
       class: 'edit-btn minibtns fas fa-pencil-alt',
       name: user.user,
@@ -252,7 +264,7 @@ const Profile = () => {
       onClick: updateProfile,
     })}   
       
-      
+    </div> 
       </div> 
       `
   return templateProfile
@@ -280,13 +292,30 @@ const updateProfile = (checkIcon) => {
 
   app.db.collection('posts').where('user', '==', user.uid)
     .get()
-    .then(function (querySnapshot) {
+    .then((querySnapshot)=> {
       querySnapshot.forEach((doc) => {
 
         app.db.collection('posts').doc(doc.id).update({ name: pName.textContent });
       });
     })
 };
+
+const updatePhoto = () => {
+  const photoProfile = document.querySelector('#myFile');
+  photoProfile.disabled = true;
+console.log(photoProfile.value)
+  const user = app.auth.currentUser;
+
+  user.updateProfile({
+    photo: photoProfile.value
+   
+  })
+ 
+      app.db.collection('users').doc(doc.ref).update({ 
+        photo: photoProfile.value });
+
+};
+
 
 window.app = {
   postTemplate,

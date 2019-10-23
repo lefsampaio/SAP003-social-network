@@ -101,6 +101,22 @@ body {
   justify-self: center;
 
 }
+.profile{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 50%;
+}
+.photo-profile{
+  flex-direction: row;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+}
+.photo-img{
+  width: 20%;
+}
 .new-post {
   display: flex;
   flex-direction: column;
