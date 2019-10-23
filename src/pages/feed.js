@@ -83,41 +83,76 @@ const checkUserDelete = (doc) => {
 };
 
 const addComment = (commentIcon) => {
-  commentIcon.parentElement.nextElementSibling.className = 'add-comment show';
+  commentIcon.parentElement.nextElementSibling.classList.toggle('hide');
+};
+
+const saveComment = (event) => {
+  if (event.keyCode === 13) {
+    const comment = event.target.value;
+    const name = app.auth.currentUser.displayName;
+    const id = event.target.parentElement.dataset.docid;
+
+    app.db.collection('posts').doc(id).update({
+      comments: firebase.firestore.FieldValue.arrayUnion({ comment, name }),
+    });
+  }
+};
+
+const checkComments = (comments) => {
+  if (comments) {
+    const commentsTemplate = [];
+    comments.forEach((obj) => {
+      commentsTemplate.push(`<p class="text comment-area">
+      ${obj.name} comentou<br>${obj.comment}
+    </p>
+  `);
+    });
+    return commentsTemplate.join('');
+  }
+  return '';
 };
 
 const postTemplate = doc => `
     <div class='posted container-post' data-id=${doc.id}> 
+
       <p class='posted posted-name'> Publicado por ${doc.name} | ${doc.date}
       ${checkUserDelete(doc)}
       </p>
+
       <div class='text-button'>
         <p class='text' data-like=${doc.likes} data-docid=${doc.id}> ${doc.text}</p>
         <div class='buttons'>
         ${checkUserEdit(doc)}
         </div>
       </div>
-      <div class="comments">
+
       <div>
-      ${actionIcon({
-  class: 'comment-btn minibtns fab far fa-paper-plane',
-  name: doc.user,
-  dataDocid: doc.id,
-  onClick: addComment,
-})}
-      ${actionIcon({
-  class: 'like-btn minibtns fas fa-heart',
-  name: doc.user,
-  dataDocid: doc.id,
-  onClick: like,
-})}
-  <span class="likes">${doc.likes}</span>
+
+      ${checkComments(doc.comments)}
       </div>
+
+      <div class="comments" data-docid=${doc.id}>
+        <div>
+        ${actionIcon({
+    class: 'comment-btn minibtns fab far fa-paper-plane',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: addComment,
+  })}
+        ${actionIcon({
+    class: 'like-btn minibtns fas fa-heart',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: like,
+  })}
+    <span class="likes">${doc.likes}</span>
+        </div>
       ${textArea({
-  class: 'add-comment hide',
-  placeholder: 'Comente...',
-  // onKeyup:
-})}
+    class: 'add-comment hide',
+    placeholder: 'Comente...',
+    onKeyup: saveComment,
+  })}
+
       </div>
     </div>`;
 
