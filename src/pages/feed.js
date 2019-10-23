@@ -84,26 +84,26 @@ const checkUserDelete = (doc) => {
 
 const addComment = (commentIcon) => {
   commentIcon.parentElement.nextElementSibling.classList.toggle('hide');
-  commentIcon.parentElement.nextElementSibling.nextElementSibling.className = 'save-btn minibtns show fas fa-check';
 };
 
-const saveComment = (saveCommentIcon) => {
-  const commentTextArea = saveCommentIcon.previousElementSibling;
-  const comment = commentTextArea.value;
-  const name = app.auth.currentUser.displayName;
-  const id = saveCommentIcon.dataset.docid;
+const saveComment = (event) => {
+  if (event.keyCode === 13) {
+    const comment = event.target.value;
+    const name = app.auth.currentUser.displayName;
+    const id = event.target.parentElement.dataset.docid;
 
-  app.db.collection('posts').doc(id).update({
-    comments: firebase.firestore.FieldValue.arrayUnion({ comment, name }),
-  });
+    app.db.collection('posts').doc(id).update({
+      comments: firebase.firestore.FieldValue.arrayUnion({ comment, name }),
+    });
+  }
 };
 
-const checkComments = (array) => {
-  if (array) {
+const checkComments = (comments) => {
+  if (comments) {
     const commentsTemplate = [];
-    array.forEach((obj) => {
-      commentsTemplate.push(`<p>
-      ${obj.name} comentou: ${obj.comment}
+    comments.forEach((obj) => {
+      commentsTemplate.push(`<p class="text comment-area">
+      ${obj.name} comentou<br>${obj.comment}
     </p>
   `);
     });
@@ -130,7 +130,7 @@ const postTemplate = doc => `
       ${checkComments(doc.comments)}
       </div>
 
-      <div class="comments">
+      <div class="comments" data-docid=${doc.id}>
         <div>
         ${actionIcon({
     class: 'comment-btn minibtns fab far fa-paper-plane',
@@ -149,13 +149,7 @@ const postTemplate = doc => `
       ${textArea({
     class: 'add-comment hide',
     placeholder: 'Comente...',
-    // onKeyup:
-  })}
-  ${actionIcon({
-    class: 'save-btn minibtns hide fas fa-check',
-    name: doc.user,
-    dataDocid: doc.id,
-    onClick: saveComment,
+    onKeyup: saveComment,
   })}
       </div>
     </div>`;
