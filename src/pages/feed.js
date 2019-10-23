@@ -52,17 +52,17 @@ const checkUserEdit = (doc) => {
   if (user === doc.user) {
     return `
     ${actionIcon({
-      class: 'save-btn minibtns hide fas fa-check',
-      name: doc.user,
-      dataDocid: doc.id,
-      onClick: saveEditPost,
-    })}
+    class: 'save-btn minibtns hide fas fa-check',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: saveEditPost,
+  })}
       ${actionIcon({
-      class: 'edit-btn minibtns fas fa-pencil-alt',
-      name: doc.user,
-      dataDocid: doc.id,
-      onClick: makePostEditable,
-    })}
+    class: 'edit-btn minibtns fas fa-pencil-alt',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: makePostEditable,
+  })}
     `;
   }
   return '';
@@ -73,11 +73,11 @@ const checkUserDelete = (doc) => {
   if (user === doc.user) {
     return `
   ${actionIcon({
-      class: 'delete-btn minibtns fas fa-times',
-      name: doc.user,
-      dataDocid: doc.id,
-      onClick: deletePost,
-    })}`;
+    class: 'delete-btn minibtns fas fa-times',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: deletePost,
+  })}`;
   }
   return '';
 };
@@ -100,7 +100,9 @@ const saveComment = (event) => {
 
 const checkComments = (comments) => {
   if (comments) {
-    const commentsTemplate = [];
+    const commentsTemplate = [`
+    <p class="comments-title">Comentários</p>
+    `];
     comments.forEach((obj) => {
       commentsTemplate.push(`<p class="text comment-area">
       ${obj.name} comentou<br>${obj.comment}
@@ -127,7 +129,6 @@ const postTemplate = doc => `
       </div>
 
       <div>
-
       ${checkComments(doc.comments)}
       </div>
 
@@ -152,7 +153,6 @@ const postTemplate = doc => `
     placeholder: 'Comente...',
     onKeyup: saveComment,
   })}
-
       </div>
     </div>`;
 
@@ -232,31 +232,30 @@ const Feed = (props) => {
 };
 
 const Profile = () => {
-  const username = app.auth.currentUser
+  const username = app.auth.currentUser;
   const user = app.auth.currentUser.uid;
   const name = username.displayName.trim();
 
-  const templateProfile =
-    `<div class="profile">        
+  const templateProfile =    `<div class="profile">        
           <p class="user-info">${name}</p>
           ${actionIcon({
-      class: 'edit-btn minibtns fas fa-pencil-alt',
-      name: user.user,
-      dataDocid: user.id,
-      onClick: editProfile,
-    })}      
+    class: 'edit-btn minibtns fas fa-pencil-alt',
+    name: user.user,
+    dataDocid: user.id,
+    onClick: editProfile,
+  })}      
           ${actionIcon({
-      class: 'save-btn minibtns hide fas fa-check',
-      name: user.user,
-      dataDocid: user.id,
-      onClick: updateProfile,
-    })}   
+    class: 'save-btn minibtns hide fas fa-check',
+    name: user.user,
+    dataDocid: user.id,
+    onClick: updateProfile,
+  })}   
       
       
       </div> 
-      `
-  return templateProfile
-}
+      `;
+  return templateProfile;
+};
 const editProfile = (pencilIcon) => {
   pencilIcon.className = 'edit-btn minibtns hide';
   pencilIcon.nextElementSibling.className = 'save-btn minibtns show fas fa-check';
@@ -265,7 +264,6 @@ const editProfile = (pencilIcon) => {
 };
 
 const updateProfile = (checkIcon) => {
-
   checkIcon.className = 'save-btn minibtns hide fas fa-check';
   checkIcon.className = 'edit-btn minibtns show';
   const pName = checkIcon.parentElement;
@@ -275,17 +273,17 @@ const updateProfile = (checkIcon) => {
   const user = app.auth.currentUser;
   user.updateProfile({
     displayName: pName.textContent,
-    name: pName.textContent
-  })
+    name: pName.textContent,
+  });
 
   app.db.collection('posts').where('user', '==', user.uid)
     .get()
-    .then(function (querySnapshot) {
+    .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
 
         app.db.collection('posts').doc(doc.id).update({ name: pName.textContent });
       });
-    })
+    });
 };
 
 window.app = {
@@ -295,4 +293,3 @@ window.app = {
 };
 
 export default Feed;
-

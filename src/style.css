@@ -253,8 +253,8 @@ body {
 }
 
 .comment-area {
-  width: 98.4%;
-  padding: 3px 3px;
+  width: 96%;
+  padding: 3px 7px;
   border-bottom: 1px solid gray;
   background-color: #d393e9;
 }
@@ -282,8 +282,20 @@ body {
   margin-bottom: -20px;
 }
 
+.comments-title{
+  font-family: 'Hind', sans-serif;
+  margin: 0;
+  background-color: #290a41;
+  padding: 3px 7px;
+  color: white;
+}
+
 .screen-margin-bottom {
   margin-bottom: 10px;
+}
+
+.square-border {
+  border-radius: 0;
 }
 
 @media (min-width: 900px){
