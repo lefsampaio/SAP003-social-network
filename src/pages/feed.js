@@ -199,12 +199,11 @@ const Feed = (props) => {
 const Profile = () => {
   const username = app.auth.currentUser
   const user = app.auth.currentUser.uid;
-  const name = username.displayName;
+  const name = username.displayName.trim();
 
   const templateProfile =
-    `<div class='profile'>
-        <div class='user-info'>
-          <p class='username'>${name}</p>
+    `<div class="profile">        
+          <p class="user-info">${name}</p>
           ${actionIcon({
       class: 'edit-btn minibtns fas fa-pencil-alt',
       name: user.user,
@@ -218,7 +217,7 @@ const Profile = () => {
       onClick: updateProfile,
     })}   
       
-        </div>
+      
       </div> 
       `
   return templateProfile
@@ -235,7 +234,6 @@ const updateProfile = (checkIcon) => {
   checkIcon.className = 'save-btn minibtns hide fas fa-check';
   checkIcon.className = 'edit-btn minibtns show';
   const pName = checkIcon.parentElement;
-  // const id = checkIcon.dataset.docid;
   pName.contentEditable = false;
   pName.className = 'username';
 
@@ -253,12 +251,6 @@ const updateProfile = (checkIcon) => {
         app.db.collection('posts').doc(doc.id).update({ name: pName.textContent });
       });
     })
-  //  let paloma = app.db.collection('posts').doc(user.uid);
-
-  //     paloma.update({
-  //       name: pName.textContent,
-  //     })
-
 };
 
 window.app = {
