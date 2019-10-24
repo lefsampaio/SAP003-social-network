@@ -94,7 +94,7 @@ body {
   justify-content: space-between;
   display: flex;
   align-items: center;
-  background-color:#9c64a6;
+  background-color:#290a41;
   padding: 10px 15px;
 }
 .header-title{
@@ -193,7 +193,7 @@ body {
 }
 
 .posted-name{
-  background-color: #9c64a6;
+  background-color: #290a41;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -327,6 +327,8 @@ body {
   .photo-profile{
     align-self: start;
     margin-top:10px ;
+    border:black solid;
+    width: 28%;
   }
   .add-post{
     width: 39vw;

@@ -291,23 +291,6 @@ const updateProfile = (checkIcon) => {
     })
 };
 
-// const updatePhoto = () => {
-//   const photoProfile = document.querySelector('#myFile');
-//   photoProfile.disabled = true;
-// console.log(photoProfile.value)
-//   const user = app.auth.currentUser;
-
-//   user.updateProfile({
-//     photo: photoProfile.value
-   
-//   })
- 
-//       app.db.collection('users').doc(doc.ref).update({ 
-//         photo: photoProfile.value });
-
-// };
-
-
 window.app = {
   postTemplate,
   db: firebase.firestore(),
