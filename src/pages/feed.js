@@ -2,7 +2,7 @@ import Button from '../components/button.js';
 import textArea from '../components/text-area.js';
 import actionIcon from '../components/action-icon.js';
 
-const logout = () => {
+const logout = (e) => {
   app.auth.signOut().catch((error) => {
     // console.log(error);
   });
@@ -103,7 +103,7 @@ const checkComments = (comments) => {
     const commentsTemplate = [];
     comments.forEach((obj) => {
       commentsTemplate.push(`<p class="text comment-area">
-      ${obj.name} comentou<br>${obj.comment}
+      <span class="comment-name">${obj.name}</span><br>${obj.comment}
     </p>
   `);
     });
@@ -192,6 +192,7 @@ const buttonActivate = (e) => {
 };
 
 const Feed = (props) => {
+  document.querySelector('body').className = 'background';
   let postsTemplate = '';
   props.posts.forEach((post) => {
     const docPost = {
@@ -202,14 +203,14 @@ const Feed = (props) => {
   });
 
   const template = `
-  <header class='header'> <span class='header-title'> MusicalSpace </span>
-  ${Button({
-    type: 'button',
-    title: 'Sair',
-    class: 'primary-button signout-button',
+  <header class='header'> <h2 class='header-title'> MusicalSpace </h2>
+  ${actionIcon({
+    class: 'signout-icon fas fa-sign-out-alt',
+    name: 'sair',
+    dataDocid: 'a',
     onClick: logout,
-    disabled: 'enabled',
-  })}</header>
+  })}
+  </header>
     <section class="container screen-margin-bottom">
     ${Profile()}
       <section class="container margin-top-container">
@@ -259,6 +260,7 @@ const Profile = () => {
       `;
   return templateProfile;
 };
+
 const editProfile = (pencilIcon) => {
   pencilIcon.className = 'edit-btn minibtns hide';
   pencilIcon.nextElementSibling.className = 'save-btn minibtns show fas fa-check';

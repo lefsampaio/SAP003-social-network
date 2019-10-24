@@ -1,10 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Hind|Righteous&display=swap');
 
 body {
-  background-color: #efeeee;
+  background-color: #290a41;
   margin: 0;
   padding: 0;
   height: 600px;
+}
+
+.background {
+  background-color: #efeeee;
 }
 
 .primary-button {
@@ -25,12 +29,11 @@ body {
 
 .primary-button:hover{
   background-color: #af8eb5;
-  box-shadow: 2px 2px 5px grey
 }
 
 .main-container{
   justify-content: space-around;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 .container{
@@ -52,6 +55,7 @@ body {
 
 .login-text{
   font-family: 'Hind', sans-serif;
+  color: #efeeee;
 }
 
 .login-container{
@@ -65,12 +69,11 @@ body {
   border: none;
   height: 50px;
   width: 50px;
-  box-shadow: 2px 2px 5px grey;
 }
 
 .link{
   text-decoration: none;
-  color: #863895;
+  color: #d393e9;
 }
 
 .logo{
@@ -84,7 +87,7 @@ body {
 .text-logo{
   font-family: 'Righteous', cursive;
   font-size: 30px;
-  color: rgb(59, 59, 59);
+  color: #efeeee;
   display: flex;
   justify-content: center;
   width: 100%;
@@ -94,20 +97,25 @@ body {
   justify-content: space-between;
   display: flex;
   align-items: center;
-  background-color:#9c64a6;
   padding: 10px 15px;
+  background-color: #290a41;
+  color: white;
+  font-weight: bold;
+  font-family: "Righteous";
+  text-align: center;
+  align-self: center;
 }
 .header-title{
   justify-self: center;
-
+  margin: 0;
 }
 .new-post {
   display: flex;
   flex-direction: column;
-  width: 92vw;
+  width: 88vw;
+  padding: 8px 12px;
   height: 135px;
-  padding: 9px 3px;
-  background-color: #e1bee7;
+  background-color: #9c64a6;
   border-radius: 6px;
 }
 
@@ -117,14 +125,11 @@ body {
   width: 85px;
   height: 32px;
   padding: 0;
-  margin-right: 10px;
-  background-color: #9c64a6;
 }
 
 .post-btn:disabled {
-  background-color: #9c64a67d;
+  background-color: #cf8fda7a;
   color: #00000066;
-  box-shadow: none;
 }
 
 .post-btn:disabled:hover {
@@ -155,15 +160,20 @@ body {
 }
 
 .posts{
-  width: 100%;
+  width: 94vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.signout-button {
-  width: 57px;
-  margin-top: 0;
-  height: 35px;
-  padding: 0;
+.signout-icon{
+  color: #d393e9;
+  font-size: 33px;
+}
 
+.signout-icon:hover{
+  cursor: pointer;
+  color: #af8eb5;
 }
 
 .container-post{
@@ -171,6 +181,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   margin-top: 20px;
+  width: 100%;
 }
 
 .posted{
@@ -178,7 +189,7 @@ body {
 }
 
 .posted-name{
-  background-color: #9c64a6;
+  background-color: #290a41;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -193,7 +204,6 @@ body {
   margin: 0;
   width: 70vw;
   font-family: 'Hind', sans-serif;
-  background-color:  #e1bee7;
   word-wrap: break-word;
 }
 
@@ -217,7 +227,7 @@ body {
   padding: 0;
   color: black;
   font-weight: bold;
-  font-size: 17px;
+  font-size: 20px;
 }
 
 .minibtns:hover {
@@ -253,14 +263,15 @@ body {
 }
 
 .comment-area {
-  /* width: 96%; */
+  width: 96%;
   padding: 3px 7px;
-  border-bottom: 1px solid gray;
+  margin-bottom: 5px;
   background-color: #d393e9;
+  border-radius: 10px;
 }
 
 .comments {
-  background-color: #a342a3;
+  background-color: #9c64a6;
   height: max-content;
   padding: 3px 8px;
   border-radius: 0 0 6px 6px;
@@ -268,30 +279,39 @@ body {
   flex-direction: column;
 }
 
+.comment-name {
+  font-weight: bold;
+  font-size: 14px;
+}
+
 .likes {
   font-family: 'Hind', sans-serif;
+  font-size: 18px;
 }
 
 .add-comment {
   resize: none;
-  width: 99%;
+  width: 95%;
   height: 45%;
   border-radius: 8px;
   border: 1px solid grey;
   font-family: 'Hind', sans-serif;
-  margin-bottom: -20px;
+  padding: 3px 7px;
+  font-size: 18px;
 }
 
 .comments-title{
   margin: 0;
-  background-color: #290a41;
-  padding: 3px 7px;
+  background-color: #643173;
+  padding: 3px 10px;
   
 }
 
 .branco {
   color: white;
+  font-weight: bold;
   font-family: 'Hind', sans-serif;
+  margin: 0;
 }
 
 .screen-margin-bottom {
@@ -305,6 +325,7 @@ body {
 @media (min-width: 900px){
   .main-container{
     flex-direction: row;
+    margin-top: 100px;
   }
 
   .erro {
@@ -331,18 +352,14 @@ body {
   }
 
   .new-post {
-    width: 42vw;
+    width: 40vw;
   }
 
   .posts {
     width: 42vw;
   }
 
-  .signout-button {
-    width: 6vw;
-  }
-
   .text {
-    width: 36vw;
+    width: 39.7vw;
   }
 }

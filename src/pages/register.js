@@ -34,6 +34,7 @@ const location = () => {
 };
 
 const Register = () => {
+  document.querySelector('body').className = '';
   const template = `
   <section class='container main-container'>
     <section class="logo">
@@ -46,7 +47,7 @@ const Register = () => {
       <p class="erro"></p>
       ${Input({ type: 'text', placeholder: 'Nome', class: 'js-name-input primary-input' })}
         ${Input({ type: 'email', placeholder: 'Email', class: 'js-email-input primary-input' })}
-        ${Input({ type: 'password', placeholder: 'Password', class: 'js-password-input primary-input' })}
+        ${Input({ type: 'password', placeholder: 'Senha', class: 'js-password-input primary-input' })}
         ${Button({
     type: 'submit', title: 'Cadastrar', class: 'primary-button', onClick: createUser, disabled: 'enabled',
   })}
