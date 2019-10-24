@@ -253,7 +253,7 @@ body {
 }
 
 .comment-area {
-  width: 96%;
+  /* width: 96%; */
   padding: 3px 7px;
   border-bottom: 1px solid gray;
   background-color: #d393e9;
@@ -283,11 +283,15 @@ body {
 }
 
 .comments-title{
-  font-family: 'Hind', sans-serif;
   margin: 0;
   background-color: #290a41;
   padding: 3px 7px;
+  
+}
+
+.branco {
   color: white;
+  font-family: 'Hind', sans-serif;
 }
 
 .screen-margin-bottom {

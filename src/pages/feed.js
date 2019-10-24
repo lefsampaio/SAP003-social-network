@@ -100,16 +100,19 @@ const saveComment = (event) => {
 
 const checkComments = (comments) => {
   if (comments) {
-    const commentsTemplate = [`
-    <p class="comments-title">Comentários</p>
-    `];
+    const commentsTemplate = [];
     comments.forEach((obj) => {
       commentsTemplate.push(`<p class="text comment-area">
       ${obj.name} comentou<br>${obj.comment}
     </p>
   `);
     });
-    return commentsTemplate.join('');
+    const finalCommentsTemplate = `
+    <div class="comments-title">
+      <p class="branco">Comentários:</p>
+      ${commentsTemplate.join('')}
+    </div>`;
+    return finalCommentsTemplate;
   }
   return '';
 };
