@@ -1,6 +1,7 @@
 import Button from '../components/button.js';
 import textArea from '../components/text-area.js';
 import actionIcon from '../components/action-icon.js';
+import selectPrivacy from '../components/selectPrivacy.js'
 
 const logout = () => {
   app.auth.signOut().catch((error) => {
@@ -51,17 +52,17 @@ const checkUserEdit = (doc) => {
   if (user === doc.user) {
     return `
     ${actionIcon({
-    class: 'save-btn minibtns hide fas fa-check',
-    name: doc.user,
-    dataDocid: doc.id,
-    onClick: saveEditPost,
-  })}
+      class: 'save-btn minibtns hide fas fa-check',
+      name: doc.user,
+      dataDocid: doc.id,
+      onClick: saveEditPost,
+    })}
       ${actionIcon({
-    class: 'edit-btn minibtns fas fa-pencil-alt',
-    name: doc.user,
-    dataDocid: doc.id,
-    onClick: makePostEditable,
-  })}
+      class: 'edit-btn minibtns fas fa-pencil-alt',
+      name: doc.user,
+      dataDocid: doc.id,
+      onClick: makePostEditable,
+    })}
     `;
   }
   return '';
@@ -72,56 +73,94 @@ const checkUserDelete = (doc) => {
   if (user === doc.user) {
     return `
   ${actionIcon({
-    class: 'delete-btn minibtns fas fa-times',
-    name: doc.user,
-    dataDocid: doc.id,
-    onClick: deletePost,
-  })}`;
+      class: 'delete-btn minibtns fas fa-times',
+      name: doc.user,
+      dataDocid: doc.id,
+      onClick: deletePost,
+    })}`;
   }
   return '';
 };
 
 const addComment = (commentIcon) => {
-  commentIcon.parentElement.nextElementSibling.className = 'add-comment show';
+  commentIcon.parentElement.nextElementSibling.classList.toggle('hide');
+};
+
+const saveComment = (event) => {
+  if (event.keyCode === 13) {
+    const comment = event.target.value;
+    const name = app.auth.currentUser.displayName;
+    const id = event.target.parentElement.dataset.docid;
+
+    app.db.collection('posts').doc(id).update({
+      comments: firebase.firestore.FieldValue.arrayUnion({ comment, name }),
+    });
+  }
+};
+
+const checkComments = (comments) => {
+  if (comments) {
+    const commentsTemplate = [];
+    comments.forEach((obj) => {
+      commentsTemplate.push(`<p class="text comment-area">
+      ${obj.name} comentou<br>${obj.comment}
+    </p>
+  `);
+    });
+    return commentsTemplate.join('');
+  }
+  return '';
 };
 
 const changeViewPost = () => {
- 
  console.log('vai carambinha')
+}
+
+const nullFunction= () =>{
+
 }
 
 const postTemplate = doc => `
     <div class='posted container-post' data-id=${doc.id}> 
+
       <p class='posted posted-name'> Publicado por ${doc.name} | ${doc.date}
       ${checkUserDelete(doc)}
       </p>
+
       <div class='text-button'>
         <p class='text' data-like=${doc.likes} data-docid=${doc.id}> ${doc.text}</p>
         <div class='buttons'>
         ${checkUserEdit(doc)}
         </div>
       </div>
-      <div class="comments">
+
       <div>
-      ${actionIcon({
+
+      ${checkComments(doc.comments)}
+      </div>
+
+      <div class="comments" data-docid=${doc.id}>
+        <div>
+        ${actionIcon({
     class: 'comment-btn minibtns fab far fa-paper-plane',
     name: doc.user,
     dataDocid: doc.id,
     onClick: addComment,
   })}
-      ${actionIcon({
+        ${actionIcon({
     class: 'like-btn minibtns fas fa-heart',
     name: doc.user,
     dataDocid: doc.id,
     onClick: like,
   })}
-  <span class="likes">${doc.likes}</span>
-      </div>
+    <span class="likes">${doc.likes}</span>
+        </div>
       ${textArea({
     class: 'add-comment hide',
     placeholder: 'Comente...',
-    // onKeyup:
+    onKeyup: saveComment,
   })}
+
       </div>
     </div>`;
 
@@ -180,9 +219,10 @@ const Feed = (props) => {
       disabled: 'enabled',
     })}
     </header>
-    <section class="container screen-margin-bottom">
-      <section class="container margin-top-container">
-      <div class='new-post'>
+    <section class='container screen-margin-bottom'>
+      ${Profile()}
+    <section class='container margin-top-container'>
+    <div class='new-post'>
 
       ${textArea({
     class: 'add-post',
@@ -198,11 +238,18 @@ const Feed = (props) => {
     disabled: 'disabled',
   })}
 
-        <select class="privacyOption">
-          <option class="public" value="false" selected> Público </option>
-          <option class="private" value="true"> Privado </option>
-        </select>
-      </div>
+      ${selectPrivacy({
+    class: 'privacyOption',
+    onChange: nullFunction,
+    opClass1: 'public',
+    value1: 'false',
+    txt1: 'Público',
+    opClass2: 'private',
+    value2: 'true',
+    txt2: 'Privado',
+  })}
+  
+    </div>
         <p> Visualizar post 
           <select class="privacyOption" onchange="${changeViewPost}">
             <option class="public" value="false" selected> Público </option>
@@ -212,8 +259,65 @@ const Feed = (props) => {
         <div class="posts"> ${postsTemplate} </div>
       </section>
     </section>
-  `;
+  `
   return template;
+};
+
+const Profile = () => {
+  const username = app.auth.currentUser
+  const user = app.auth.currentUser.uid;
+  const name = username.displayName.trim();
+
+  const templateProfile =
+    `<div class="profile">        
+          <p class="user-info">${name}</p>
+          ${actionIcon({
+      class: 'edit-btn minibtns fas fa-pencil-alt',
+      name: user.user,
+      dataDocid: user.id,
+      onClick: editProfile,
+    })}      
+          ${actionIcon({
+      class: 'save-btn minibtns hide fas fa-check',
+      name: user.user,
+      dataDocid: user.id,
+      onClick: updateProfile,
+    })}   
+      
+      
+      </div> 
+      `
+  return templateProfile
+}
+const editProfile = (pencilIcon) => {
+  pencilIcon.className = 'edit-btn minibtns hide';
+  pencilIcon.nextElementSibling.className = 'save-btn minibtns show fas fa-check';
+  pencilIcon.previousElementSibling.contentEditable = true;
+  pencilIcon.previousElementSibling.className += 'editable-text';
+};
+
+const updateProfile = (checkIcon) => {
+
+  checkIcon.className = 'save-btn minibtns hide fas fa-check';
+  checkIcon.className = 'edit-btn minibtns show';
+  const pName = checkIcon.parentElement;
+  pName.contentEditable = false;
+  pName.className = 'username';
+
+  const user = app.auth.currentUser;
+  user.updateProfile({
+    displayName: pName.textContent,
+    name: pName.textContent
+  })
+
+  app.db.collection('posts').where('user', '==', user.uid)
+    .get()
+    .then(function (querySnapshot) {
+      querySnapshot.forEach((doc) => {
+
+        app.db.collection('posts').doc(doc.id).update({ name: pName.textContent });
+      });
+    })
 };
 
 window.app = {

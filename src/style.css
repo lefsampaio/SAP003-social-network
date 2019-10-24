@@ -256,6 +256,13 @@ body {
   color: palevioletred;
 }
 
+.comment-area {
+  width: 98.4%;
+  padding: 3px 3px;
+  border-bottom: 1px solid gray;
+  background-color: #d393e9;
+}
+
 .comments {
   background-color: #a342a3;
   height: max-content;

@@ -1,29 +1,25 @@
-[debug] [2019-10-23T04:43:36.821Z] ----------------------------------------------------------------------
-[debug] [2019-10-23T04:43:36.824Z] Command:       /home/laboratoria/.nvm/versions/node/v12.11.1/bin/node /home/laboratoria/.nvm/versions/node/v12.11.1/bin/firebase serve
-[debug] [2019-10-23T04:43:36.825Z] CLI Version:   7.5.0
-[debug] [2019-10-23T04:43:36.825Z] Platform:      linux
-[debug] [2019-10-23T04:43:36.825Z] Node Version:  v12.11.1
-[debug] [2019-10-23T04:43:36.825Z] Time:          Wed Oct 23 2019 01:43:36 GMT-0300 (Brasilia Standard Time)
-[debug] [2019-10-23T04:43:36.825Z] ----------------------------------------------------------------------
+[debug] [2019-10-23T20:23:31.227Z] ----------------------------------------------------------------------
+[debug] [2019-10-23T20:23:31.229Z] Command:       /home/laboratoria/.nvm/versions/node/v12.11.1/bin/node /home/laboratoria/.nvm/versions/node/v12.11.1/bin/firebase serve
+[debug] [2019-10-23T20:23:31.229Z] CLI Version:   7.5.0
+[debug] [2019-10-23T20:23:31.229Z] Platform:      linux
+[debug] [2019-10-23T20:23:31.229Z] Node Version:  v12.11.1
+[debug] [2019-10-23T20:23:31.230Z] Time:          Wed Oct 23 2019 17:23:31 GMT-0300 (Brasilia Standard Time)
+[debug] [2019-10-23T20:23:31.230Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2019-10-23T04:43:36.843Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2019-10-23T04:43:36.843Z] > authorizing via signed-in user
-[debug] [2019-10-23T04:43:36.844Z] [iam] checking project social-network-b6633 for permissions ["firebase.projects.get"]
-[debug] [2019-10-23T04:43:36.845Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] [2019-10-23T04:43:36.846Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
- <request body omitted>
-[debug] [2019-10-23T04:43:37.059Z] <<< HTTP RESPONSE 200
-[debug] [2019-10-23T04:43:37.093Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/social-network-b6633:testIamPermissions  
+[debug] [2019-10-23T20:23:31.235Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-10-23T20:23:31.236Z] > authorizing via signed-in user
+[debug] [2019-10-23T20:23:31.236Z] [iam] checking project social-network-b6633 for permissions ["firebase.projects.get"]
+[debug] [2019-10-23T20:23:31.237Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/social-network-b6633:testIamPermissions  
 
-[debug] [2019-10-23T04:43:38.118Z] <<< HTTP RESPONSE 200
-[debug] [2019-10-23T04:43:38.121Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/social-network-b6633  
+[debug] [2019-10-23T20:23:32.476Z] <<< HTTP RESPONSE 200
+[debug] [2019-10-23T20:23:32.478Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/social-network-b6633  
  
-[debug] [2019-10-23T04:43:39.366Z] <<< HTTP RESPONSE 200
+[debug] [2019-10-23T20:23:33.779Z] <<< HTTP RESPONSE 200
 [info] 
 [info] === Serving from '/home/laboratoria/SAP003-social-network'...
 [info] 
-[debug] [2019-10-23T04:43:39.371Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/social-network-b6633/webApps/-/config  
+[debug] [2019-10-23T20:23:33.784Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/social-network-b6633/webApps/-/config  
  
-[debug] [2019-10-23T04:43:40.603Z] <<< HTTP RESPONSE 200
+[debug] [2019-10-23T20:23:35.015Z] <<< HTTP RESPONSE 200
 [info] i  hosting: Serving hosting files from: src
 [info] ✔  hosting: Local server: http://localhost:5000
