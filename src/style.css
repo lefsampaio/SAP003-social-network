@@ -108,11 +108,10 @@ body {
   width: 50%;
 }
 .photo-profile{
-  flex-direction: row;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-
+  
 }
 .photo-img{
   width: 20%;
@@ -269,7 +268,7 @@ body {
 }
 
 .comment-area {
-  width: 98.4%;
+  width: 98.5%;
   padding: 3px 3px;
   border-bottom: 1px solid gray;
   background-color: #d393e9;
@@ -319,13 +318,16 @@ body {
     height: 280px;
     width: 280px;
     margin-bottom: -37px;
-}
+  }
 
   .text-logo{
     font-size: 45px;
     display: flex;
   }
-
+  .photo-profile{
+    align-self: start;
+    margin-top:10px ;
+  }
   .add-post{
     width: 39vw;
   }
@@ -343,6 +345,6 @@ body {
   }
 
   .text {
-    width: 36vw;
+    width: auto;
   }
 }

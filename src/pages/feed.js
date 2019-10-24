@@ -160,13 +160,11 @@ const postTemplate = doc => `
 
 const newPost = () => {
   const textArea = document.querySelector('.add-post');
-  const photoURL = document.querySelector('.my-picture');
   const post = {
     name: app.auth.currentUser.displayName,
     user: app.auth.currentUser.uid,
     text: textArea.value,
     likes: 0,
-    photo:photoURL,
     timestamp: new Date().getTime(),
     date: new Date().toLocaleString('pt-BR').slice(0, 16),
   };
@@ -240,17 +238,10 @@ const Profile = () => {
   const name = username.displayName.trim();
 
   const templateProfile =
-    `<div class="photo-profile">
-      <input type="file" id="myFile" class="my-picture" accept="image/png, image/jpeg"></input>
+   `<div class="photo-profile">
       <img class= "photo-img" src=${username.photo ? username.photo : "../image/person.png"}/>
-      ${Button({
-        type: 'button',
-        title: '',
-        class: 'edit-btn minibtns fas fa-camera-retro',
-        onClick: updatePhoto,
-      })}       
     <div class="profile">      
-          <h2 class="user-info">${name}</h2>
+          <h1 class="user-info">${name}</h1>
           ${actionIcon({
       class: 'edit-btn minibtns fas fa-pencil-alt',
       name: user.user,
@@ -264,8 +255,8 @@ const Profile = () => {
       onClick: updateProfile,
     })}   
       
-    </div> 
-      </div> 
+     </div> 
+   </div> 
       `
   return templateProfile
 }
@@ -300,21 +291,21 @@ const updateProfile = (checkIcon) => {
     })
 };
 
-const updatePhoto = () => {
-  const photoProfile = document.querySelector('#myFile');
-  photoProfile.disabled = true;
-console.log(photoProfile.value)
-  const user = app.auth.currentUser;
+// const updatePhoto = () => {
+//   const photoProfile = document.querySelector('#myFile');
+//   photoProfile.disabled = true;
+// console.log(photoProfile.value)
+//   const user = app.auth.currentUser;
 
-  user.updateProfile({
-    photo: photoProfile.value
+//   user.updateProfile({
+//     photo: photoProfile.value
    
-  })
+//   })
  
-      app.db.collection('users').doc(doc.ref).update({ 
-        photo: photoProfile.value });
+//       app.db.collection('users').doc(doc.ref).update({ 
+//         photo: photoProfile.value });
 
-};
+// };
 
 
 window.app = {
