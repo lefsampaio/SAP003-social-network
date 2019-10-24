@@ -3,6 +3,7 @@ import textArea from '../components/text-area.js';
 import actionIcon from '../components/action-icon.js';
 import selectPrivacy from '../components/selectPrivacy.js'
 
+
 const logout = () => {
   app.auth.signOut().catch((error) => {
     // console.log(error);
@@ -142,24 +143,24 @@ const postTemplate = doc => `
       <div class="comments" data-docid=${doc.id}>
         <div>
         ${actionIcon({
-    class: 'comment-btn minibtns fab far fa-paper-plane',
-    name: doc.user,
-    dataDocid: doc.id,
-    onClick: addComment,
-  })}
+  class: 'comment-btn minibtns fab far fa-paper-plane',
+  name: doc.user,
+  dataDocid: doc.id,
+  onClick: addComment,
+})}
         ${actionIcon({
-    class: 'like-btn minibtns fas fa-heart',
-    name: doc.user,
-    dataDocid: doc.id,
-    onClick: like,
-  })}
+  class: 'like-btn minibtns fas fa-heart',
+  name: doc.user,
+  dataDocid: doc.id,
+  onClick: like,
+})}
     <span class="likes">${doc.likes}</span>
         </div>
       ${textArea({
-    class: 'add-comment hide',
-    placeholder: 'Comente...',
-    onKeyup: saveComment,
-  })}
+  class: 'add-comment hide',
+  placeholder: 'Comente...',
+  onKeyup: saveComment,
+})}
 
       </div>
     </div>`;
@@ -269,8 +270,10 @@ const Profile = () => {
   const name = username.displayName.trim();
 
   const templateProfile =
-    `<div class="profile">        
-          <p class="user-info">${name}</p>
+   `<div class="photo-profile">
+      <img class= "photo-img" src=${username.photo ? username.photo : "../image/person.png"}/>
+    <div class="profile">      
+          <h1 class="user-info">${name}</h1>
           ${actionIcon({
       class: 'edit-btn minibtns fas fa-pencil-alt',
       name: user.user,
@@ -284,8 +287,8 @@ const Profile = () => {
       onClick: updateProfile,
     })}   
       
-      
-      </div> 
+     </div> 
+   </div> 
       `
   return templateProfile
 }
@@ -312,7 +315,7 @@ const updateProfile = (checkIcon) => {
 
   app.db.collection('posts').where('user', '==', user.uid)
     .get()
-    .then(function (querySnapshot) {
+    .then((querySnapshot)=> {
       querySnapshot.forEach((doc) => {
 
         app.db.collection('posts').doc(doc.id).update({ name: pName.textContent });
