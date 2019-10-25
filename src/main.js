@@ -2,6 +2,7 @@ import Register from './pages/register.js';
 import Login from './pages/login.js';
 import Feed from './pages/feed.js';
 
+
 const main = document.querySelector('main');
 
 const authCheck = () => {
@@ -14,6 +15,12 @@ const authCheck = () => {
         .onSnapshot((querySnapshot) => {
           main.innerHTML = Feed({ posts: querySnapshot });
         });
+        // firebase.firestore().collection('users').onSnapshot((querySnapshot) =>{
+        //   querySnapshot.forEach(post => {
+        //     console.log(post.data())
+            
+        //   });
+        // })
     } else {
       location.hash = '';
     }

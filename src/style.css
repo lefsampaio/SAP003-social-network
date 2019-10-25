@@ -119,10 +119,28 @@ body {
   color: #d393e9;
 }
 
+
 .header-title{
   justify-self: center;
   margin: 0;
 }
+
+.profile{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 50%;
+}
+.photo-profile{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+.photo-img{
+  width: 20%;
+}
+
 
 .post-btn {
   align-self: flex-end;
@@ -185,6 +203,9 @@ body {
 
 .posted-name{
   background-color: #290a41;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 3px 8px;
   font-size: 15px;
   margin-bottom: 13px;
@@ -258,11 +279,12 @@ body {
 }
 
 .comment-area {
-  width: 96%;
+  width: 98.5%;
   padding: 3px 7px;
   margin-bottom: 5px;
   background-color: #efeeee;
   border-radius: 10px;
+
 }
 
 .comment-name {
@@ -326,12 +348,17 @@ body {
     height: 280px;
     width: 280px;
     margin-bottom: -37px;
-}
+  }
 
   .text-logo{
     font-size: 45px;
   }
-
+  .photo-profile{
+    align-self: start;
+    margin-top:10px ;
+    border:black solid;
+    width: 28%;
+  }
   .add-post{
     width: 39vw;
   }
@@ -345,6 +372,8 @@ body {
   }
 
   .text {
-    width: 39.7vw;
+
+    width: auto;
+
   }
 }

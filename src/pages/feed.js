@@ -138,17 +138,17 @@ const postTemplate = doc => `
       <div class='column comments' data-docid=${doc.id}>
         <div>
         ${actionIcon({
-    class: 'comment-btn minibtns fab far fa-paper-plane',
-    name: doc.user,
-    dataDocid: doc.id,
-    onClick: addComment,
-  })}
+  class: 'comment-btn minibtns fab far fa-paper-plane',
+  name: doc.user,
+  dataDocid: doc.id,
+  onClick: addComment,
+})}
         ${actionIcon({
-    class: 'like-btn minibtns fas fa-heart',
-    name: doc.user,
-    dataDocid: doc.id,
-    onClick: like,
-  })}
+  class: 'like-btn minibtns fas fa-heart',
+  name: doc.user,
+  dataDocid: doc.id,
+  onClick: like,
+})}
     <span class="likes">${doc.likes}</span>
         </div>
       ${textArea({
@@ -156,6 +156,7 @@ const postTemplate = doc => `
     placeholder: 'Comente...',
     onKeyup: saveComment,
   })}
+
       </div>
     </div>`;
 
@@ -240,8 +241,13 @@ const Profile = () => {
   const user = app.auth.currentUser.uid;
   const name = username.displayName.trim();
 
-  const templateProfile =    `<div class="profile">        
-          <p class="user-info">${name}</p>
+
+  const templateProfile =
+   `<div class="photo-profile">
+      <img class= "photo-img" src=${username.photo ? username.photo : "../image/person.png"}/>
+    <div class="profile">      
+          <h1 class="user-info">${name}</h1>
+
           ${actionIcon({
     class: 'edit-btn minibtns fas fa-pencil-alt',
     name: user.user,
@@ -255,12 +261,12 @@ const Profile = () => {
     onClick: updateProfile,
   })}   
       
-      
-      </div> 
-      `;
-  return templateProfile;
-};
 
+     </div> 
+   </div> 
+      `
+  return templateProfile
+}
 const editProfile = (pencilIcon) => {
   pencilIcon.className = 'edit-btn minibtns hide';
   pencilIcon.nextElementSibling.className = 'save-btn minibtns show fas fa-check';
@@ -283,7 +289,9 @@ const updateProfile = (checkIcon) => {
 
   app.db.collection('posts').where('user', '==', user.uid)
     .get()
+
     .then((querySnapshot) => {
+
       querySnapshot.forEach((doc) => {
 
         app.db.collection('posts').doc(doc.id).update({ name: pName.textContent });
