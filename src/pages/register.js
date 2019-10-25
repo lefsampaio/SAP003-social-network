@@ -37,7 +37,7 @@ const Register = () => {
   document.querySelector('body').className = '';
   const template = `
   <section class='container main-container'>
-    <section class="logo">
+    <section class="container">
       ${logo({
     img: 'image/logo.png', classImg: 'logo', classP: 'text-logo', text: 'MusicalSpace',
   })}

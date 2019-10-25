@@ -118,13 +118,13 @@ const checkComments = (comments) => {
 };
 
 const postTemplate = doc => `
-    <div class='posted container-post' data-id=${doc.id}> 
+    <div class='column posted container-post' data-id=${doc.id}> 
 
-      <p class='posted posted-name'> Publicado por ${doc.name} | ${doc.date}
+      <p class='row posted posted-name'> Publicado por ${doc.name} | ${doc.date}
       ${checkUserDelete(doc)}
       </p>
 
-      <div class='text-button'>
+      <div class='row text-button'>
         <p class='text' data-like=${doc.likes} data-docid=${doc.id}> ${doc.text}</p>
         <div class='buttons'>
         ${checkUserEdit(doc)}
@@ -135,7 +135,7 @@ const postTemplate = doc => `
       ${checkComments(doc.comments)}
       </div>
 
-      <div class="comments" data-docid=${doc.id}>
+      <div class='column comments' data-docid=${doc.id}>
         <div>
         ${actionIcon({
     class: 'comment-btn minibtns fab far fa-paper-plane',
@@ -214,7 +214,7 @@ const Feed = (props) => {
     <section class="container screen-margin-bottom">
     ${Profile()}
       <section class="container margin-top-container">
-      <div class='new-post'>
+      <div class='column new-post'>
       ${textArea({
     class: 'add-post',
     placeholder: 'O que você está ouvindo?',
@@ -228,7 +228,7 @@ const Feed = (props) => {
     disabled: 'disabled',
   })}
       </div>
-        <div class="posts"> ${postsTemplate} </div>
+        <div class='container posts'> ${postsTemplate} </div>
       </section>
     </section>
   `;

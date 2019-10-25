@@ -3,17 +3,36 @@
 body {
   background-color: #290a41;
   margin: 0;
-  padding: 0;
-  height: 600px;
 }
 
 .background {
   background-color: #efeeee;
 }
 
+.main-container{
+  justify-content: space-around;
+  margin-top: 30px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 .primary-button {
   padding: 10px;
-  font-size: 1.5rem;
   border-radius: 30px;
   border: none;
   cursor: pointer;
@@ -23,7 +42,6 @@ body {
   height: 40px;
   font-family: 'Righteous', cursive;
   font-size: 16px;
-  align-self: center;
   margin-top: 20px;
 }
 
@@ -31,15 +49,9 @@ body {
   background-color: #af8eb5;
 }
 
-.main-container{
-  justify-content: space-around;
-  margin-top: 30px;
-}
-
-.container{
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+.logo{
+  width: 150px;
+  margin-bottom: -20px;
 }
 
 .primary-input{
@@ -53,15 +65,46 @@ body {
   font-family: 'Hind', sans-serif;
 }
 
+.container-post{
+  justify-content: space-between;
+  margin-top: 20px;
+  width: 100%;
+}
+
 .login-text{
   font-family: 'Hind', sans-serif;
   color: #efeeee;
 }
 
-.login-container{
+.text-logo{
+  font-family: 'Righteous', cursive;
+  font-size: 30px;
+  color: #efeeee;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 3px;
+}
+
+.erro{
+  text-align: center;
+  margin-top: 35px;
+  width: 92vw;
+  font-family: 'Hind', sans-serif;
+  color: #efeeee;
+}
+
+.header{
+  justify-content: space-between;
+  display: flex;
   align-items: center;
+  padding: 10px 15px;
+  background-color: #290a41;
+  color: #efeeee;
+  font-weight: bold;
+  font-family: 'Righteous', cursive;
+  text-align: center;
+  align-self: center;
 }
 
 .google-button{
@@ -76,47 +119,9 @@ body {
   color: #d393e9;
 }
 
-.logo{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 150px;
-  margin-bottom: -20px;
-}
-
-.text-logo{
-  font-family: 'Righteous', cursive;
-  font-size: 30px;
-  color: #efeeee;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-bottom: 3px;
-}
-.header{
-  justify-content: space-between;
-  display: flex;
-  align-items: center;
-  padding: 10px 15px;
-  background-color: #290a41;
-  color: white;
-  font-weight: bold;
-  font-family: "Righteous";
-  text-align: center;
-  align-self: center;
-}
 .header-title{
   justify-self: center;
   margin: 0;
-}
-.new-post {
-  display: flex;
-  flex-direction: column;
-  width: 88vw;
-  padding: 8px 12px;
-  height: 135px;
-  background-color: #9c64a6;
-  border-radius: 6px;
 }
 
 .post-btn {
@@ -152,21 +157,6 @@ body {
   font-family: 'Hind', sans-serif;
 }
 
-.erro{
-  text-align: center;
-  margin-top: 35px;
-  width: 92vw;
-  font-family: 'Hind', sans-serif;
-  color: #efeeee;
-}
-
-.posts{
-  width: 94vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .signout-icon{
   color: #d393e9;
   font-size: 33px;
@@ -177,23 +167,24 @@ body {
   color: #af8eb5;
 }
 
-.container-post{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-top: 20px;
-  width: 100%;
-}
-
 .posted{
   border-radius: 6px 6px 0 0;
 }
 
+.new-post {
+  width: 88vw;
+  padding: 8px 12px;
+  height: 135px;
+  background-color: #9c64a6;
+  border-radius: 6px;
+}
+
+.posts{
+  width: 94vw;
+}
+
 .posted-name{
   background-color: #290a41;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 3px 8px;
   font-size: 15px;
   margin-bottom: 13px;
@@ -215,12 +206,15 @@ body {
 
 .text-button {
   background-color:  #e1bee7;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
   margin-top: -13px;
   padding: 3px 8px;
+}
+
+.comments {
+  background-color: #9c64a6;
+  height: max-content;
+  padding: 3px 8px;
+  border-radius: 0 0 6px 6px;
 }
 
 .minibtns {
@@ -267,17 +261,8 @@ body {
   width: 96%;
   padding: 3px 7px;
   margin-bottom: 5px;
-  background-color: #d393e9;
+  background-color: #efeeee;
   border-radius: 10px;
-}
-
-.comments {
-  background-color: #9c64a6;
-  height: max-content;
-  padding: 3px 8px;
-  border-radius: 0 0 6px 6px;
-  display: flex;
-  flex-direction: column;
 }
 
 .comment-name {
@@ -345,7 +330,6 @@ body {
 
   .text-logo{
     font-size: 45px;
-    display: flex;
   }
 
   .add-post{
