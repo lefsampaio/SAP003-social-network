@@ -1,15 +1,38 @@
 @import url('https://fonts.googleapis.com/css?family=Hind|Righteous&display=swap');
 
 body {
-  background-color: #efeeee;
+  background-color: #290a41;
   margin: 0;
-  padding: 0;
-  height: 600px;
+}
+
+.background {
+  background-color: #efeeee;
+}
+
+.main-container{
+  justify-content: space-around;
+  margin-top: 30px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .primary-button {
   padding: 10px;
-  font-size: 1.5rem;
   border-radius: 30px;
   border: none;
   cursor: pointer;
@@ -19,24 +42,16 @@ body {
   height: 40px;
   font-family: 'Righteous', cursive;
   font-size: 16px;
-  align-self: center;
   margin-top: 20px;
 }
 
 .primary-button:hover{
   background-color: #af8eb5;
-  box-shadow: 2px 2px 5px grey
 }
 
-.main-container{
-  justify-content: space-around;
-  margin-top: 50px;
-}
-
-.container{
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+.logo{
+  width: 150px;
+  margin-bottom: -20px;
 }
 
 .primary-input{
@@ -50,14 +65,46 @@ body {
   font-family: 'Hind', sans-serif;
 }
 
-.login-text{
-  font-family: 'Hind', sans-serif;
+.container-post{
+  justify-content: space-between;
+  margin-top: 20px;
+  width: 100%;
 }
 
-.login-container{
+.login-text{
+  font-family: 'Hind', sans-serif;
+  color: #efeeee;
+}
+
+.text-logo{
+  font-family: 'Righteous', cursive;
+  font-size: 30px;
+  color: #efeeee;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 3px;
+}
+
+.erro{
+  text-align: center;
+  margin-top: 35px;
+  width: 92vw;
+  font-family: 'Hind', sans-serif;
+  color: #efeeee;
+}
+
+.header{
+  justify-content: space-between;
+  display: flex;
   align-items: center;
+  padding: 10px 15px;
+  background-color: #290a41;
+  color: #efeeee;
+  font-weight: bold;
+  font-family: 'Righteous', cursive;
+  text-align: center;
+  align-self: center;
 }
 
 .google-button{
@@ -65,42 +112,19 @@ body {
   border: none;
   height: 50px;
   width: 50px;
-  box-shadow: 2px 2px 5px grey;
 }
 
 .link{
   text-decoration: none;
-  color: #863895;
+  color: #d393e9;
 }
 
-.logo{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 150px;
-  margin-bottom: -20px;
-}
 
-.text-logo{
-  font-family: 'Righteous', cursive;
-  font-size: 30px;
-  color: rgb(59, 59, 59);
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-bottom: 3px;
-}
-.header{
-  justify-content: space-between;
-  display: flex;
-  align-items: center;
-  background-color:#290a41;
-  padding: 10px 15px;
-}
 .header-title{
   justify-self: center;
-
+  margin: 0;
 }
+
 .profile{
   display: flex;
   align-items: center;
@@ -116,15 +140,7 @@ body {
 .photo-img{
   width: 20%;
 }
-.new-post {
-  display: flex;
-  flex-direction: column;
-  width: 92vw;
-  height: 135px;
-  padding: 9px 3px;
-  background-color: #e1bee7;
-  border-radius: 6px;
-}
+
 
 .post-btn {
   align-self: flex-end;
@@ -132,14 +148,11 @@ body {
   width: 85px;
   height: 32px;
   padding: 0;
-  margin-right: 10px;
-  background-color: #9c64a6;
 }
 
 .post-btn:disabled {
-  background-color: #9c64a67d;
+  background-color: #cf8fda7a;
   color: #00000066;
-  box-shadow: none;
 }
 
 .post-btn:disabled:hover {
@@ -162,34 +175,30 @@ body {
   font-family: 'Hind', sans-serif;
 }
 
-.erro{
-  text-align: center;
-  margin-top: 35px;
-  width: 92vw;
-  font-family: 'Hind', sans-serif;
+.signout-icon{
+  color: #d393e9;
+  font-size: 33px;
 }
 
-.posts{
-  width: 100%;
-}
-
-.signout-button {
-  width: 57px;
-  margin-top: 0;
-  height: 35px;
-  padding: 0;
-
-}
-
-.container-post{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-top: 20px;
+.signout-icon:hover{
+  cursor: pointer;
+  color: #af8eb5;
 }
 
 .posted{
   border-radius: 6px 6px 0 0;
+}
+
+.new-post {
+  width: 88vw;
+  padding: 8px 12px;
+  height: 135px;
+  background-color: #9c64a6;
+  border-radius: 6px;
+}
+
+.posts{
+  width: 94vw;
 }
 
 .posted-name{
@@ -208,7 +217,6 @@ body {
   margin: 0;
   width: 70vw;
   font-family: 'Hind', sans-serif;
-  background-color:  #e1bee7;
   word-wrap: break-word;
 }
 
@@ -219,12 +227,15 @@ body {
 
 .text-button {
   background-color:  #e1bee7;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
   margin-top: -13px;
   padding: 3px 8px;
+}
+
+.comments {
+  background-color: #9c64a6;
+  height: max-content;
+  padding: 3px 8px;
+  border-radius: 0 0 6px 6px;
 }
 
 .minibtns {
@@ -232,7 +243,7 @@ body {
   padding: 0;
   color: black;
   font-weight: bold;
-  font-size: 17px;
+  font-size: 20px;
 }
 
 .minibtns:hover {
@@ -269,41 +280,60 @@ body {
 
 .comment-area {
   width: 98.5%;
-  padding: 3px 3px;
-  border-bottom: 1px solid gray;
-  background-color: #d393e9;
+  padding: 3px 7px;
+  margin-bottom: 5px;
+  background-color: #efeeee;
+  border-radius: 10px;
+
 }
 
-.comments {
-  background-color: #a342a3;
-  height: max-content;
-  padding: 3px 8px;
-  border-radius: 0 0 6px 6px;
-  display: flex;
-  flex-direction: column;
+.comment-name {
+  font-weight: bold;
+  font-size: 14px;
 }
 
 .likes {
   font-family: 'Hind', sans-serif;
+  font-size: 18px;
 }
 
 .add-comment {
   resize: none;
-  width: 99%;
+  width: 95%;
   height: 45%;
   border-radius: 8px;
   border: 1px solid grey;
   font-family: 'Hind', sans-serif;
-  margin-bottom: -20px;
+  padding: 3px 7px;
+  font-size: 18px;
+}
+
+.comments-title{
+  margin: 0;
+  background-color: #643173;
+  padding: 3px 10px;
+  
+}
+
+.branco {
+  color: white;
+  font-weight: bold;
+  font-family: 'Hind', sans-serif;
+  margin: 0;
 }
 
 .screen-margin-bottom {
   margin-bottom: 10px;
 }
 
+.square-border {
+  border-radius: 0;
+}
+
 @media (min-width: 900px){
   .main-container{
     flex-direction: row;
+    margin-top: 100px;
   }
 
   .erro {
@@ -322,7 +352,6 @@ body {
 
   .text-logo{
     font-size: 45px;
-    display: flex;
   }
   .photo-profile{
     align-self: start;
@@ -335,18 +364,16 @@ body {
   }
 
   .new-post {
-    width: 42vw;
+    width: 40vw;
   }
 
   .posts {
     width: 42vw;
   }
 
-  .signout-button {
-    width: 6vw;
-  }
-
   .text {
+
     width: auto;
+
   }
 }

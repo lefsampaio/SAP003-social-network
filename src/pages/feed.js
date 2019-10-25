@@ -2,8 +2,7 @@ import Button from '../components/button.js';
 import textArea from '../components/text-area.js';
 import actionIcon from '../components/action-icon.js';
 
-
-const logout = () => {
+const logout = (e) => {
   app.auth.signOut().catch((error) => {
     // console.log(error);
   });
@@ -53,17 +52,17 @@ const checkUserEdit = (doc) => {
   if (user === doc.user) {
     return `
     ${actionIcon({
-      class: 'save-btn minibtns hide fas fa-check',
-      name: doc.user,
-      dataDocid: doc.id,
-      onClick: saveEditPost,
-    })}
+    class: 'save-btn minibtns hide fas fa-check',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: saveEditPost,
+  })}
       ${actionIcon({
-      class: 'edit-btn minibtns fas fa-pencil-alt',
-      name: doc.user,
-      dataDocid: doc.id,
-      onClick: makePostEditable,
-    })}
+    class: 'edit-btn minibtns fas fa-pencil-alt',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: makePostEditable,
+  })}
     `;
   }
   return '';
@@ -74,11 +73,11 @@ const checkUserDelete = (doc) => {
   if (user === doc.user) {
     return `
   ${actionIcon({
-      class: 'delete-btn minibtns fas fa-times',
-      name: doc.user,
-      dataDocid: doc.id,
-      onClick: deletePost,
-    })}`;
+    class: 'delete-btn minibtns fas fa-times',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: deletePost,
+  })}`;
   }
   return '';
 };
@@ -104,23 +103,28 @@ const checkComments = (comments) => {
     const commentsTemplate = [];
     comments.forEach((obj) => {
       commentsTemplate.push(`<p class="text comment-area">
-      ${obj.name} comentou<br>${obj.comment}
+      <span class="comment-name">${obj.name}</span><br>${obj.comment}
     </p>
   `);
     });
-    return commentsTemplate.join('');
+    const finalCommentsTemplate = `
+    <div class="comments-title">
+      <p class="branco">Comentários:</p>
+      ${commentsTemplate.join('')}
+    </div>`;
+    return finalCommentsTemplate;
   }
   return '';
 };
 
 const postTemplate = doc => `
-    <div class='posted container-post' data-id=${doc.id}> 
+    <div class='column posted container-post' data-id=${doc.id}> 
 
-      <p class='posted posted-name'> Publicado por ${doc.name} | ${doc.date}
+      <p class='row posted posted-name'> Publicado por ${doc.name} | ${doc.date}
       ${checkUserDelete(doc)}
       </p>
 
-      <div class='text-button'>
+      <div class='row text-button'>
         <p class='text' data-like=${doc.likes} data-docid=${doc.id}> ${doc.text}</p>
         <div class='buttons'>
         ${checkUserEdit(doc)}
@@ -128,11 +132,10 @@ const postTemplate = doc => `
       </div>
 
       <div>
-
       ${checkComments(doc.comments)}
       </div>
 
-      <div class="comments" data-docid=${doc.id}>
+      <div class='column comments' data-docid=${doc.id}>
         <div>
         ${actionIcon({
   class: 'comment-btn minibtns fab far fa-paper-plane',
@@ -149,10 +152,10 @@ const postTemplate = doc => `
     <span class="likes">${doc.likes}</span>
         </div>
       ${textArea({
-  class: 'add-comment hide',
-  placeholder: 'Comente...',
-  onKeyup: saveComment,
-})}
+    class: 'add-comment hide',
+    placeholder: 'Comente...',
+    onKeyup: saveComment,
+  })}
 
       </div>
     </div>`;
@@ -190,6 +193,7 @@ const buttonActivate = (e) => {
 };
 
 const Feed = (props) => {
+  document.querySelector('body').className = 'background';
   let postsTemplate = '';
   props.posts.forEach((post) => {
     const docPost = {
@@ -200,18 +204,18 @@ const Feed = (props) => {
   });
 
   const template = `
-  <header class='header'> <span class='header-title'> MusicalSpace </span>
-  ${Button({
-    type: 'button',
-    title: 'Sair',
-    class: 'primary-button signout-button',
+  <header class='header'> <h2 class='header-title'> MusicalSpace </h2>
+  ${actionIcon({
+    class: 'signout-icon fas fa-sign-out-alt',
+    name: 'sair',
+    dataDocid: 'a',
     onClick: logout,
-    disabled: 'enabled',
-  })}</header>
+  })}
+  </header>
     <section class="container screen-margin-bottom">
     ${Profile()}
       <section class="container margin-top-container">
-      <div class='new-post'>
+      <div class='column new-post'>
       ${textArea({
     class: 'add-post',
     placeholder: 'O que você está ouvindo?',
@@ -225,7 +229,7 @@ const Feed = (props) => {
     disabled: 'disabled',
   })}
       </div>
-        <div class="posts"> ${postsTemplate} </div>
+        <div class='container posts'> ${postsTemplate} </div>
       </section>
     </section>
   `;
@@ -233,28 +237,31 @@ const Feed = (props) => {
 };
 
 const Profile = () => {
-  const username = app.auth.currentUser
+  const username = app.auth.currentUser;
   const user = app.auth.currentUser.uid;
   const name = username.displayName.trim();
+
 
   const templateProfile =
    `<div class="photo-profile">
       <img class= "photo-img" src=${username.photo ? username.photo : "../image/person.png"}/>
     <div class="profile">      
           <h1 class="user-info">${name}</h1>
+
           ${actionIcon({
-      class: 'edit-btn minibtns fas fa-pencil-alt',
-      name: user.user,
-      dataDocid: user.id,
-      onClick: editProfile,
-    })}      
+    class: 'edit-btn minibtns fas fa-pencil-alt',
+    name: user.user,
+    dataDocid: user.id,
+    onClick: editProfile,
+  })}      
           ${actionIcon({
-      class: 'save-btn minibtns hide fas fa-check',
-      name: user.user,
-      dataDocid: user.id,
-      onClick: updateProfile,
-    })}   
+    class: 'save-btn minibtns hide fas fa-check',
+    name: user.user,
+    dataDocid: user.id,
+    onClick: updateProfile,
+  })}   
       
+
      </div> 
    </div> 
       `
@@ -268,7 +275,6 @@ const editProfile = (pencilIcon) => {
 };
 
 const updateProfile = (checkIcon) => {
-
   checkIcon.className = 'save-btn minibtns hide fas fa-check';
   checkIcon.className = 'edit-btn minibtns show';
   const pName = checkIcon.parentElement;
@@ -278,17 +284,19 @@ const updateProfile = (checkIcon) => {
   const user = app.auth.currentUser;
   user.updateProfile({
     displayName: pName.textContent,
-    name: pName.textContent
-  })
+    name: pName.textContent,
+  });
 
   app.db.collection('posts').where('user', '==', user.uid)
     .get()
-    .then((querySnapshot)=> {
+
+    .then((querySnapshot) => {
+
       querySnapshot.forEach((doc) => {
 
         app.db.collection('posts').doc(doc.id).update({ name: pName.textContent });
       });
-    })
+    });
 };
 
 window.app = {
@@ -298,4 +306,3 @@ window.app = {
 };
 
 export default Feed;
-

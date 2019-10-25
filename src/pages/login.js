@@ -29,9 +29,10 @@ const loginGoogle = () => {
 };
 
 const Login = () => {
+  document.querySelector('body').classList = '';
   const template = `
     <section class='container main-container'>
-    <section class="logo">
+    <section class="container">
       ${logo({
     img: 'image/logo.png', classImg: 'logo', classP: 'text-logo', text: 'MusicalSpace',
   })}
@@ -40,7 +41,7 @@ const Login = () => {
         <form class="container">
         <p class="erro"></p>
           ${Input({ type: 'email', placeholder: 'Email', class: 'js-email-input primary-input' })}
-          ${Input({ type: 'password', placeholder: 'Password', class: 'js-password-input primary-input' })}
+          ${Input({ type: 'password', placeholder: 'Senha', class: 'js-password-input primary-input' })}
           ${Button({
     type: 'submit', title: 'Login', class: 'primary-button', onClick: userLogin, disabled: 'enabled',
   })}
