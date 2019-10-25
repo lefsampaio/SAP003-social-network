@@ -212,24 +212,26 @@ const Feed = (props) => {
     onClick: logout,
   })}
   </header>
-    <section class="container screen-margin-bottom">
-    ${Profile()}
+    <section class="container-main screen-margin-bottom">
+      ${Profile()}
       <section class="container margin-top-container">
-      <div class='column new-post'>
-      ${textArea({
-    class: 'add-post',
-    placeholder: 'O que você está ouvindo?',
-    onKeyup: buttonActivate,
-  })}
-        ${Button({
-    type: 'button',
-    title: 'Postar',
-    class: 'primary-button post-btn',
-    onClick: newPost,
-    disabled: 'disabled',
-  })}
-      </div>
-        <div class='container posts'> ${postsTemplate} </div>
+        <section>
+          <div class='column new-post'>
+            ${textArea({
+          class: 'add-post',
+          placeholder: 'O que você está ouvindo?',
+          onKeyup: buttonActivate,
+        })}
+              ${Button({
+          type: 'button',
+          title: 'Postar',
+          class: 'primary-button post-btn',
+          onClick: newPost,
+          disabled: 'disabled',
+        })}
+          </div>
+          <div class='container posts'> ${postsTemplate} </div>
+        </section>
       </section>
     </section>
   `;
@@ -244,22 +246,24 @@ const Profile = () => {
 
   const templateProfile =
    `<div class="photo-profile">
-      <img class= "photo-img" src=${username.photo ? username.photo : "../image/person.png"}/>
-    <div class="profile">      
+      <div class="cover">
+      <img class="cover"src="../image/cover.png"/>
+      </div>
+      <div class="profile">
+      <i class="far fa-user user-icon"></i>
           <h1 class="user-info">${name}</h1>
-
           ${actionIcon({
-    class: 'edit-btn minibtns fas fa-pencil-alt',
-    name: user.user,
-    dataDocid: user.id,
-    onClick: editProfile,
-  })}      
+          class: 'edit-btn minibtns fas fa-pencil-alt',
+          name: user.user,
+          dataDocid: user.id,
+          onClick: editProfile,
+          })}      
           ${actionIcon({
-    class: 'save-btn minibtns hide fas fa-check',
-    name: user.user,
-    dataDocid: user.id,
-    onClick: updateProfile,
-  })}   
+          class: 'save-btn minibtns hide fas fa-check',
+          name: user.user,
+          dataDocid: user.id,
+          onClick: updateProfile,
+          })}   
       
 
      </div> 

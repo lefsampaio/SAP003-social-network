@@ -129,16 +129,19 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 50%;
+  width: 70%;
 }
 .photo-profile{
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 9px 7px 1px;
   
 }
-.photo-img{
-  width: 20%;
+
+.user-icon{
+  font-size:xxx-large;
+  color:#9c64a6;
 }
 
 
@@ -279,7 +282,7 @@ body {
 }
 
 .comment-area {
-  width: 98.5%;
+  width: 96.5%;
   padding: 3px 7px;
   margin-bottom: 5px;
   background-color: #efeeee;
@@ -329,8 +332,24 @@ body {
 .square-border {
   border-radius: 0;
 }
-
+.cover{
+display: none;
+}
 @media (min-width: 900px){
+  .cover{
+    display: inline;
+  }
+  .user-icon{
+    font-size:xxx-large;
+    color:#9c64a6;
+  }
+
+  .container-main{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 37px;
+    }
+
   .main-container{
     flex-direction: row;
     margin-top: 100px;
@@ -353,11 +372,19 @@ body {
   .text-logo{
     font-size: 45px;
   }
+  .profile{
+    width:100%;
+    justify-content: space-between;
+  }
   .photo-profile{
-    align-self: start;
     margin-top:10px ;
-    border:black solid;
     width: 28%;
+    height: 185px;
+    font-size: 17px;
+    border-radius: 8px;
+    font-family: 'Hind', sans-serif;
+    flex-direction: column;
+
   }
   .add-post{
     width: 39vw;
