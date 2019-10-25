@@ -3,7 +3,6 @@ import textArea from '../components/text-area.js';
 import actionIcon from '../components/action-icon.js';
 import selectPrivacy from '../components/selectPrivacy.js'
 
-
 const logout = () => {
   app.auth.signOut().catch((error) => {
     // console.log(error);
@@ -113,14 +112,6 @@ const checkComments = (comments) => {
   return '';
 };
 
-const changeViewPost = () => {
- console.log('vai carambinha')
-}
-
-const nullFunction= () =>{
-
-}
-
 const postTemplate = doc => `
     <div class='posted container-post' data-id=${doc.id}> 
 
@@ -179,11 +170,6 @@ const newPost = () => {
     private: privacyOption.value
   };
   app.db.collection('posts').add(post).then(() => {
-    // docRef = {
-    //   ...post,
-    //   id: docRef.id,
-    // };
-
     textArea.value = '';
     document.querySelector('.post-btn').disabled = true;
   });
@@ -200,16 +186,48 @@ const buttonActivate = (e) => {
 };
 
 const Feed = (props) => {
-  let postsTemplate = '';
   props.posts.forEach((post) => {
     const docPost = {
       ...post.data(),
       id: post.id,
     };
-    postsTemplate += postTemplate(docPost);
+    app.postsTemplate += postTemplate(docPost);
   });
-  
-    
+
+  const changeViewPost = (e) => {
+    document.querySelector('.posts').innerHTML= ''
+    const value = e.target.value
+    if(value == 'false'){
+      firebase.firestore().collection('posts')
+      .where('private', '==', value)
+      .orderBy('timestamp', 'desc')
+      .onSnapshot((querySnapshot) => {
+          querySnapshot.forEach((post) => {
+            const docPost = {
+              ...post.data(),
+              id: post.id,
+            };
+            document.querySelector('.posts').innerHTML+= app.postTemplate(docPost)
+          });
+      });
+    } else {
+      const currentUser = app.auth.currentUser.uid;
+      firebase.firestore().collection('posts')
+      .where('user', '==', currentUser)
+      .where('private', '==', value)
+      .orderBy('timestamp', 'desc')
+      .onSnapshot((querySnapshot) => {
+           querySnapshot.forEach((post) => {
+            const docPost = {
+              ...post.data(),
+              id: post.id,
+            };
+            document.querySelector('.posts').innerHTML+= app.postTemplate(docPost)
+          });
+      });
+    }
+  }  
+
   const template = `
     <header class='header'> <span class='header-title'> MusicalSpace </span>
     ${Button({
@@ -231,7 +249,19 @@ const Feed = (props) => {
     onKeyup: buttonActivate,
   })}
 
-        ${Button({
+    <div class='select'>
+      ${selectPrivacy({
+        class: 'privacyOption',
+        onChange: null,
+        opClass1: 'public', 
+        value1: 'false',
+        txt1: 'Público',
+        opClass2: 'private',
+        value2: 'true',
+        txt2: 'Privado',
+      })}
+    </div>
+  ${Button({
     type: 'button',
     title: 'Postar',
     class: 'primary-button post-btn',
@@ -239,25 +269,21 @@ const Feed = (props) => {
     disabled: 'disabled',
   })}
 
-      ${selectPrivacy({
-    class: 'privacyOption',
-    onChange: nullFunction,
-    opClass1: 'public',
-    value1: 'false',
-    txt1: 'Público',
-    opClass2: 'private',
-    value2: 'true',
-    txt2: 'Privado',
-  })}
-  
     </div>
-        <p> Visualizar post 
-          <select class="privacyOption" onchange="${changeViewPost}">
-            <option class="public" value="false" selected> Público </option>
-            <option class="private" value="true"> Privado </option>
-          </select>
-        </p>
-        <div class="posts"> ${postsTemplate} </div>
+        <section class='view-post'> 
+          Visualizar posts:
+          ${selectPrivacy({
+            class: 'privacyOption select-position',
+            onChange: changeViewPost,
+            opClass1: 'public',
+            value1: 'false',
+            txt1: 'Público',
+            opClass2: 'private',
+            value2: 'true',
+            txt2: 'Privado',
+          })}
+        </section>
+        <div class="posts"> ${app.postsTemplate} </div>
       </section>
     </section>
   `
@@ -271,7 +297,7 @@ const Profile = () => {
 
   const templateProfile =
    `<div class="photo-profile">
-      <img class= "photo-img" src=${username.photo ? username.photo : "../image/person.png"}/>
+      <img class= "photo-img" src=${username.photo ? username.photo : '../image/person.png'}/>
     <div class="profile">      
           <h1 class="user-info">${name}</h1>
           ${actionIcon({
@@ -324,14 +350,10 @@ const updateProfile = (checkIcon) => {
 };
 
 window.app = {
+  postsTemplate: '',
   postTemplate,
   db: firebase.firestore(),
   auth: firebase.auth(),
 };
 
 export default Feed;
-
-
-// const currentUser= user.uid
-// firebase.firestore().collection('posts')
-//   .where('user', '==', currentUser)
