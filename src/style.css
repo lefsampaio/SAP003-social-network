@@ -201,6 +201,9 @@ body {
   border-radius: 6px;
 }
 
+.privacyOption{
+  width: 90px;
+}
 .posts{
   width: 94vw;
 }
