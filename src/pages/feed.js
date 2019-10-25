@@ -93,6 +93,7 @@ const saveComment = (event) => {
     const id = event.target.parentElement.dataset.docid;
 
     app.db.collection('posts').doc(id).update({
+      commentsCount: firebase.firestore.FieldValue.increment(1),
       comments: firebase.firestore.FieldValue.arrayUnion({ comment, name }),
     });
   }
@@ -138,17 +139,18 @@ const postTemplate = doc => `
       <div class='column comments' data-docid=${doc.id}>
         <div>
         ${actionIcon({
-  class: 'comment-btn minibtns fab far fa-paper-plane',
-  name: doc.user,
-  dataDocid: doc.id,
-  onClick: addComment,
-})}
+    class: 'comment-btn minibtns fab far fa-paper-plane',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: addComment,
+  })}
+      <span class="likes">${doc.commentsCount}</span>
         ${actionIcon({
-  class: 'like-btn minibtns fas fa-heart',
-  name: doc.user,
-  dataDocid: doc.id,
-  onClick: like,
-})}
+    class: 'like-btn minibtns fas fa-heart',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: like,
+  })}
     <span class="likes">${doc.likes}</span>
         </div>
       ${textArea({
@@ -168,6 +170,7 @@ const newPost = () => {
     user: app.auth.currentUser.uid,
     text: textArea.value,
     likes: 0,
+    commentsCount: 0,
     timestamp: new Date().getTime(),
     date: new Date().toLocaleString('pt-BR').slice(0, 16),
   };
@@ -236,37 +239,6 @@ const Feed = (props) => {
   return template;
 };
 
-const Profile = () => {
-  const username = app.auth.currentUser;
-  const user = app.auth.currentUser.uid;
-  const name = username.displayName.trim();
-
-
-  const templateProfile =
-   `<div class="photo-profile">
-      <img class= "photo-img" src=${username.photo ? username.photo : "../image/person.png"}/>
-    <div class="profile">      
-          <h1 class="user-info">${name}</h1>
-
-          ${actionIcon({
-    class: 'edit-btn minibtns fas fa-pencil-alt',
-    name: user.user,
-    dataDocid: user.id,
-    onClick: editProfile,
-  })}      
-          ${actionIcon({
-    class: 'save-btn minibtns hide fas fa-check',
-    name: user.user,
-    dataDocid: user.id,
-    onClick: updateProfile,
-  })}   
-      
-
-     </div> 
-   </div> 
-      `
-  return templateProfile
-}
 const editProfile = (pencilIcon) => {
   pencilIcon.className = 'edit-btn minibtns hide';
   pencilIcon.nextElementSibling.className = 'save-btn minibtns show fas fa-check';
@@ -291,12 +263,41 @@ const updateProfile = (checkIcon) => {
     .get()
 
     .then((querySnapshot) => {
-
       querySnapshot.forEach((doc) => {
-
         app.db.collection('posts').doc(doc.id).update({ name: pName.textContent });
       });
     });
+};
+
+const Profile = () => {
+  const username = app.auth.currentUser;
+  const user = app.auth.currentUser.uid;
+  const name = username.displayName.trim();
+
+
+  const templateProfile =   `<div class="photo-profile">
+      <img class= "photo-img" src=${username.photo ? username.photo : '../image/person.png'}/>
+    <div class="profile">      
+          <h1 class="user-info">${name}</h1>
+
+          ${actionIcon({
+    class: 'edit-btn minibtns fas fa-pencil-alt',
+    name: user.user,
+    dataDocid: user.id,
+    onClick: editProfile,
+  })}      
+          ${actionIcon({
+    class: 'save-btn minibtns hide fas fa-check',
+    name: user.user,
+    dataDocid: user.id,
+    onClick: updateProfile,
+  })}   
+      
+
+     </div> 
+   </div> 
+      `;
+  return templateProfile;
 };
 
 window.app = {
