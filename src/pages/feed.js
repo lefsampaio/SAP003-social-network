@@ -305,37 +305,6 @@ const updateProfile = (checkIcon) => {
     });
 };
 
-const Profile = () => {
-  const username = app.auth.currentUser;
-  const user = app.auth.currentUser.uid;
-  const name = username.displayName.trim();
-
-
-  const templateProfile =   `<div class="photo-profile">
-      <img class= "photo-img" src=${username.photo ? username.photo : '../image/person.png'}/>
-    <div class="profile">      
-          <h1 class="user-info">${name}</h1>
-
-          ${actionIcon({
-    class: 'edit-btn minibtns fas fa-pencil-alt',
-    name: user.user,
-    dataDocid: user.id,
-    onClick: editProfile,
-  })}      
-          ${actionIcon({
-    class: 'save-btn minibtns hide fas fa-check',
-    name: user.user,
-    dataDocid: user.id,
-    onClick: updateProfile,
-  })}   
-      
-
-     </div> 
-   </div> 
-      `;
-  return templateProfile;
-};
-
 window.app = {
   postTemplate,
   db: firebase.firestore(),
