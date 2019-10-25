@@ -166,7 +166,7 @@ const postTemplate = doc => `
 
 const newPost = () => {
   const textArea = document.querySelector('.add-post');
-  const privacyOption = document.querySelector('.privacyOption');
+  const privacyOption = document.querySelector('.privacy-option');
   const post = {
     name: app.auth.currentUser.displayName,
     user: app.auth.currentUser.uid,
@@ -230,7 +230,7 @@ const Feed = (props) => {
   })}
   <div class='row'>
     ${selectPrivacy({
-    class: 'privacyOption',
+    class: 'privacy-option',
     onChange: null,
     opClass1: 'public',
     value1: 'false',
@@ -249,10 +249,11 @@ const Feed = (props) => {
   })}
   </div>
       </div>
-      <p>
+      <p class="privacy-text">
       Visualizar Posts:
+      </p>
       ${selectPrivacy({
-    class: 'privacyOption',
+    class: 'privacy-option',
     onChange: changeViewPost,
     opClass1: 'public',
     value1: 'false',
@@ -261,7 +262,6 @@ const Feed = (props) => {
     value2: 'true',
     txt2: 'Privado',
   })}
-      </p>
         <div class='container posts'> ${app.postsTemplate} </div>
       </section>
     </section>
@@ -277,7 +277,7 @@ const changeViewPost = (e) => {
       .where('private', '==', value)
       .orderBy('timestamp', 'desc')
       .get()
-.then((querySnapshot) => {
+      .then((querySnapshot) => {
         querySnapshot.forEach((post) => {
           const docPost = {
             ...post.data(),
@@ -293,7 +293,7 @@ const changeViewPost = (e) => {
       .where('private', '==', value)
       .orderBy('timestamp', 'desc')
       .get()
-.then((querySnapshot) => {
+      .then((querySnapshot) => {
         querySnapshot.forEach((post) => {
           const docPost = {
             ...post.data(),
@@ -311,7 +311,7 @@ const Profile = () => {
   const name = username.displayName.trim();
 
 
-  const templateProfile =   `<div class="photo-profile">
+  const templateProfile = `<div class="photo-profile">
       <div class="cover">
       <img class="cover"src="../image/cover.png"/>
       </div>
