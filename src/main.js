@@ -34,10 +34,3 @@ const routes = () => {
 
 window.addEventListener('load', routes);
 window.addEventListener('hashchange', routes);
-
-        // firebase.firestore().collection('users').onSnapshot((querySnapshot) =>{
-        //   querySnapshot.forEach(post => {
-        //     console.log(post.data())
-            
-        //   });
-        // })
