@@ -90,74 +90,71 @@ const saveComment = (event) => {
   if (event.keyCode === 13) {
     const comment = event.target.value;
     const name = app.auth.currentUser.displayName;
-    const id = event.target.parentElement.dataset.docid;
+    const id = event.target.parentElement.parentElement.dataset.docid;
 
     app.db.collection('posts').doc(id).update({
+      commentsCount: firebase.firestore.FieldValue.increment(1),
       comments: firebase.firestore.FieldValue.arrayUnion({ comment, name }),
     });
+
+    event.target.parentElement.className = '';
   }
 };
 
 const checkComments = (comments) => {
   if (comments) {
-    const commentsTemplate = [];
+    const commentsTemplate = [`
+    <p class="branco">Comentários:</p>
+  `];
     comments.forEach((obj) => {
       commentsTemplate.push(`<p class="text comment-area">
       <span class="comment-name">${obj.name}</span><br>${obj.comment}
     </p>
   `);
     });
-    const finalCommentsTemplate = `
-    <div class="comments-title">
-      <p class="branco">Comentários:</p>
-      ${commentsTemplate.join('')}
-    </div>`;
-    return finalCommentsTemplate;
+    return commentsTemplate.join('');
   }
   return '';
 };
 
 const postTemplate = doc => `
-    <div class='posted container-post' data-id=${doc.id}> 
-
-      <p class='posted posted-name'> Publicado por ${doc.name} | ${doc.date}
+  <div class='posted container-post' data-id=${doc.id}> 
+    <p class='posted posted-name'> Publicado por ${doc.name} | ${doc.date}
       ${checkUserDelete(doc)}
-      </p>
-
-      <div class='text-button'>
-        <p class='text' data-like=${doc.likes} data-docid=${doc.id}> ${doc.text}</p>
-        <div class='buttons'>
+    </p>
+    <div class='text-button'>
+      <p class='text' data-like=${doc.likes} data-docid=${doc.id}> ${doc.text}</p>
+      <div class='buttons'>
         ${checkUserEdit(doc)}
-        </div>
       </div>
-
+    </div>
+    <div class="comments" data-docid=${doc.id}>
       <div>
-      ${checkComments(doc.comments)}
-      </div>
-
-      <div class="comments" data-docid=${doc.id}>
-        <div>
         ${actionIcon({
     class: 'comment-btn minibtns fab far fa-paper-plane',
     name: doc.user,
     dataDocid: doc.id,
     onClick: addComment,
   })}
+        <span class="likes">${doc.commentsCount}</span>
         ${actionIcon({
     class: 'like-btn minibtns fas fa-heart',
     name: doc.user,
     dataDocid: doc.id,
     onClick: like,
   })}
-    <span class="likes">${doc.likes}</span>
-        </div>
-      ${textArea({
-    class: 'add-comment hide',
+        <span class="likes">${doc.likes}</span>
+      </div>
+      <div name="essa-aqui" class="hide">
+        ${checkComments(doc.comments)}
+        ${textArea({
+    class: 'add-comment',
     placeholder: 'Comente...',
     onKeyup: saveComment,
   })}
       </div>
-    </div>`;
+    </div>
+  </div>`;
 
 
 const newPost = () => {
@@ -167,6 +164,7 @@ const newPost = () => {
     user: app.auth.currentUser.uid,
     text: textArea.value,
     likes: 0,
+    commentsCount:0,
     timestamp: new Date().getTime(),
     date: new Date().toLocaleString('pt-BR').slice(0, 16),
   };
@@ -240,7 +238,7 @@ const Profile = () => {
   const user = app.auth.currentUser.uid;
   const name = username.displayName.trim();
 
-  const templateProfile =    `<div class="profile">        
+  const templateProfile = `<div class="profile">        
           <p class="user-info">${name}</p>
           ${actionIcon({
     class: 'edit-btn minibtns fas fa-pencil-alt',
@@ -285,7 +283,6 @@ const updateProfile = (checkIcon) => {
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-
         app.db.collection('posts').doc(doc.id).update({ name: pName.textContent });
       });
     });

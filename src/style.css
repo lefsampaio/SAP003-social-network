@@ -267,7 +267,7 @@ body {
   width: 96%;
   padding: 3px 7px;
   margin-bottom: 5px;
-  background-color: #d393e9;
+  background-color: #efeeee;
   border-radius: 10px;
 }
 
@@ -293,7 +293,7 @@ body {
 .add-comment {
   resize: none;
   width: 95%;
-  height: 45%;
+  height: 7vh;
   border-radius: 8px;
   border: 1px solid grey;
   font-family: 'Hind', sans-serif;
@@ -362,5 +362,10 @@ body {
 
   .text {
     width: 39.7vw;
+  }
+
+  .add-comment {
+    width: 97%;
+    height: 13vh;
   }
 }
