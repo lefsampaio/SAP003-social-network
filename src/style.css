@@ -141,7 +141,7 @@ body {
 }
 
 .user-icon{
-  font-size:xxx-large;
+  font-size: 50px;
   color:#9c64a6;
 }
 
@@ -336,20 +336,39 @@ body {
 .square-border {
   border-radius: 0;
 }
+
 .cover{
 display: none;
 }
+
+.privacy-text {
+  font-family: "Hind";
+  margin-bottom: 0;
+  font-size: 16px;
+}
+
+.privacy-option {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url(../image/v.png) no-repeat #eeeeee;
+  background-position: 76px center;
+  width: 107px;
+  height: 34px;
+  border:1px solid #ad31da;
+  border-radius: 6px;
+  background-color:#643173;
+  background-size: 29px;
+  color:#feffff;
+  padding: 6px 9px;
+}
+
 @media (min-width: 900px){
 
   .cover{
     display: inline;
     border-radius: 6px 6px 0 0;
     margin-bottom: -5px;
-    
-  }
-  .user-icon{
-    font-size:xxx-large;
-    color:#9c64a6;
   }
 
   .container-main{
