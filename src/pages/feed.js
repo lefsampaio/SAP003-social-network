@@ -1,7 +1,7 @@
 import Button from '../components/button.js';
 import textArea from '../components/text-area.js';
-import actionIcon from '../components/action-icon.js'
-import selectPrivacy from '../components/selectPrivacy.js'
+import actionIcon from '../components/action-icon.js';
+import selectPrivacy from '../components/selectPrivacy.js';
 
 const logout = (e) => {
   app.auth.signOut().catch((error) => {
@@ -53,17 +53,17 @@ const checkUserEdit = (doc) => {
   if (user === doc.user) {
     return `
     ${actionIcon({
-      class: 'save-btn minibtns hide fas fa-check',
-      name: doc.user,
-      dataDocid: doc.id,
-      onClick: saveEditPost,
-    })}
+    class: 'save-btn minibtns hide fas fa-check',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: saveEditPost,
+  })}
       ${actionIcon({
-      class: 'edit-btn minibtns fas fa-pencil-alt',
-      name: doc.user,
-      dataDocid: doc.id,
-      onClick: makePostEditable,
-    })}
+    class: 'edit-btn minibtns fas fa-pencil-alt',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: makePostEditable,
+  })}
     `;
   }
   return '';
@@ -74,11 +74,11 @@ const checkUserDelete = (doc) => {
   if (user === doc.user) {
     return `
   ${actionIcon({
-      class: 'delete-btn minibtns fas fa-times',
-      name: doc.user,
-      dataDocid: doc.id,
-      onClick: deletePost,
-    })}`;
+    class: 'delete-btn minibtns fas fa-times',
+    name: doc.user,
+    dataDocid: doc.id,
+    onClick: deletePost,
+  })}`;
   }
   return '';
 };
@@ -155,10 +155,10 @@ const postTemplate = doc => `
     <span class="likes">${doc.likes}</span>
         </div>
       ${textArea({
-  class: 'add-comment hide',
-  placeholder: 'Comente...',
-  onKeyup: saveComment,
-})}
+    class: 'add-comment hide',
+    placeholder: 'Comente...',
+    onKeyup: saveComment,
+  })}
 
       </div>
     </div>`;
@@ -166,7 +166,7 @@ const postTemplate = doc => `
 
 const newPost = () => {
   const textArea = document.querySelector('.add-post');
-  const privacyOption = document.querySelector('.privacyOption')
+  const privacyOption = document.querySelector('.privacyOption');
   const post = {
     name: app.auth.currentUser.displayName,
     user: app.auth.currentUser.uid,
@@ -175,7 +175,7 @@ const newPost = () => {
     commentsCount: 0,
     timestamp: new Date().getTime(),
     date: new Date().toLocaleString('pt-BR').slice(0, 16),
-    private: privacyOption.value
+    private: privacyOption.value,
   };
   app.db.collection('posts').add(post).then((docRef) => {
     docRef = {
@@ -199,15 +199,15 @@ const buttonActivate = (e) => {
 };
 
 const Feed = (props) => {
-  app.postsTemplate = ''
+  app.postsTemplate = '';
   document.querySelector('body').className = 'background';
-  
+
   props.posts.forEach((post) => {
     const docPost = {
       ...post.data(),
       id: post.id,
     };
-    app.postsTemplate += app.postTemplate(docPost)
+    app.postsTemplate += app.postTemplate(docPost);
   });
 
   const template = `
@@ -270,19 +270,20 @@ const Feed = (props) => {
 };
 
 const changeViewPost = (e) => {
-  document.querySelector('.posts').innerHTML = ''
-  const value = e.target.value
+  document.querySelector('.posts').innerHTML = '';
+  const value = e.target.value;
   if (value == 'false') {
     firebase.firestore().collection('posts')
       .where('private', '==', value)
       .orderBy('timestamp', 'desc')
-      .get().then((querySnapshot) => {
+      .get()
+.then((querySnapshot) => {
         querySnapshot.forEach((post) => {
           const docPost = {
             ...post.data(),
             id: post.id,
           };
-          document.querySelector('.posts').innerHTML += app.postTemplate(docPost)
+          document.querySelector('.posts').innerHTML += app.postTemplate(docPost);
         });
       });
   } else {
@@ -291,25 +292,26 @@ const changeViewPost = (e) => {
       .where('user', '==', currentUser)
       .where('private', '==', value)
       .orderBy('timestamp', 'desc')
-      .get().then((querySnapshot) => {
+      .get()
+.then((querySnapshot) => {
         querySnapshot.forEach((post) => {
           const docPost = {
             ...post.data(),
             id: post.id,
           };
-          document.querySelector('.posts').innerHTML += app.postTemplate(docPost)
+          document.querySelector('.posts').innerHTML += app.postTemplate(docPost);
         });
       });
   }
-  
+};
+
 const Profile = () => {
   const username = app.auth.currentUser;
   const user = app.auth.currentUser.uid;
   const name = username.displayName.trim();
 
 
-  const templateProfile =
-   `<div class="photo-profile">
+  const templateProfile =   `<div class="photo-profile">
       <div class="cover">
       <img class="cover"src="../image/cover.png"/>
       </div>
@@ -317,24 +319,24 @@ const Profile = () => {
       <i class="far fa-user user-icon"></i>
           <h1 class="user-info">${name}</h1>
           ${actionIcon({
-          class: 'edit-btn minibtns fas fa-pencil-alt',
-          name: user.user,
-          dataDocid: user.id,
-          onClick: editProfile,
-          })}      
+    class: 'edit-btn minibtns fas fa-pencil-alt',
+    name: user.user,
+    dataDocid: user.id,
+    onClick: editProfile,
+  })}      
           ${actionIcon({
-          class: 'save-btn minibtns hide fas fa-check',
-          name: user.user,
-          dataDocid: user.id,
-          onClick: updateProfile,
-          })}   
+    class: 'save-btn minibtns hide fas fa-check',
+    name: user.user,
+    dataDocid: user.id,
+    onClick: updateProfile,
+  })}   
       
 
      </div> 
    </div> 
-      `
-  return templateProfile
-}
+      `;
+  return templateProfile;
+};
 
 const editProfile = (pencilIcon) => {
   pencilIcon.className = 'edit-btn minibtns hide';
@@ -366,37 +368,6 @@ const updateProfile = (checkIcon) => {
     });
 };
 
-const Profile = () => {
-  const username = app.auth.currentUser;
-  const user = app.auth.currentUser.uid;
-  const name = username.displayName.trim();
-
-
-  const templateProfile =
-    `<div class="photo-profile">
-      <img class= "photo-img" src=${username.photo ? username.photo : "../image/person.png"}/>
-    <div class="profile">      
-          <h1 class="user-info">${name}</h1>
-
-          ${actionIcon({
-      class: 'edit-btn minibtns fas fa-pencil-alt',
-      name: user.user,
-      dataDocid: user.id,
-      onClick: editProfile,
-    })}      
-          ${actionIcon({
-      class: 'save-btn minibtns hide fas fa-check',
-      name: user.user,
-      dataDocid: user.id,
-      onClick: updateProfile,
-    })}   
-      
-
-     </div> 
-   </div> 
-      `
-  return templateProfile
-}
 
 window.app = {
   postsTemplate: '',
