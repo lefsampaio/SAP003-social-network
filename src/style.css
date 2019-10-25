@@ -135,41 +135,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%  
+  
 }
 .photo-img{
   width: 20%;
 }
 
-
-.select-and-button{
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.select{
-  display: flex;
-  align-items: center;
-  width: 70%;
-  margin-left: 10px;
-}
-
-select{
-  appearance: none;
-  outline: none;
-  background: #e1bee7;
-  border: 0;
-}
-
-.privacyOption{
-  position: relative;
-  width:90px;
-  height: 30px;
-  overflow: hidden;
-  padding: 1px;
-  font-size: 15px;
-}
 
 .post-btn {
   align-self: flex-end;
@@ -355,13 +326,8 @@ select{
   margin-bottom: 10px;
 }
 
-<<<<<<< HEAD
-.user-info{
-  font-size: 20px;
-=======
 .square-border {
   border-radius: 0;
->>>>>>> master
 }
 
 @media (min-width: 900px){
@@ -390,6 +356,7 @@ select{
   .photo-profile{
     align-self: start;
     margin-top:10px ;
+    border:black solid;
     width: 28%;
   }
   .add-post{
