@@ -273,6 +273,10 @@ body {
   color: #454ee7;
 }
 
+.delete-btn{
+color: #feffff;
+}
+
 .delete-btn:hover {
   color: #d30505;
 }
