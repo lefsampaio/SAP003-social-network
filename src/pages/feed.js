@@ -373,7 +373,7 @@ const Profile = () => {
 };
 
 const editProfile = (pencilIcon) => {
-  pencilIcon.className = 'edit-btn minibtns hide';
+  pencilIcon.className = 'edit-btn minibtns fas fa-pencil-alt hide';
   pencilIcon.nextElementSibling.className = 'save-btn minibtns show fas fa-check';
   pencilIcon.previousElementSibling.contentEditable = true;
   pencilIcon.previousElementSibling.className += 'editable-text';
@@ -381,7 +381,9 @@ const editProfile = (pencilIcon) => {
 
 const updateProfile = (checkIcon) => {
   checkIcon.className = 'save-btn minibtns hide fas fa-check';
-  checkIcon.previousElementSibling.className = 'edit-btn minibtns show';
+  console.log(checkIcon.previousElementSibling);
+  
+  checkIcon.previousElementSibling.className = 'edit-btn minibtns fas fa-pencil-alt show';
   const pName = checkIcon.previousElementSibling.previousElementSibling;
   pName.contentEditable = false;
   pName.className = 'username';
