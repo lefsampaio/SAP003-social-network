@@ -1,3 +1,4 @@
+/* eslint-disable no-else-return */
 import Button from '../components/button.js';
 import textArea from '../components/text-area.js';
 import actionIcon from '../components/action-icon.js';
@@ -12,9 +13,7 @@ const logout = (e) => {
 const deletePost = (deleteButton) => {
   const confirmDelete = confirm('Deseja mesmo deletar?');
   if (confirmDelete) {
-    app.db.collection('posts').doc(deleteButton.dataset.docid).delete().then(() => {
-      deleteButton.parentElement.parentElement.remove();
-    });
+    app.db.collection('posts').doc(deleteButton.dataset.docid).delete();
   }
 };
 
@@ -48,6 +47,25 @@ const like = (heart) => {
     });
 };
 
+const deleteComment = (commentDeleteIcon) => {
+  const confirmDelete = confirm('Deseja mesmo deletar?');
+  if (confirmDelete) {
+    const post = commentDeleteIcon.parentElement.parentElement.parentElement.previousElementSibling.firstElementChild;
+    const postId = post.dataset.docid;
+    const commentId = Number(commentDeleteIcon.dataset.docid);
+
+    app.db.collection('posts').doc(postId).get().then((qs) => {
+      const commentsPosts = qs.data().comments;
+      const updatedComments = commentsPosts.filter(comment => comment.timestampComment !== commentId);
+
+      app.db.collection('posts').doc(postId).update({
+        commentsCount: firebase.firestore.FieldValue.increment(-1),
+        comments: updatedComments,
+      });
+    });
+  }
+};
+
 const checkUserEdit = (doc) => {
   const user = app.auth.currentUser.uid;
   if (user === doc.user) {
@@ -71,13 +89,21 @@ const checkUserEdit = (doc) => {
 
 const checkUserDelete = (doc) => {
   const user = app.auth.currentUser.uid;
-  if (user === doc.user) {
+  if (user === doc.user && doc.id) {
     return `
   ${actionIcon({
     class: 'delete-btn minibtns fas fa-times',
     name: doc.user,
     dataDocid: doc.id,
     onClick: deletePost,
+  })}`;
+  } else if (user === doc.user && doc.timestampComment) {
+    return `
+  ${actionIcon({
+    class: 'delete-btn delete-btn-comment minibtns fas fa-times',
+    name: doc.user,
+    dataDocid: doc.timestampComment,
+    onClick: deleteComment,
   })}`;
   }
   return '';
@@ -90,23 +116,31 @@ const addComment = (commentIcon) => {
 const saveComment = (event) => {
   if (event.keyCode === 13) {
     const comment = event.target.value;
-    const name = app.auth.currentUser.displayName;
     const id = event.target.parentElement.dataset.docid;
 
     app.db.collection('posts').doc(id).update({
       commentsCount: firebase.firestore.FieldValue.increment(1),
-      comments: firebase.firestore.FieldValue.arrayUnion({ comment, name }),
+      comments: firebase.firestore.FieldValue.arrayUnion({
+        comment,
+        name: app.auth.currentUser.displayName,
+        timestampComment: new Date().getTime(),
+        user: app.auth.currentUser.uid,
+        date: new Date().toLocaleString('pt-BR').slice(0, 16),
+      }),
     });
   }
 };
 
 const checkComments = (comments) => {
-  if (comments) {
+  if (comments && comments.length !== 0) {
     const commentsTemplate = [];
     comments.forEach((obj) => {
-      commentsTemplate.push(`<p class="text comment-area">
-      <span class="comment-name">${obj.name}</span><br>${obj.comment}
-    </p>
+      commentsTemplate.push(`<div class="text comment-area">
+      <p class='comment row'><span class="comment-name">${obj.name} | ${obj.date}</span>
+      ${checkUserDelete(obj)}
+      </p>
+      <p class='comment'>${obj.comment}</p>
+    </div>
   `);
     });
     const finalCommentsTemplate = `
@@ -133,9 +167,9 @@ const postTemplate = doc => `
         </div>
       </div>
 
-      <div>
+     
       ${checkComments(doc.comments)}
-      </div>
+      
 
       <div class='column comments' data-docid=${doc.id}>
         <div>
@@ -339,7 +373,7 @@ const Profile = () => {
 };
 
 const editProfile = (pencilIcon) => {
-  pencilIcon.className = 'edit-btn minibtns hide';
+  pencilIcon.className = 'edit-btn minibtns fas fa-pencil-alt hide';
   pencilIcon.nextElementSibling.className = 'save-btn minibtns show fas fa-check';
   pencilIcon.previousElementSibling.contentEditable = true;
   pencilIcon.previousElementSibling.className += 'editable-text';
@@ -347,7 +381,9 @@ const editProfile = (pencilIcon) => {
 
 const updateProfile = (checkIcon) => {
   checkIcon.className = 'save-btn minibtns hide fas fa-check';
-  checkIcon.previousElementSibling.className = 'edit-btn minibtns show';
+  console.log(checkIcon.previousElementSibling);
+  
+  checkIcon.previousElementSibling.className = 'edit-btn minibtns fas fa-pencil-alt show';
   const pName = checkIcon.previousElementSibling.previousElementSibling;
   pName.contentEditable = false;
   pName.className = 'username';

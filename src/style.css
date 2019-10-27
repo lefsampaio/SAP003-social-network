@@ -277,6 +277,10 @@ body {
 color: #feffff;
 }
 
+.delete-btn-comment {
+  color: #000000;
+}
+
 .delete-btn:hover {
   color: #d30505;
 }
@@ -323,7 +327,10 @@ color: #feffff;
   margin: 0;
   background-color: #643173;
   padding: 3px 10px;
-  
+}
+
+.comment {
+  margin: 0;
 }
 
 .branco {
