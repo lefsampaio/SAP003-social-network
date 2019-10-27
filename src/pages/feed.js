@@ -347,8 +347,8 @@ const editProfile = (pencilIcon) => {
 
 const updateProfile = (checkIcon) => {
   checkIcon.className = 'save-btn minibtns hide fas fa-check';
-  checkIcon.className = 'edit-btn minibtns show';
-  const pName = checkIcon.parentElement;
+  checkIcon.previousElementSibling.className = 'edit-btn minibtns show';
+  const pName = checkIcon.previousElementSibling.previousElementSibling;
   pName.contentEditable = false;
   pName.className = 'username';
 

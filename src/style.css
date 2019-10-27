@@ -273,6 +273,10 @@ body {
   color: #454ee7;
 }
 
+.delete-btn{
+color: #feffff;
+}
+
 .delete-btn:hover {
   color: #d30505;
 }
@@ -409,12 +413,9 @@ display: none;
   }
   .photo-profile{
     margin-top:10px;
-    width: 28%;
-    height: 185px;
+    height: max-content;
     font-size: 17px;
-    border-radius: 8px;
     flex-direction: column;
-
   }
   .add-post{
     width: 39vw;
