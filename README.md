@@ -1,5 +1,17 @@
 # MusicalSpace
 
+## Índice
+
+* [1. MusicalSpace](#1-musicalspace)
+* [2. Objetivo](#2-objetivo)
+* [3. Usuário e história de usuário](#3-usuário-e-história-de-usuário)
+* [4. Protótipo de baixa fidelidade](#4-protótipo-de-baixa-fidelidade)
+* [5. Considerações finais](#5-considerações-finais)
+
+*** 
+
+## 1. MusicalSpace
+
 Neste projeto construimos uma Rede social, cuja temática é Música.
 
 O projeto MusicalSpace foi desenvolvido pensando na necessidade do nosso usuário de compartilhar
@@ -10,12 +22,12 @@ dade simples e intuitiva para o usuário.
 
 MusicalSpace foi desenvolvido com *HTML5*, *CSS3*, *JavaScript(ES6+)* e *Firebase*
 
-## Objetivo
+## 2. Objetivo
 
 O objetivo deste projeto era construir uma Rede Social, Single-Page Application (SPA), responsiva na 
 qual podemos escrever, ler, atualizar e deletar dados.
 
-## Usuário e história de usuário.
+## 3. Usuário e história de usuário.
 
 Nossa rede social é destinada a todos os tipos de público, de todas as idades, que gostem de música
 e queiram interagir com outros usários.
@@ -48,20 +60,25 @@ social, tendo isso em mente implementamos as histórias nessa ordem:
 7. Comentar e deletar comentário.
 8. Postar como Público ou Privado e visualizar o modelo selecionado.
 
-## Protótipo de Baixa Fidelidade
+## 4. Protótipo de Baixa Fidelidade
 
 Recebemos dois layouts para seguir como protótipos e a partir desses desenvolvemos os nossos.
 
-**Layouts de login**
+###Layouts de login
+
 ![](/src/image/loginpage.png)
 
-**Layouts do Feed**
+###Layouts do Feed
+
 ![](/src/image/feed.png)
 
 Você pode ver a versão final deste projeto [AQUI NESTE LINK](https://social-network-b6633.firebaseapp.com/)
 
-## Considerações finais
+## 5. Considerações finais
+
 Este projeto foi desenvolvido por Aline Camargo, Jackeline Mattar e Letícia Sampaio, durante o Bootcamp Laboratória.
+Agradecemos o apoio de toda a equipe Laboratória, a nossas companheiras da 3ª geração Laboratória e aos 
+nossos familiares que testaram a usabilidade do nosso projeto e seguem nos apoiando a todo o momento.
 
 
 
