@@ -1,81 +1,38 @@
 # MusicalSpace
 
-Neste projeto construimos uma Rede social, cuja temática é Musica.
+## Índice
+
+* [1. MusicalSpace](#1-musicalspace)
+* [2. Objetivo](#2-objetivo)
+* [3. Usuário e história de usuário](#3-usuário-e-história-de-usuário)
+* [4. Protótipo de baixa fidelidade](#4-protótipo-de-baixa-fidelidade)
+* [5. Considerações finais](#5-considerações-finais)
+
+*** 
+
+## 1. MusicalSpace
+
+Neste projeto construimos uma Rede social, cuja temática é Música.
 
 O projeto MusicalSpace foi desenvolvido pensando na necessidade do nosso usuário de compartilhar
 seus gostos musicais, eventos, playlists e tudo relacionado ao mundo da música, além de interagir
 com os outros usuários.
+Todo o projeto foi desenvolvido com o conceito Mobile First, e com a preocupação de ter usabili-
+dade simples e intuitiva para o usuário.
 
+MusicalSpace foi desenvolvido com *HTML5*, *CSS3*, *JavaScript(ES6+)* e *Firebase*
 
-Nessa aplicação, utilizamos *HTML5*, *CCS3*, *JavaScript(ES6+)* e *Firebase*
+## 2. Objetivo
 
-## Objetivo
+O objetivo deste projeto era construir uma Rede Social, Single-Page Application (SPA), responsiva na 
+qual podemos escrever, ler, atualizar e deletar dados.
 
-O objetivo deste projeto é construir uma Rede Social, Single-Page Application (SPA), responsiva na qual podemos escrever, ler, atualizar e deletar dados.
+## 3. Usuário e história de usuário.
 
-### Planejamento
+Nossa rede social é destinada a todos os tipos de público, de todas as idades, que gostem de música
+e queiram interagir com outros usários.
 
-* Escrever, de maneira colaborativa, as **Definições de pronto** e **Critérios de Aceitação** para cada **História de usuário** que te daremos para este projeto e que deverá considerar em seu planejamento.
-
-* **Priorizar** a implementação de suas funcionalidades, levando em conta o esforço que demandam em relação ao valor que elas têm para o usuário, e executar, em equipe, todas as histórias de usuário dentro do tempo estimado para cada sprint. Levem em conta que ao final de cada sprint deverão ser entregues publicações completamente funcionais.
-
-* Adquirir disciplina na completude, terminando uma história de usuário antes de passar para a seguinte (ou seja, que cumpre com as *Definições de Pronto* e *Critérios de Aceitação* contemplando todos os pontos que são objetivos de aprendizagem para este projeto).
-
-### Desenvolvimento FrontEnd
-
-#### Tecnologias HTML5 e CSS3/SASS
-
-* Aplicar HTML5 semântico em seu projeto.
-* Aplicar e reforçar os conceitos fundamentais de CSS3.
-* Implemetar seletores de classe evitando a redundância de estilos CSS3.
-* Utilizar `flexbox` para alcançar o desenho `mobile first`, implementando um layout que se adapte a **mobile e desktop**
-
-A seguir, te passaremos o layout da tela mobile e desktop que você deverá replicar visualmente e cujo conteúdo, cores e fontes de texto deixaremos a seu critério.
-
-* Tela mobile
-
-    ![mobile](https://user-images.githubusercontent.com/32286663/56174616-ec9f6100-5fb8-11e9-9edb-d5ef7c251d9c.png)
-
-* Tela Desktop
-
-    ![desktop](https://user-images.githubusercontent.com/32286663/56174626-fcb74080-5fb8-11e9-8854-26e8d9c4e25f.png)
-
-#### JavaScript (ES6+)
-
-* Utilizar módulos de ES6 para poder modularizar seu código JavaScript.
-* Reforçar seu conhecimento sobre o uso de Template strings.
-* Reforçar seu conhecimento da manipulação de DOM através do JavaSript.
-* Implementar um sistema de rotas (sem uso de bibliotecas externas) para trocar de uma tela para outra de maneira dinâmica (SPA).
-
-### Persistência de dados
-
-Nos projetos anteriores só consumimos (lemos) dados, por exemplo, através de um arquivo `json` ou utilizando `fetch`.
-
-Neste projeto você desenhará a estrutura destes dados, a forma de consultá-los, atualizá-los, modificá-los e eliminá-los segundo os requerimentos do usuário. Para isto você utilizará `Firestore` do `Firebase` ou `LocalStorage` uma `Web Storage API`.
-
-#### Firebase
-
-O objetivo de usar Firebase neste projeto é que, com ele, você aprederá a manipular e persistir dados através de um banco de dados não relacional, em tempo real e poderá implementar operações CRUD (Criação, Leitura, Atualização e Remoção) de dados.
-
-## Considerações Gerais do Projeto
-
-* Este projeto deve ser desenvolvido em equipes de 3 integrantes.
-
-* A duração proposta do projeto é de **3 sprints**, com duração de uma semana cada uma.
-
-* Te daremos as **histórias de usuário** com o fim de apresentar a vocês os requisitos e funcionalidades que o usuário deseja.
-
-* O **planejamento é vital**, para ele te recomendamos utilizar o trello, para que possa **escrever suas Definições de Pronto** e **Critérios de Aceitação** para cada história de usuário com o objetivo de determinar, em equipe, **o que fazer** no sprint e **como realizar**.
-
-* Para que todos os membros de sua equipe possam alcançar os objetivos de aprendizagem, vocês deverão determinar qual será a estratégia de desenvolvimento que usarão: divisão por sub-histórias, pair programming, code reviews, etc.
-
-## Restrições Técnicas
-
-* Devem utilizar `flexbox` para posicionar seus elementos. Não está permitido o uso de frameworks de CSS (bootstrap), nem de estilização com `float`.
-
-* Já te demos o layout das telas mobile e desktop. Queremos que repliquem estas telas. O conteúdo, paleta de cores e fontes, depende da temática que vão eleger como equipe. A implementação deste layout deverá ser parte da definição de pronto de suas histórias de usuário.
-
-## Histórias de Usuário
+**Para este projeto recebemos histórias de usuário pré-definidas:**
 
 * Como usuário novo, devo poder criar uma conta com email e senha válidos para poder iniciar uma sessão e ingressar na Rede Social.
 
@@ -87,23 +44,41 @@ O objetivo de usar Firebase neste projeto é que, com ele, você aprederá a man
 
 * Eu como usuário logado, posso dar like e ver a contagem de likes em minhas publicações
 
-* Eu como usuário logado, posso escrever um comentário nas publicações.
+* Eu como usuário logado, posso escrever e deletar um comentário nas publicações.
 
 * Ao final devo poder ingressar na Rede Social e poder visualizar os dados de meu perfil criado e editá-los.
 
-## Critérios de aceitação
+Ordenamos o desenvolvimento do projeto pensando em quais seriam as prioridades do usuário dentro de uma rede
+social, tendo isso em mente implementamos as histórias nessa ordem:
 
-* Se o email ou senha não forem válidos, ao momento de logar, devo ver uma mensagem de erro.
-* Deve ser visível se existir alguma mensagem de erro.
-* Devo poder ver esta página de registro em celulares e desktop (responsive).
-* Não devo necessitar recarregar a página para criar uma conta (SPA).
-   
-    > **Definição de pronto**
-    > - A funcionalidade cumpre e satisfaz os critérios de aceitação.
-    > - O layout está de acordo com o protótipo.
-    > - O código desta funcionalidade recebeu code review.
-    > - A funcionalidade está publicada para ser testada.
-    > - A funcionalidade foi testada manualmente.
-    > - Foram feitos testes de usabilidade e foi implementado o feedback, se for
-    > necessário
+1. Criar uma nova conta com email e senha.
+2. Fazer Login na rede social.
+3. Postar uma publicação.
+4. Editar e Deletar uma publicação.
+5. Dar like.
+6. Editar perfil.
+7. Comentar e deletar comentário.
+8. Postar como Público ou Privado e visualizar o modelo selecionado.
+
+## 4. Protótipo de Baixa Fidelidade
+
+Recebemos dois layouts para seguir como protótipos e a partir desses desenvolvemos os nossos.
+
+###Layouts de login
+
+![](/src/image/loginpage.png)
+
+###Layouts do Feed
+
+![](/src/image/feed.png)
+
+Você pode ver a versão final deste projeto [AQUI NESTE LINK](https://social-network-b6633.firebaseapp.com/)
+
+## 5. Considerações finais
+
+Este projeto foi desenvolvido por Aline Camargo, Jackeline Mattar e Letícia Sampaio, durante o Bootcamp Laboratória.
+Agradecemos o apoio de toda a equipe Laboratória, a nossas companheiras da 3ª geração Laboratória e aos 
+nossos familiares que testaram a usabilidade do nosso projeto e seguem nos apoiando a todo o momento.
+
+
 
