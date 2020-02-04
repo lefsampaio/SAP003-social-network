@@ -10,7 +10,7 @@ const selectPrivacy = (props) => {
 
 window.select = {
   handleClick: (event, callBack) => {
-    callBack(event.target);
+    callBack(event); 
   },
 };
 

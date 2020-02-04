@@ -9,7 +9,6 @@ const authCheck = () => {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       location.hash = '#feed';
-      
       firebase.firestore().collection('posts')
         .where('private', '==', 'false')
         .orderBy('timestamp', 'desc')
