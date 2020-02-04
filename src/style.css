@@ -130,6 +130,7 @@ body {
   align-items: center;
   justify-content: space-between;
   width: 70%;
+  word-break: break-word;
 }
 .photo-profile{
   display: flex;
@@ -227,9 +228,11 @@ body {
   word-wrap: break-word;
 }
 
-.editable-text {
-  background-color: whitesmoke;
+.editable-text{
+  background-color: white;
   padding: 3px 3px;
+  word-wrap: break-word;
+  
 }
 
 .text-button {
@@ -416,6 +419,7 @@ display: none;
     border: 2px solid #9c64a6;
     border-top: 0;
     border-radius: 0 0 10px 10px;
+    word-break:break-all;
     
   }
   .photo-profile{

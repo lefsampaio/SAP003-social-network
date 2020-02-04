@@ -9,8 +9,8 @@ const selectPrivacy = (props) => {
 };
 
 window.select = {
-  handleClick: (e, callBack) => {
-    callBack(e);
+  handleClick: (event, callBack) => {
+    callBack(event.target);
   },
 };
 

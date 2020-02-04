@@ -6,7 +6,7 @@ import selectPrivacy from '../components/selectPrivacy.js';
 
 const logout = (e) => {
   app.auth.signOut().catch((error) => {
-    // console.log(error);
+    `<p>${error}</p>`
   });
 };
 
@@ -155,17 +155,16 @@ const checkComments = (comments) => {
 
 const postTemplate = doc => `
     <div class='column posted container-post' data-id=${doc.id}> 
-
       <p class='row posted posted-name'> Publicado por ${doc.name} | ${doc.date}
       ${checkUserDelete(doc)}
       </p>
 
-      <div class='row text-button'>
-        <p class='text' data-like=${doc.likes} data-docid=${doc.id}> ${doc.text}</p>
-        <div class='buttons'>
-        ${checkUserEdit(doc)}
-        </div>
+    <div class='row text-button'>
+      <p class='text' data-like=${doc.likes} data-docid=${doc.id}> ${doc.text}</p>
+      <div class='buttons'>
+      ${checkUserEdit(doc)}
       </div>
+    </div>
 
      
       ${checkComments(doc.comments)}
@@ -265,7 +264,7 @@ const Feed = (props) => {
   <div class='row'>
     ${selectPrivacy({
     class: 'privacy-option',
-    onChange: null,
+    onChange: changeViewPost,
     opClass1: 'public',
     value1: 'false',
     txt1: 'Público',
@@ -351,7 +350,7 @@ const Profile = () => {
       </div>
       <div class="profile">
       <i class="far fa-user user-icon"></i>
-          <h1 class="user-info">${name}</h1>
+          <h1 class="">${name}</h1>
           ${actionIcon({
     class: 'edit-btn minibtns fas fa-pencil-alt',
     name: user.user,
@@ -381,12 +380,13 @@ const editProfile = (pencilIcon) => {
 
 const updateProfile = (checkIcon) => {
   checkIcon.className = 'save-btn minibtns hide fas fa-check';
-  console.log(checkIcon.previousElementSibling);
-  
   checkIcon.previousElementSibling.className = 'edit-btn minibtns fas fa-pencil-alt show';
   const pName = checkIcon.previousElementSibling.previousElementSibling;
   pName.contentEditable = false;
   pName.className = 'username';
+
+ 
+
 
   const user = app.auth.currentUser;
   user.updateProfile({
