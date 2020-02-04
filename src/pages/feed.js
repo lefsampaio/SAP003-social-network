@@ -28,6 +28,7 @@ const makePostEditable = (pencilIcon) => {
 };
 
 const saveEditPost = (checkIcon) => {
+  document.querySelector('.posts').innerHTML = '';
   checkIcon.className = 'save-btn minibtns hide fas fa-check';
   checkIcon.nextElementSibling.className = 'edit-btn minibtns show';
   const pText = checkIcon.parentElement.previousElementSibling;
@@ -47,6 +48,7 @@ const like = (heart) => {
     .update({
       likes: newlike,
     });
+    document.querySelector('.posts').innerHTML = '';
 };
 
 const deleteComment = (commentDeleteIcon) => {
@@ -202,6 +204,7 @@ const postTemplate = doc => `
 
 
 const newPost = () => {
+  document.querySelector('.posts').innerHTML = '';
   const textArea = document.querySelector('.add-post');
   const privacyOption = document.querySelector('.privacy-option');
   const post = {
@@ -219,9 +222,9 @@ const newPost = () => {
       ...post,
       id: docRef.id,
     };
-
     textArea.value = '';
     document.querySelector('.post-btn').disabled = true;
+    
   });
 };
 
@@ -374,9 +377,6 @@ const updateProfile = (checkIcon) => {
   const pName = checkIcon.previousElementSibling.previousElementSibling;
   pName.contentEditable = false;
   pName.className = 'username';
-
-
-
 
   const user = app.auth.currentUser;
   user.updateProfile({
